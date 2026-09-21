@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact & Pull Request — HAUSMAN Paris</title>
+  <meta name="description" content="Submit a wardrobe rental pull request or contact the HAUSMAN Paris showroom team for fashion editorials and productions." />
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='sans-serif' font-weight='900'>H</text></svg>">
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-title">HAUSMAN</span>
+        <span class="brand-location">PARIS SHOWROOM</span>
+      </a>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link" data-i18n="nav.home">HOME</a>
+        <a href="wardrobe.html" class="nav-link" data-i18n="nav.wardrobe">WARDROBE</a>
+        <a href="projects.html" class="nav-link" data-i18n="nav.projects">PROJECTS</a>
+        <a href="about.html" class="nav-link" data-i18n="nav.about">ABOUT</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <span class="lang-sep">/</span>
+          <button class="lang-btn" data-lang="fr">FR</button>
+        </div>
+
+        <a href="contact.html" class="btn-header-request">
+          <span data-i18n="nav.contact">PULL REQUEST</span>
+          <span class="pull-count-badge" style="display: none;">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <div class="page-head">
+      <div>
+        <span class="home-showroom-tag" style="margin-bottom: 0.25rem;" data-i18n="contact.tag">RESERVATION & INQUIRIES</span>
+        <h1 class="page-title" data-i18n="contact.title">RENTAL REQUEST FORM</h1>
+        <p class="page-subtitle" data-i18n="contact.subtitle">Please specify your production details, dates, and selected references. We reply within 24 hours.</p>
+      </div>
+    </div>
+
+    <div class="contact-page-layout">
+      
+      <!-- Qualified Rental Form (Section 11 du CDC) -->
+      <form class="contact-form" id="rentalForm">
+        
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="formName" data-i18n="contact.name">Full Name / Stylist Name</label>
+            <input class="form-input" type="text" id="formName" name="name" placeholder="e.g. Marc Jacobs / Studio Saint-Germain" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="formEmail" data-i18n="contact.email">Professional Email</label>
+            <input class="form-input" type="email" id="formEmail" name="email" placeholder="contact@agency.com" required />
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="formAgency" data-i18n="contact.company">Production Company / Agency / Magazine</label>
+            <input class="form-input" type="text" id="formAgency" name="agency" placeholder="e.g. Vogue Paris / Iconoclast" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="formInstagram" data-i18n="contact.instagram">Instagram / Portfolio Website</label>
+            <input class="form-input" type="text" id="formInstagram" name="instagram" placeholder="@stylist_name" />
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="formProjectType" data-i18n="contact.projectType">Project Type</label>
+            <select class="form-select" id="formProjectType" name="projectType">
+              <option value="Editorial">Editorial / Magazine</option>
+              <option value="Music Video">Music Video / Clip</option>
+              <option value="Artist / Celebrity">Artist / Celebrity Red Carpet</option>
+              <option value="Brand Campaign">Brand Campaign / Commercial</option>
+              <option value="Photography">Creative Photography Project</option>
+              <option value="Event">Private Fashion Event</option>
+              <option value="Other">Other Creative Production</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="formDates" data-i18n="contact.projectDate">Pull / Shooting Dates</label>
+            <input class="form-input" type="text" id="formDates" name="dates" placeholder="e.g. Oct 12 — Oct 15, 2026" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="contact.requestedPieces">Requested Pieces (Refs or Names)</label>
+          <div class="form-selected-pieces-tags" id="selectedPiecesContainer">
+            <!-- Dynamically populated or filled via URL -->
+          </div>
+          <input type="hidden" id="formRequestedPieces" name="requestedPieces" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="formMessage" data-i18n="contact.message">Project Description & Styling Mood</label>
+          <textarea class="form-textarea" id="formMessage" name="message" placeholder="Brief outline of the project, moodboard aesthetic, talent details..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="align-self: flex-start; margin-top: 1rem;" data-i18n="contact.submit">
+          SEND PULL REQUEST
+        </button>
+
+      </form>
+
+      <!-- Direct Showroom Contact Info -->
+      <aside class="contact-sidebar">
+        <div class="contact-info-block">
+          <span class="contact-info-label">SHOWROOM APPOINTMENTS</span>
+          <span class="contact-info-val" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700;">Paris, 75003 — Marais</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Strictly by appointment only for certified stylists and image professionals.</span>
+        </div>
+
+        <div class="contact-info-block">
+          <span class="contact-info-label">DIRECT INQUIRIES</span>
+          <span class="contact-info-val" style="font-family: var(--font-heading); font-size: 1rem; font-weight: 700;">pull@hausman-paris.com</span>
+        </div>
+
+        <div class="contact-info-block">
+          <span class="contact-info-label">INSTAGRAM & WHATSAPP</span>
+          <div class="contact-social-links">
+            <a href="#" class="contact-social-link">@HAUSMAN.PARIS</a>
+            <a href="#" class="contact-social-link">WHATSAPP DIRECT</a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="brand-title">HAUSMAN</span>
+          <span class="brand-location">PARIS SHOWROOM & WARDROBE ARCHIVE</span>
+        </div>
+        <nav class="footer-nav">
+          <a href="index.html" data-i18n="nav.home">HOME</a>
+          <a href="wardrobe.html" data-i18n="nav.wardrobe">WARDROBE</a>
+          <a href="projects.html" data-i18n="nav.projects">PROJECTS</a>
+          <a href="about.html" data-i18n="nav.about">ABOUT</a>
+          <a href="contact.html" data-i18n="nav.contact">PULL REQUEST</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 HAUSMAN SHOWROOM PARIS. ALL RIGHTS RESERVED.</span>
+        <span>WARDROBE RENTAL FOR CREATIVE IMAGE PROFESSIONALS.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const pieceName = params.get('piece');
+      if (pieceName) {
+        const container = document.getElementById('selectedPiecesContainer');
+        const input = document.getElementById('formRequestedPieces');
+        if (container && input) {
+          container.innerHTML = `<span class="piece-tag">${pieceName}</span>`;
+          input.value = pieceName;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

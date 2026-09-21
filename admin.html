@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HAUSMAN — Administration Showroom & Archives</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='sans-serif' font-weight='900'>H</text></svg>">
+  <link rel="stylesheet" href="assets/css/admin.css" />
+</head>
+<body>
+
+  <!-- ==========================================================================
+       ADMIN SIDEBAR (EXPANDED TO 340PX, PURE SINGLE-LINE READABILITY)
+       ========================================================================== -->
+  <aside class="admin-sidebar">
+    <div>
+      <div class="admin-brand">
+        <span class="admin-brand-title">HAUSMAN</span>
+        <span class="admin-brand-sub">PANEL D'ADMINISTRATION • PARIS</span>
+      </div>
+
+      <nav class="admin-nav-list">
+        <!-- 1. DASHBOARD (VUE D'ENSEMBLE - DEFAULT ACTIVE) -->
+        <div class="admin-nav-item active" data-tab="dashboard">
+          <div style="display: flex; align-items: center;">
+            <span class="admin-nav-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </span>
+            <span>Tableau de bord</span>
+          </div>
+        </div>
+
+        <!-- 2. WARDROBE -->
+        <div class="admin-nav-item" data-tab="wardrobe">
+          <div style="display: flex; align-items: center;">
+            <span class="admin-nav-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </span>
+            <span>Garde-robe & Inventaire</span>
+          </div>
+        </div>
+
+        <!-- 3. PROJECTS -->
+        <div class="admin-nav-item" data-tab="projects">
+          <div style="display: flex; align-items: center;">
+            <span class="admin-nav-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </span>
+            <span>Projets & HAUSMAN Files</span>
+          </div>
+        </div>
+
+        <!-- 4. INQUIRIES -->
+        <div class="admin-nav-item" data-tab="inquiries">
+          <div style="display: flex; align-items: center;">
+            <span class="admin-nav-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <span>Demandes de Pull (Stylistes)</span>
+          </div>
+          <span class="nav-count-badge" id="sidebarInquiriesBadge">1</span>
+        </div>
+
+        <!-- 5. CONTENT -->
+        <div class="admin-nav-item" data-tab="content">
+          <div style="display: flex; align-items: center;">
+            <span class="admin-nav-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </span>
+            <span>Textes & Présentation</span>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Sidebar Footer (Voir Showroom ON TOP, Curator Profile & Déconnexion UNDERNEATH) -->
+    <div class="admin-sidebar-footer">
+      <a href="index.html" class="btn-view-site">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Voir le Showroom</span>
+      </a>
+
+      <div class="admin-user-card" id="adminUserCard">
+        <div class="user-avatar">H</div>
+        <div class="user-info">
+          <span class="user-name">Curateur Showroom</span>
+          <span class="user-email">admin@hausman-paris.com</span>
+        </div>
+        <button class="btn-logout" id="btnLogoutAdmin" title="Se déconnecter">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+
+      <button class="btn-admin-login-cta" id="btnLoginAdmin" style="display: none;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        <span>Se connecter</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       MAIN WORKSPACE
+       ========================================================================== -->
+  <main class="admin-main">
+    
+    <!-- ==========================================================================
+         PANEL 1: DASHBOARD (VUE D'ENSEMBLE) — DEFAULT TAB
+         ========================================================================== -->
+    <section class="admin-panel active" id="panel-dashboard">
+      
+      <header class="admin-header">
+        <div>
+          <h1 class="admin-title">Vue d'ensemble du Showroom</h1>
+          <p class="admin-desc">Console de gestion des archives, prêts pour tournages et demandes éditoriales.</p>
+        </div>
+        <div class="admin-actions" style="display: flex; gap: 0.75rem;">
+          <button class="btn-icon-action" style="padding: 0.75rem 1.2rem; font-weight: 700; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.08em;" onclick="document.querySelector('[data-tab=projects]').click();">
+            + Nouveau projet
+          </button>
+          <button class="btn-admin-primary" onclick="document.querySelector('[data-tab=wardrobe]').click(); document.getElementById('btnAddGarment').click();">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>+ Ajouter une pièce</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Key Metrics Row (Crisp Monochrome Luxury Cards) -->
+      <section class="metrics-row">
+        <div class="metric-card" onclick="document.querySelector('[data-tab=wardrobe]').click();">
+          <div class="metric-card-header">
+            <span class="metric-label">Garde-robe au catalogue</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <div class="metric-value" id="metricTotalPieces">6</div>
+          <span class="metric-sub">6 maisons • 100% numérisées</span>
+        </div>
+
+        <div class="metric-card" onclick="document.querySelector('[data-tab=wardrobe]').click(); document.getElementById('adminStatusFilter').value='on_loan'; document.getElementById('adminStatusFilter').dispatchEvent(new Event('change'));">
+          <div class="metric-card-header">
+            <span class="metric-label">En cours de prêt</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="metric-value" id="metricOnLoan">1</div>
+          <span class="metric-sub">Margiela Trench • Retour 24/09</span>
+        </div>
+
+        <div class="metric-card" onclick="document.querySelector('[data-tab=projects]').click();">
+          <div class="metric-card-header">
+            <span class="metric-label">HAUSMAN Files</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <div class="metric-value" id="metricTotalProjects">3</div>
+          <span class="metric-sub">Éditos Vogue, Numéro, Dazed</span>
+        </div>
+
+        <div class="metric-card" onclick="document.querySelector('[data-tab=inquiries]').click();">
+          <div class="metric-card-header">
+            <span class="metric-label">Demandes à traiter</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="metric-value" id="metricNewInquiries">1</div>
+          <span class="metric-sub">Vogue Paris / Iconoclast • À valider</span>
+        </div>
+      </section>
+
+      <!-- Dashboard Split Grid (2 Columns) -->
+      <div class="dashboard-summary-grid">
+        
+        <!-- Left Column: Operations & Lists -->
+        <div class="dashboard-col">
+          
+          <!-- Card 1: Recent Inquiries -->
+          <div class="admin-table-card">
+            <div class="table-toolbar">
+              <div>
+                <h2 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Demandes de pull récentes</h2>
+                <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Demandes formulées par les stylistes et productions</span>
+              </div>
+              <button class="btn-icon-action" onclick="document.querySelector('[data-tab=inquiries]').click();">Voir tout &rarr;</button>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Demandeur</th>
+                  <th>Projet & Dates</th>
+                  <th>Statut</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="dashboardRecentInquiries">
+                <!-- Dynamically populated via admin.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Card 2: Recent Archive Garments -->
+          <div class="admin-table-card">
+            <div class="table-toolbar">
+              <div>
+                <h2 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Pièces récemment ajoutées au showroom</h2>
+                <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Dernières acquisitions et archives numérisées</span>
+              </div>
+              <button class="btn-icon-action" onclick="document.querySelector('[data-tab=wardrobe]').click();">Catalogue complet &rarr;</button>
+            </div>
+            <div id="dashboardRecentGarmentsList">
+              <!-- Dynamically populated via admin.js -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Showroom Health & Highlights -->
+        <div class="dashboard-col">
+          
+          <!-- Card 3: Stock Status & Active Loans -->
+          <div class="admin-table-card" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--admin-border);">
+              <h2 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Disponibilités du stock</h2>
+              <span class="status-pill status-available">83% Disponible</span>
+            </div>
+
+            <!-- Visual Capacity Bar (Sleek Monochrome) -->
+            <div class="capacity-progress-wrap">
+              <div class="capacity-progress-bar">
+                <div class="capacity-progress-fill" style="width: 83%;" title="5 Disponibles"></div>
+                <div class="capacity-progress-loan" style="width: 17%;" title="1 En prêt"></div>
+              </div>
+              <div class="capacity-legend">
+                <span>5 Disponibles (83%)</span>
+                <span>1 En Tournage (17%)</span>
+              </div>
+            </div>
+
+            <!-- Structured Inventory Breakdown -->
+            <div class="stock-breakdown-list">
+              <div class="stock-breakdown-item">
+                <span class="stock-breakdown-label">Pièces au catalogue</span>
+                <span class="stock-breakdown-val">6</span>
+              </div>
+              <div class="stock-breakdown-item">
+                <span class="stock-breakdown-label">Prêtes en showroom (Paris Marais)</span>
+                <span class="stock-breakdown-val">5</span>
+              </div>
+              <div class="stock-breakdown-item">
+                <span class="stock-breakdown-label">Sorties en shooting / tournage</span>
+                <span class="stock-breakdown-val">1</span>
+              </div>
+              <div class="stock-breakdown-item">
+                <span class="stock-breakdown-label">Maisons de couture répertoriées</span>
+                <span class="stock-breakdown-val">6</span>
+              </div>
+            </div>
+
+            <!-- Active Loan Spotlight (Sober Luxury) -->
+            <div style="font-family: var(--font-heading); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--admin-text-secondary); margin-top: 1.25rem;">
+              Pièce actuellement en shooting :
+            </div>
+            <div class="active-loan-banner">
+              <img class="active-loan-thumb" src="assets/img/margiela_trench_flat.jpg" alt="Margiela Trench" />
+              <div class="active-loan-info">
+                <div class="active-loan-brand">MAISON MARGIELA</div>
+                <div class="active-loan-desc">Deconstructed Trench (HSM-ARC-024)</div>
+                <div class="active-loan-date">Styliste : Emmanuelle Alt • Retour prévu 24/09</div>
+              </div>
+            </div>
+
+            <button class="btn-icon-action" style="width: 100%; margin-top: 1.25rem; padding: 0.75rem; text-align: center; justify-content: center;" onclick="document.querySelector('[data-tab=wardrobe]').click();">
+              Gérer l'inventaire complet &rarr;
+            </button>
+          </div>
+
+          <!-- Card 4: Editorial Projects Preview -->
+          <div class="admin-table-card" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--admin-border);">
+              <h2 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">HAUSMAN Files récents</h2>
+              <button class="btn-icon-action" onclick="document.querySelector('[data-tab=projects]').click();">Voir tout &rarr;</button>
+            </div>
+            <div id="dashboardRecentProjectsList" style="display: flex; flex-direction: column; gap: 0.85rem;">
+              <!-- Dynamically populated via admin.js -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==========================================================================
+         PANEL 2: WARDROBE INVENTORY (NO METRIC CARDS - FOCUSED TABLE & ACTION TOP RIGHT)
+         ========================================================================== -->
+    <section class="admin-panel" id="panel-wardrobe">
+      
+      <header class="admin-header">
+        <div>
+          <h1 class="admin-title">Garde-robe & Inventaire</h1>
+          <p class="admin-desc">Consultez, modifiez ou masquez vos pièces d'archives en toute autonomie.</p>
+        </div>
+        <div class="admin-actions">
+          <button class="btn-admin-primary" id="btnAddGarment">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>+ Ajouter une pièce</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-table-card">
+        <div class="table-toolbar">
+          <input type="text" class="table-search-input" id="adminGarmentSearch" placeholder="Rechercher marque, nom, réf..." />
+          
+          <div class="table-filters">
+            <select class="table-select" id="adminCategoryFilter">
+              <option value="ALL">Toutes catégories</option>
+              <option value="Outerwear">Outerwear / Manteaux</option>
+              <option value="Jackets">Jackets / Cuirs</option>
+              <option value="Tops">Tops / Chemises</option>
+              <option value="Knitwear">Knitwear / Mailles</option>
+            </select>
+
+            <select class="table-select" id="adminStatusFilter">
+              <option value="ALL">Tous les statuts</option>
+              <option value="available">Disponible</option>
+              <option value="on_loan">En location</option>
+              <option value="hidden">Masqué</option>
+            </select>
+          </div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Pièce & Designer</th>
+              <th>Référence</th>
+              <th>Catégorie</th>
+              <th>Taille</th>
+              <th>Statut (Cliquer pour basculer)</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="wardrobeTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+
+        <!-- Table Pagination -->
+        <div class="table-pagination">
+          <span class="table-pagination-info" id="wardrobeTablePaginationInfo">Affichage de 1 à 6 sur 6 pièces</span>
+          <div class="table-pagination-controls">
+            <button class="table-pagination-btn" disabled>&larr; Précédent</button>
+            <span class="table-pagination-page active">1</span>
+            <button class="table-pagination-btn" disabled>Suivant &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==========================================================================
+         PANEL 3: EDITORIAL PROJECTS (NO METRIC CARDS - FOCUSED TABLE & ACTION TOP RIGHT)
+         ========================================================================== -->
+    <section class="admin-panel" id="panel-projects">
+      
+      <header class="admin-header">
+        <div>
+          <h1 class="admin-title">Projets & HAUSMAN Files</h1>
+          <p class="admin-desc">Gérez vos collaborations, éditoriaux magazines, clips musicaux et lookbooks.</p>
+        </div>
+        <div class="admin-actions">
+          <button class="btn-admin-primary" onclick="alert('Module d\'ajout de projet prêt pour l\'intégration Laravel.');">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>+ Nouveau projet</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-table-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Projet & Publication</th>
+              <th>Type</th>
+              <th>Styliste / Direction</th>
+              <th>Pièces utilisées</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="projectsTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+
+        <!-- Table Pagination -->
+        <div class="table-pagination">
+          <span class="table-pagination-info">Affichage de 1 à 3 sur 3 projets éditoriaux</span>
+          <div class="table-pagination-controls">
+            <button class="table-pagination-btn" disabled>&larr; Précédent</button>
+            <span class="table-pagination-page active">1</span>
+            <button class="table-pagination-btn" disabled>Suivant &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==========================================================================
+         PANEL 4: RENTAL INQUIRIES (NO METRIC CARDS - FOCUSED TABLE)
+         ========================================================================== -->
+    <section class="admin-panel" id="panel-inquiries">
+      
+      <header class="admin-header">
+        <div>
+          <h1 class="admin-title">Demandes de Location (Pull Requests)</h1>
+          <p class="admin-desc">Consultez et validez les demandes qualifiées reçues depuis le showroom digital.</p>
+        </div>
+        <div class="admin-actions">
+          <button class="btn-icon-action" style="padding: 0.75rem 1.2rem; font-weight: 600;" onclick="alert('Exportation des demandes en cours (CSV/PDF)...');">
+            Exporter la liste
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-table-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Réf & Date</th>
+              <th>Demandeur / Agence</th>
+              <th>Type & Dates</th>
+              <th>Pièces demandées</th>
+              <th>Statut</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inquiriesTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+
+        <!-- Table Pagination -->
+        <div class="table-pagination">
+          <span class="table-pagination-info">Affichage de 1 à 1 sur 1 demande</span>
+          <div class="table-pagination-controls">
+            <button class="table-pagination-btn" disabled>&larr; Précédent</button>
+            <span class="table-pagination-page active">1</span>
+            <button class="table-pagination-btn" disabled>Suivant &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==========================================================================
+         PANEL 5: TEXT CONTENT & BIO EDITOR (NO METRIC CARDS - FOCUSED FORM)
+         ========================================================================== -->
+    <section class="admin-panel" id="panel-content">
+      
+      <header class="admin-header">
+        <div>
+          <h1 class="admin-title">Textes & Présentation Showroom</h1>
+          <p class="admin-desc">Modifiez les textes des pages About et Contact en français et en anglais.</p>
+        </div>
+      </header>
+
+      <div class="admin-table-card" style="padding: 2.5rem;">
+        <form id="formContentEdit" onsubmit="event.preventDefault(); alert('Textes de présentation mis à jour avec succès sur le site !');">
+          <div class="admin-form-grid">
+            
+            <div class="admin-form-group full">
+              <label class="admin-form-label">Titre de Présentation (About - Anglais)</label>
+              <input class="admin-input" type="text" value="PARISIAN WARDROBE ARCHIVE FOR IMAGE PROFESSIONALS" />
+            </div>
+
+            <div class="admin-form-group full">
+              <label class="admin-form-label">Titre de Présentation (About - Français)</label>
+              <input class="admin-input" type="text" value="ARCHIVE DE MODE PARISIENNE POUR PROFESSIONNELS DE L'IMAGE" />
+            </div>
+
+            <div class="admin-form-group full">
+              <label class="admin-form-label">Texte Principal Showroom (Anglais)</label>
+              <textarea class="admin-textarea" rows="4">HAUSMAN is an exclusive fashion showroom based in Paris, housing an evolving archive of rare designer garments, runway pieces, and contemporary sculptural menswear and womenswear.</textarea>
+            </div>
+
+            <div class="admin-form-group full">
+              <label class="admin-form-label">Texte Principal Showroom (Français)</label>
+              <textarea class="admin-textarea" rows="4">HAUSMAN est un showroom de mode exclusif basé à Paris, abritant des archives rares de créateurs, des pièces de défilés et des silhouettes contemporaines pour femme et homme.</textarea>
+            </div>
+
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--admin-border);">
+            <button type="reset" class="btn-icon-action" style="padding: 0.75rem 1.4rem;">Réinitialiser</button>
+            <button type="submit" class="btn-admin-primary">
+              Enregistrer les modifications
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL: AJOUTER UNE PIÈCE -->
+  <div class="admin-modal-backdrop" id="modalAddGarment">
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <h2 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700;">Ajouter une pièce à la Garde-robe HAUSMAN</h2>
+        <button id="modalCloseAddGarment" style="font-size: 1.2rem; color: var(--admin-text-secondary); cursor: pointer;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <form id="formAddGarment">
+        <div class="admin-form-grid">
+          
+          <div class="admin-form-group">
+            <label class="admin-form-label">Créateur / Marque</label>
+            <select class="admin-select" id="newGarmentBrand" name="brand">
+              <!-- Populated via JS -->
+            </select>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Nom de la pièce</label>
+            <input class="admin-input" type="text" name="name" placeholder="ex. Veste Tailleur Déconstruite" required />
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Catégorie</label>
+            <select class="admin-select" id="newGarmentCategory" name="category">
+              <!-- Populated via JS -->
+            </select>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Taille</label>
+            <input class="admin-input" type="text" name="size" placeholder="ex. 48 (M) ou Free Size" required />
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Saison / Archive</label>
+            <input class="admin-input" type="text" name="season" placeholder="ex. Autumn / Winter 2004" required />
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Référence HAUSMAN</label>
+            <input class="admin-input" type="text" name="ref" placeholder="ex. HSM-ARC-150" required />
+          </div>
+
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Photographies de la pièce</label>
+            <div class="photo-upload-zone">
+              <div style="margin-bottom: 0.5rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <strong style="font-family: var(--font-heading); font-size: 0.85rem;">Glissez-déposez vos photos haute définition ici</strong>
+              <p style="font-size: 0.75rem; color: var(--admin-text-muted); margin-top: 4px;">
+                Formats JPG, PNG, WEBP acceptés • Traitement et compression automatique
+              </p>
+              <div class="upload-thumbs-preview">
+                <img class="upload-thumb-item" src="assets/img/margiela_trench_flat.jpg" alt="Aperçu photo 1" />
+                <img class="upload-thumb-item" src="assets/img/margiela_trench_model.jpg" alt="Aperçu photo 2" />
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Notes de Curation / Description</label>
+            <textarea class="admin-textarea" name="description" rows="3" placeholder="Détails des matières, spécificités de coupe, usage recommandé..."></textarea>
+          </div>
+
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--admin-border);">
+          <button type="button" onclick="document.getElementById('modalAddGarment').classList.remove('active')" class="btn-icon-action" style="padding: 0.7rem 1.4rem;">Annuler</button>
+          <button type="submit" class="btn-admin-primary">Publier au showroom</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CONNEXION / LOGIN ADMIN -->
+  <div class="admin-modal-backdrop" id="modalAdminLogin">
+    <div class="admin-modal-card login-modal-card">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <span style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;">HAUSMAN</span>
+        <span style="display: block; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--admin-text-muted); text-transform: uppercase; margin-top: 5px;">ESPACE D'AUTHENTIFICATION CMS</span>
+      </div>
+
+      <form id="formAdminLogin">
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          
+          <div class="admin-form-group">
+            <label class="admin-form-label">Identifiant / Email Professionnel</label>
+            <input class="admin-input" type="email" id="loginEmailInput" value="admin@hausman-paris.com" required placeholder="nom@hausman-paris.com" />
+          </div>
+
+          <div class="admin-form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="admin-form-label" style="margin-bottom: 0;">Mot de passe</label>
+              <a href="#" onclick="alert('Lien de réinitialisation sécurisé envoyé à votre adresse administrateur.'); return false;" style="font-size: 0.72rem; color: var(--admin-text-muted); text-decoration: underline;">Oublié ?</a>
+            </div>
+            <input class="admin-input" type="password" id="loginPasswordInput" value="password123" required placeholder="••••••••••••" />
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--admin-text-secondary); margin-top: -0.25rem;">
+            <input type="checkbox" id="rememberMe" checked style="accent-color: #000000; cursor: pointer;" />
+            <label for="rememberMe" style="cursor: pointer;">Maintenir la session active sur cet appareil</label>
+          </div>
+
+          <button type="submit" class="btn-admin-primary" style="justify-content: center; padding: 0.95rem; font-size: 0.82rem; margin-top: 0.5rem; width: 100%;">
+            SE CONNECTER À L'ADMINISTRATION &rarr;
+          </button>
+
+        </div>
+      </form>
+      
+      <div style="margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--admin-border); text-align: center; font-size: 0.75rem; color: var(--admin-text-muted);">
+        Accès restreint au personnel habilité et curateurs du Showroom HAUSMAN Paris.
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
