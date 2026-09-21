@@ -1,6 +1,6 @@
 /**
- * HAUSMAN Fashion Showroom & Archive Gallery — Front-Office Interactive Engine
- * Editorial / Silent Luxury Architecture
+ * HAUSMAN Fashion Showroom & Archive Gallery — Interactive Engine
+ * Ultra-Minimalist / Silent Luxury Architecture
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,8 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         lang: localStorage.getItem('hausman_lang') || 'en',
         category: 'ALL',
         designer: 'ALL',
-        size: 'ALL',
-        availability: 'ALL',
         gridCols: 3,
         selectedPiecesForPull: JSON.parse(localStorage.getItem('hausman_pull') || '[]')
     };
@@ -20,12 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
         garmentsGrid: document.getElementById('garmentsGrid'),
         homeLatestGarments: document.getElementById('homeLatestGarments'),
         homeProjectsPreview: document.getElementById('homeProjectsPreview'),
-        filterCategories: document.getElementById('filterCategories'),
-        filterDesigners: document.getElementById('filterDesigners'),
-        filterSizes: document.getElementById('filterSizes'),
-        filterAvailability: document.getElementById('filterAvailability'),
+        categoryPills: document.getElementById('categoryPills'),
+        filterDesignerSelect: document.getElementById('filterDesignerSelect'),
         activeCount: document.getElementById('activeGarmentsCount'),
-        resetFiltersBtn: document.getElementById('resetFiltersBtn'),
         gridButtons: document.querySelectorAll('.grid-btn'),
         langButtons: document.querySelectorAll('.lang-btn'),
         
@@ -35,15 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Form
         rentalForm: document.getElementById('rentalForm'),
         selectedPiecesContainer: document.getElementById('selectedPiecesContainer'),
-        formRequestedPiecesInput: document.getElementById('formRequestedPieces'),
-        pullCountBadges: document.querySelectorAll('.pull-count-badge')
+        formRequestedPiecesInput: document.getElementById('formRequestedPieces')
     };
 
     // ==========================================
     // 1. Render Home Page Components
     // ==========================================
     function renderHomeComponents() {
-        // Home Latest Arrivals (Curated 3 items)
+        // Home Curated Archive (3 items)
         if (elements.homeLatestGarments) {
             const latest = HAUSMAN_DATA.garments.slice(0, 3);
             elements.homeLatestGarments.innerHTML = latest.map(garment => {
@@ -75,10 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <img src="${proj.coverImage}" alt="${proj.title}" loading="lazy" />
                         </div>
                         <div class="project-editorial-meta">
-                            <div class="project-meta-line">
-                                <span class="project-client-year">${proj.client} — ${proj.year}</span>
-                                <span class="project-cat-pill">${proj.category}</span>
-                            </div>
+                            <span class="project-client-year">${proj.client} — ${proj.year}</span>
                             <h3 class="project-title">${proj.title}</h3>
                             <p class="project-credits">${proj.photographer} • ${proj.stylist}</p>
                         </div>
@@ -89,86 +80,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 2. Render Filters Sidebar (Wardrobe page)
+    // 2. Render Silent Horizontal Category Pills
     // ==========================================
-    function renderFilters() {
-        const i18n = HAUSMAN_DATA.i18n[state.lang].wardrobe;
+    function renderCategoryPills() {
+        if (!elements.categoryPills) return;
 
-        // Categories
-        if (elements.filterCategories) {
-            const categories = HAUSMAN_DATA.categories;
-            let catHTML = `
-                <li class="filter-item ${state.category === 'ALL' ? 'active' : ''}" data-type="category" data-val="ALL">
-                    <span>${i18n.allCategories}</span>
-                    <span class="filter-count">(${HAUSMAN_DATA.garments.length})</span>
-                </li>
+        const allLabel = state.lang === 'fr' ? 'TOUTES LES PIÈCES' : 'ALL SPECIMENS';
+        const categories = HAUSMAN_DATA.categories;
+
+        let html = `
+            <span class="category-pill ${state.category === 'ALL' ? 'active' : ''}" data-cat="ALL">
+                ${allLabel}
+            </span>
+        `;
+
+        categories.forEach(cat => {
+            html += `
+                <span class="category-pill ${state.category === cat ? 'active' : ''}" data-cat="${cat}">
+                    ${cat}
+                </span>
             `;
-            categories.forEach(cat => {
-                const count = HAUSMAN_DATA.garments.filter(g => g.category === cat).length;
-                if (count > 0) {
-                    catHTML += `
-                        <li class="filter-item ${state.category === cat ? 'active' : ''}" data-type="category" data-val="${cat}">
-                            <span>${cat}</span>
-                            <span class="filter-count">(${count})</span>
-                        </li>
-                    `;
-                }
-            });
-            elements.filterCategories.innerHTML = catHTML;
-        }
+        });
 
-        // Designers
-        if (elements.filterDesigners) {
-            const designers = [...new Set(HAUSMAN_DATA.garments.map(g => g.brand))];
-            let desHTML = `
-                <li class="filter-item ${state.designer === 'ALL' ? 'active' : ''}" data-type="designer" data-val="ALL">
-                    <span>${i18n.allDesigners}</span>
-                </li>
-            `;
-            designers.forEach(des => {
-                const count = HAUSMAN_DATA.garments.filter(g => g.brand === des).length;
-                desHTML += `
-                    <li class="filter-item ${state.designer === des ? 'active' : ''}" data-type="designer" data-val="${des}">
-                        <span>${des}</span>
-                        <span class="filter-count">(${count})</span>
-                    </li>
-                `;
-            });
-            elements.filterDesigners.innerHTML = desHTML;
-        }
+        elements.categoryPills.innerHTML = html;
 
-        // Sizes
-        if (elements.filterSizes) {
-            const sizes = [...new Set(HAUSMAN_DATA.garments.map(g => g.size))];
-            let sizeHTML = `
-                <li class="filter-item ${state.size === 'ALL' ? 'active' : ''}" data-type="size" data-val="ALL">
-                    <span>${i18n.allSizes}</span>
-                </li>
-            `;
-            sizes.forEach(sz => {
-                sizeHTML += `
-                    <li class="filter-item ${state.size === sz ? 'active' : ''}" data-type="size" data-val="${sz}">
-                        <span>${sz}</span>
-                    </li>
-                `;
-            });
-            elements.filterSizes.innerHTML = sizeHTML;
-        }
-
-        // Attach filter click events
-        document.querySelectorAll('.filter-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const type = item.getAttribute('data-type');
-                const val = item.getAttribute('data-val');
-                state[type] = val;
-                renderFilters();
+        // Attach click listeners
+        elements.categoryPills.querySelectorAll('.category-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                state.category = pill.getAttribute('data-cat');
+                renderCategoryPills();
                 renderGarments();
             });
         });
     }
 
+    function renderDesignerOptions() {
+        if (!elements.filterDesignerSelect) return;
+
+        const designers = [...new Set(HAUSMAN_DATA.garments.map(g => g.brand))];
+        const allDesignersLabel = state.lang === 'fr' ? 'TOUS LES CRÉATEURS' : 'ALL DESIGNERS';
+
+        let html = `<option value="ALL">${allDesignersLabel}</option>`;
+        designers.forEach(des => {
+            html += `<option value="${des}" ${state.designer === des ? 'selected' : ''}>${des}</option>`;
+        });
+
+        elements.filterDesignerSelect.innerHTML = html;
+        elements.filterDesignerSelect.onchange = (e) => {
+            state.designer = e.target.value;
+            renderGarments();
+        };
+    }
+
     // ==========================================
-    // 3. Render Garments Grid (Pure Gallery / Editorial)
+    // 3. Render Garments Grid (Silent Gallery)
     // ==========================================
     function renderGarments() {
         if (!elements.garmentsGrid) return;
@@ -180,26 +145,25 @@ document.addEventListener('DOMContentLoaded', () => {
             if (g.status === 'hidden') return false;
             if (state.category !== 'ALL' && g.category !== state.category) return false;
             if (state.designer !== 'ALL' && g.brand !== state.designer) return false;
-            if (state.size !== 'ALL' && g.size !== state.size) return false;
-            if (state.availability !== 'ALL' && g.status !== state.availability) return false;
             return true;
         });
 
         // Update active count
         if (elements.activeCount) {
-            elements.activeCount.textContent = `${filtered.length} ${state.lang === 'fr' ? 'PIÈCES' : 'PIECES'}`;
+            const countStr = filtered.length < 10 ? `0${filtered.length}` : `${filtered.length}`;
+            elements.activeCount.textContent = `${countStr} ${state.lang === 'fr' ? 'PIÈCES' : 'SPECIMENS'}`;
         }
 
         if (filtered.length === 0) {
             elements.garmentsGrid.innerHTML = `
-                <div style="grid-column: 1 / -1; padding: 5rem 0; text-align: center; color: var(--text-muted); font-size: 0.88rem; letter-spacing: 0.05em;">
+                <div style="grid-column: 1 / -1; padding: 6rem 0; text-align: center; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 0.08em;">
                     ${i18n.noResults}
                 </div>
             `;
             return;
         }
 
-        // Build Clean Silent Gallery HTML (No badges, no overlay buttons, pure visual elegance)
+        // Build Clean Silent Gallery HTML
         elements.garmentsGrid.innerHTML = filtered.map(garment => {
             const name = state.lang === 'fr' ? garment.nameFr : garment.name;
 
@@ -217,29 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </article>
             `;
         }).join('');
-
-        // Update Wardrobe Pagination
-        const pInfo = document.getElementById('wardrobePaginationInfo');
-        const pNums = document.getElementById('wardrobePageNums');
-        const pPrev = document.getElementById('wardrobePrevBtn');
-        const pNext = document.getElementById('wardrobeNextBtn');
-        if (pInfo) {
-            const count = filtered.length;
-            pInfo.textContent = state.lang === 'fr' 
-                ? `PAGE 1 SUR 1 • ${count} PIÈCES AU TOTAL`
-                : `PAGE 1 OF 1 • ${count} PIECES TOTAL`;
-        }
-        if (pNums) {
-            pNums.innerHTML = '<button class="pagination-page-num active">1</button>';
-        }
-        if (pPrev) {
-            pPrev.disabled = true;
-            pPrev.classList.add('disabled');
-        }
-        if (pNext) {
-            pNext.disabled = true;
-            pNext.classList.add('disabled');
-        }
     }
 
     // ==========================================
@@ -247,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     function renderProjects() {
         if (!elements.projectsGrid) return;
-        const i18n = HAUSMAN_DATA.i18n[state.lang].projects;
 
         elements.projectsGrid.innerHTML = HAUSMAN_DATA.projects.map(proj => {
             const desc = state.lang === 'fr' ? proj.descriptionFr : proj.descriptionEn;
@@ -257,10 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <img src="${proj.coverImage}" alt="${proj.title}" loading="lazy" />
                     </div>
                     <div class="project-editorial-meta">
-                        <div class="project-meta-line">
-                            <span class="project-client-year">${proj.client} — ${proj.year}</span>
-                            <span class="project-cat-pill">${proj.category}</span>
-                        </div>
+                        <span class="project-client-year">${proj.client} — ${proj.year}</span>
                         <h3 class="project-title">${proj.title}</h3>
                         <p class="project-desc-subtle">${desc}</p>
                         <p class="project-credits">${proj.photographer} • ${proj.stylist}</p>
@@ -268,46 +205,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </article>
             `;
         }).join('');
-
-        // Update Projects Pagination
-        const projInfo = document.getElementById('projectsPaginationInfo');
-        const projNums = document.getElementById('projectsPageNums');
-        const projPrev = document.getElementById('projectsPrevBtn');
-        const projNext = document.getElementById('projectsNextBtn');
-        if (projInfo) {
-            projInfo.textContent = state.lang === 'fr'
-                ? `PAGE 1 SUR 1 • ${HAUSMAN_DATA.projects.length} PRODUCTIONS`
-                : `PAGE 1 OF 1 • ${HAUSMAN_DATA.projects.length} PRODUCTIONS`;
-        }
-        if (projNums) {
-            projNums.innerHTML = '<button class="pagination-page-num active">1</button>';
-        }
-        if (projPrev) {
-            projPrev.disabled = true;
-            projPrev.classList.add('disabled');
-        }
-        if (projNext) {
-            projNext.disabled = true;
-            projNext.classList.add('disabled');
-        }
     }
 
     // ==========================================
-    // 5. Contact / Pull Request Form Management
+    // 5. Contact / Inquiry Form
     // ==========================================
-    function removePieceFromPull(garmentId) {
-        state.selectedPiecesForPull = state.selectedPiecesForPull.filter(p => p.id !== garmentId);
-        localStorage.setItem('hausman_pull', JSON.stringify(state.selectedPiecesForPull));
-        updateSelectedPiecesUI();
-    }
-
     function updateSelectedPiecesUI() {
-        const count = state.selectedPiecesForPull.length;
-        elements.pullCountBadges.forEach(b => {
-            b.textContent = count > 0 ? count : '';
-            b.style.display = count > 0 ? 'inline-block' : 'none';
-        });
-
         if (elements.selectedPiecesContainer) {
             if (state.selectedPiecesForPull.length === 0) {
                 elements.selectedPiecesContainer.innerHTML = `
@@ -326,7 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.piece-tag-remove').forEach(btn => {
                     btn.addEventListener('click', () => {
                         const id = btn.getAttribute('data-id');
-                        removePieceFromPull(id);
+                        state.selectedPiecesForPull = state.selectedPiecesForPull.filter(p => p.id !== id);
+                        localStorage.setItem('hausman_pull', JSON.stringify(state.selectedPiecesForPull));
+                        updateSelectedPiecesUI();
                     });
                 });
             }
@@ -339,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Form submission handler
     if (elements.rentalForm) {
         elements.rentalForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -390,21 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 7. Reset Filters
-    // ==========================================
-    if (elements.resetFiltersBtn) {
-        elements.resetFiltersBtn.addEventListener('click', () => {
-            state.category = 'ALL';
-            state.designer = 'ALL';
-            state.size = 'ALL';
-            state.availability = 'ALL';
-            renderFilters();
-            renderGarments();
-        });
-    }
-
-    // ==========================================
-    // 8. Language Switcher (FR / EN)
+    // 7. Language Switcher (FR / EN)
     // ==========================================
     function setLanguage(lang) {
         state.lang = lang;
@@ -429,7 +319,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         renderHomeComponents();
-        renderFilters();
+        renderCategoryPills();
+        renderDesignerOptions();
         renderGarments();
         renderProjects();
         updateSelectedPiecesUI();
@@ -443,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 9. Mobile Navigation Menu Toggle
+    // 8. Mobile Navigation Drawer Toggle
     // ==========================================
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileNavDrawer = document.getElementById('mobileNavDrawer');
@@ -461,18 +352,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 mobileMenuToggle.classList.remove('active');
                 document.body.style.overflow = '';
             });
-        });
-    }
-
-    // ==========================================
-    // 10. Mobile Wardrobe Filter Drawer Toggle
-    // ==========================================
-    const mobileFilterToggleBtn = document.getElementById('mobileFilterToggleBtn');
-    const catalogueSidebar = document.getElementById('catalogueSidebar');
-
-    if (mobileFilterToggleBtn && catalogueSidebar) {
-        mobileFilterToggleBtn.addEventListener('click', () => {
-            catalogueSidebar.classList.toggle('hidden');
         });
     }
 

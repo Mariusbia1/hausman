@@ -96,8 +96,8 @@
 
   <main class="container">
     
-    <div style="padding: 2rem 0 1rem 0; font-family: var(--font-heading); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">
-      <a href="wardrobe.html" style="text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
+    <div style="padding: 2.5rem 0 1rem 0; font-family: var(--font-heading); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted);">
+      <a href="wardrobe.html" style="text-decoration: underline; display: inline-flex; align-items: center; gap: 6px;">
         <span>&larr;</span> <span id="backToArchiveText">BACK TO ARCHIVE</span>
       </a>
     </div>
@@ -123,7 +123,7 @@
 
         <div class="detail-specs-table">
           <div class="detail-spec-row">
-            <span class="detail-spec-label" data-i18n="modal.ref">REFERENCE</span>
+            <span class="detail-spec-label" data-i18n="modal.ref">SPECIMEN REF</span>
             <span class="detail-spec-val" id="detailRef">HSM-ARC-024</span>
           </div>
           <div class="detail-spec-row">
@@ -135,18 +135,18 @@
             <span class="detail-spec-val" id="detailCategory">Outerwear</span>
           </div>
           <div class="detail-spec-row">
-            <span class="detail-spec-label" data-i18n="modal.size">SIZE / FIT</span>
+            <span class="detail-spec-label" data-i18n="modal.size">SIZE & FIT</span>
             <span class="detail-spec-val" id="detailSize">48 (M/L)</span>
           </div>
           <div class="detail-spec-row">
-            <span class="detail-spec-label" data-i18n="modal.status">STATUS</span>
-            <span class="detail-spec-val" id="detailStatus">IN ARCHIVE</span>
+            <span class="detail-spec-label">PROVENANCE</span>
+            <span class="detail-spec-val">PARIS SHOWROOM ARCHIVE</span>
           </div>
         </div>
 
         <div class="detail-description">
-          <h3 style="font-family: var(--font-heading); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;" data-i18n="modal.description">
-            ARCHIVE ESSAY & CURATION NOTES
+          <h3 style="font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem;" data-i18n="modal.description">
+            CURATION & ARCHIVE ESSAY
           </h3>
           <p id="detailDescription">
             Iconic Artisanal concept trench coat featuring asymmetrical patchwork panels, exposed basting stitches, safety pin hardware accents, and unlined raw hem. Heavyweight washed cotton gabardine.
@@ -157,8 +157,8 @@
           <a href="#" id="detailRequestBtn" class="btn-primary" style="text-align: center;" data-i18n="modal.requestThisPiece">
             INQUIRE ABOUT THIS SPECIMEN
           </a>
-          <span style="font-size: 0.72rem; color: var(--text-muted); text-align: center; letter-spacing: 0.05em;">
-            INDIVIDUALLY REVIEWED FOR FASHION EDITORIALS & CREATIVE PRODUCTIONS
+          <span style="font-size: 0.68rem; color: var(--text-muted); text-align: center; letter-spacing: 0.08em; text-transform: uppercase;">
+            INDIVIDUALLY REVIEWED FOR FASHION EDITORIALS & ARTISTIC PRODUCTIONS
           </span>
         </div>
       </div>
@@ -203,9 +203,6 @@
         const name = lang === 'fr' ? garment.nameFr : garment.name;
         const desc = lang === 'fr' ? garment.descriptionFr : garment.descriptionEn;
         const category = lang === 'fr' ? garment.categoryFr : garment.category;
-        const statusLabel = garment.status === 'on_loan' 
-          ? (lang === 'fr' ? 'EN PRÊT' : 'ON LOAN') 
-          : (lang === 'fr' ? 'EN ARCHIVE' : 'IN ARCHIVE');
 
         document.getElementById('detailBrand').textContent = garment.brand;
         document.getElementById('detailName').textContent = name;
@@ -213,7 +210,6 @@
         document.getElementById('detailSeason').textContent = garment.season;
         document.getElementById('detailCategory').textContent = category;
         document.getElementById('detailSize').textContent = garment.size;
-        document.getElementById('detailStatus').textContent = statusLabel;
         document.getElementById('detailDescription').textContent = desc;
         document.getElementById('detailMainImg').src = garment.images.flat;
         document.getElementById('detailModelImg').src = garment.images.model;

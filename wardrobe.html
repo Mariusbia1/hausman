@@ -98,14 +98,14 @@
   <main class="container">
     
     <!-- PAGE HEAD & CONTROLS -->
-    <div class="page-head">
+    <div class="archive-page-head">
       <div>
-        <h1 class="page-title" data-i18n="wardrobe.title">ARCHIVE</h1>
-        <p class="page-subtitle" data-i18n="wardrobe.subtitle">Curated designer pieces available for professional loan and editorial productions.</p>
+        <h1 class="archive-page-title" data-i18n="wardrobe.title">ARCHIVE</h1>
+        <p class="archive-page-subtitle" data-i18n="wardrobe.subtitle">Curated designer pieces available for professional loan and editorial productions.</p>
       </div>
 
-      <div class="catalogue-controls">
-        <span class="active-count" id="activeGarmentsCount">6 PIECES</span>
+      <div class="archive-controls-right">
+        <span class="archive-count-silent" id="activeGarmentsCount">6 PIECES</span>
         
         <!-- Grid View Switcher -->
         <div class="grid-switcher">
@@ -116,70 +116,25 @@
       </div>
     </div>
 
-    <!-- MOBILE FILTER TRIGGER -->
-    <div class="lg:hidden flex justify-between items-center bg-zinc-100 px-4 py-3 mb-6 border border-zinc-200">
-      <button id="mobileFilterToggleBtn" class="flex items-center gap-2 font-heading text-xs font-bold uppercase tracking-wider text-black">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
-        <span>FILTRES DE L'ARCHIVE</span>
-      </button>
-      <span class="text-xs text-zinc-600 font-medium">6 PIÈCES</span>
-    </div>
-
-    <!-- CATALOGUE LAYOUT: Left Sidebar + Main Garments Grid -->
-    <div class="catalogue-layout">
-      
-      <!-- LEFT SIDEBAR -->
-      <aside class="catalogue-sidebar hidden lg:block" id="catalogueSidebar">
-        <h2 class="filter-sidebar-title" data-i18n="wardrobe.filterBy">FILTER:</h2>
-
-        <!-- Categories Filter -->
-        <div class="filter-group">
-          <h3 class="filter-title" data-i18n="wardrobe.categories">CATEGORIES</h3>
-          <ul class="filter-list" id="filterCategories">
-            <!-- Dynamically populated via app.js -->
-          </ul>
-        </div>
-
-        <!-- Designers Filter -->
-        <div class="filter-group">
-          <h3 class="filter-title" data-i18n="wardrobe.designers">DESIGNERS</h3>
-          <ul class="filter-list" id="filterDesigners">
-            <!-- Dynamically populated via app.js -->
-          </ul>
-        </div>
-
-        <!-- Sizes Filter -->
-        <div class="filter-group">
-          <h3 class="filter-title" data-i18n="wardrobe.sizes">SIZES</h3>
-          <ul class="filter-list" id="filterSizes">
-            <!-- Dynamically populated via app.js -->
-          </ul>
-        </div>
-
-        <!-- Reset Button -->
-        <button class="filter-reset-btn" id="resetFiltersBtn">Reset filters</button>
-      </aside>
-
-      <!-- MAIN GARMENTS GRID & PAGINATION -->
-      <section>
-        <div class="garments-grid cols-3" id="garmentsGrid">
+    <!-- SLEEK HORIZONTAL SILENT FILTER BAR -->
+    <div class="archive-filter-bar">
+      <div class="archive-category-pills" id="categoryPills">
+        <!-- Dynamically rendered via app.js -->
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <select class="archive-designer-select" id="filterDesignerSelect">
+          <option value="ALL">ALL DESIGNERS</option>
           <!-- Dynamically populated via app.js -->
-        </div>
-
-        <!-- Luxury Showroom Pagination -->
-        <div class="pagination-bar" id="wardrobePagination">
-          <div class="pagination-info" id="wardrobePaginationInfo">PAGE 1 OF 1 • 6 PIECES TOTAL</div>
-          <div class="pagination-controls">
-            <button class="pagination-btn pagination-prev disabled" id="wardrobePrevBtn" disabled>&larr; PREV</button>
-            <div class="pagination-pages" id="wardrobePageNums">
-              <button class="pagination-page-num active">1</button>
-            </div>
-            <button class="pagination-btn pagination-next disabled" id="wardrobeNextBtn" disabled>NEXT &rarr;</button>
-          </div>
-        </div>
-      </section>
-
+        </select>
+      </div>
     </div>
+
+    <!-- MAIN GARMENTS FULL-WIDTH GALLERY GRID -->
+    <section>
+      <div class="garments-grid cols-3" id="garmentsGrid">
+        <!-- Dynamically populated via app.js -->
+      </div>
+    </section>
 
   </main>
 
