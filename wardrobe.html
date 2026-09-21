@@ -7,6 +7,31 @@
   <meta name="description" content="Browse the full archive wardrobe catalogue of HAUSMAN Paris. Outerwear, jackets, tops, knitwear, runway pieces for styling loans." />
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='sans-serif' font-weight='900'>H</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Chillax', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            body: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          colors: {
+            hausman: {
+              black: '#000000',
+              dark: '#0C0D0E',
+              charcoal: '#111827',
+              gray: '#374151',
+              muted: '#6B7280',
+              light: '#F8F9FA',
+              border: '#E5E7EB',
+              subtle: '#F3F4F6'
+            }
+          }
+        }
+      }
+    }
+  </script>
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
@@ -95,11 +120,20 @@
       </div>
     </div>
 
+    <!-- MOBILE FILTER TRIGGER (VISIBLE ONLY ON MOBILE & TABLETS) -->
+    <div class="lg:hidden flex justify-between items-center bg-zinc-100 px-4 py-3 mb-6 border border-zinc-200">
+      <button id="mobileFilterToggleBtn" class="flex items-center gap-2 font-heading text-xs font-bold uppercase tracking-wider text-black">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+        <span>FILTRES DU CATALOGUE</span>
+      </button>
+      <span class="text-xs text-zinc-600 font-medium">6 ARCHIVES</span>
+    </div>
+
     <!-- CATALOGUE LAYOUT: Left Sidebar "Filtered by:" + Main Garments Grid -->
     <div class="catalogue-layout">
       
       <!-- LEFT SIDEBAR -->
-      <aside class="catalogue-sidebar">
+      <aside class="catalogue-sidebar hidden lg:block" id="catalogueSidebar">
         <h2 class="filter-sidebar-title" data-i18n="wardrobe.filterBy">FILTERED BY:</h2>
 
         <!-- Categories Filter -->

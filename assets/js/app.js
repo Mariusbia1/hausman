@@ -618,6 +618,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ==========================================
+    // 11. Mobile Wardrobe Filter Drawer Toggle
+    // ==========================================
+    const mobileFilterToggleBtn = document.getElementById('mobileFilterToggleBtn');
+    const catalogueSidebar = document.getElementById('catalogueSidebar');
+
+    if (mobileFilterToggleBtn && catalogueSidebar) {
+        mobileFilterToggleBtn.addEventListener('click', () => {
+            catalogueSidebar.classList.toggle('hidden');
+        });
+    }
+
     // Initial setup
     setLanguage(state.lang);
 });
