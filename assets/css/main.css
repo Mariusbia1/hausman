@@ -1,6 +1,6 @@
 /* ==========================================================================
-   HAUSMAN PARIS — LUXURY FASHION SHOWROOM & DIGITAL ARCHIVE
-   High-Couture Minimalist Design System (SSENSE & Firusas Inspired)
+   HAUSMAN PARIS — SILENT LUXURY ARCHIVE & EDITORIAL SHOWROOM
+   High-Fashion Contemporary Art Gallery Design System
    Typography: Chillax + Inter
    ========================================================================== */
 
@@ -8,20 +8,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Palette Chromatique SSENSE / Quiet Luxury */
+  /* Quiet Luxury Gallery Palette */
   --bg-primary: #FFFFFF;
   --bg-secondary: #FAFAFA;
-  --bg-card: #F7F7F7;
+  --bg-card: #F6F6F6;
   --bg-dark: #000000;
   
   --text-primary: #000000;
-  --text-secondary: #1F2937;
-  --text-muted: #4B5563;
+  --text-secondary: #222222;
+  --text-muted: #737373;
   --text-light: #FFFFFF;
   
   --border-light: #EBEBEB;
-  --border-subtle: #F0F0F0;
+  --border-subtle: #F2F2F2;
   --border-dark: #000000;
+  --border-medium: #D6D6D6;
   
   /* Typographies */
   --font-heading: 'Chillax', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -29,9 +30,9 @@
   
   /* Transitions */
   --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-fast: 0.18s var(--ease-luxury);
-  --transition-normal: 0.35s var(--ease-luxury);
-  --transition-slow: 0.6s var(--ease-luxury);
+  --transition-fast: 0.2s var(--ease-luxury);
+  --transition-normal: 0.4s var(--ease-luxury);
+  --transition-slow: 0.7s var(--ease-luxury);
 
   --container-max: 1640px;
   --header-height: 68px;
@@ -47,7 +48,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 13.5px;
-  background-color: #000000; /* Seamless dark overscroll matching footer */
+  background-color: #000000;
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -109,7 +110,7 @@ ul, ol {
 }
 
 /* ==========================================================================
-   HEADER & NAVIGATION (SSENSE STYLE)
+   HEADER & NAVIGATION (SILENT GALLERY STYLE)
    ========================================================================== */
 .site-header {
   position: sticky;
@@ -233,34 +234,6 @@ ul, ol {
   color: var(--border-light);
 }
 
-.btn-header-request {
-  font-family: var(--font-heading);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.65rem 1.3rem;
-  background-color: var(--text-primary);
-  color: var(--text-light);
-  border: 1px solid var(--text-primary);
-  border-radius: 0;
-  transition: all var(--transition-fast);
-}
-
-.btn-header-request:hover {
-  background-color: #FFFFFF;
-  color: var(--text-primary);
-}
-
-.pull-count-badge {
-  background: var(--text-light);
-  color: var(--text-primary);
-  font-size: 0.65rem;
-  padding: 1px 5px;
-  border-radius: 10px;
-  margin-left: 6px;
-}
-
 /* Mobile Menu Toggle Button */
 .mobile-menu-toggle {
   display: none;
@@ -338,7 +311,7 @@ ul, ol {
 
 .mobile-nav-link {
   font-family: var(--font-heading);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -381,76 +354,37 @@ ul, ol {
   font-family: var(--font-heading);
 }
 
-/* Floating Switcher */
-.floating-demo-switcher {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 999;
-  display: flex;
-  background: #FFFFFF;
-  color: #000000;
-  border: 1px solid var(--border-dark);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  border-radius: 40px;
-  padding: 4px;
-  gap: 4px;
-}
-
-.switcher-btn {
-  font-family: var(--font-heading);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 8px 16px;
-  border-radius: 30px;
-  color: #777777;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all var(--transition-fast);
-}
-
-.switcher-btn.active {
-  background: #000000;
-  color: #FFFFFF;
-}
-
-.switcher-btn:hover:not(.active) {
-  color: #000000;
-}
-
 /* ==========================================================================
-   HOMEPAGE (Section 5 du Cahier des Charges)
+   HOMEPAGE (EDITORIAL ART DIRECTION)
    ========================================================================== */
 .home-hero {
   position: relative;
   width: 100%;
-  padding: 3rem 0 4rem 0;
+  padding: 4rem 0 5rem 0;
   border-bottom: 1px solid var(--border-light);
 }
 
 .home-hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 4.5rem;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 5rem;
   align-items: center;
 }
 
 .home-showroom-tag {
   font-family: var(--font-heading);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   margin-bottom: 1.25rem;
   display: inline-block;
 }
 
 .home-hero-title {
   font-family: var(--font-heading);
-  font-size: clamp(2.8rem, 4.8vw, 4.4rem);
+  font-size: clamp(3rem, 5vw, 4.8rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 0.95;
@@ -460,9 +394,9 @@ ul, ol {
 
 .home-hero-subtitle {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-secondary);
   margin-bottom: 1.75rem;
@@ -471,10 +405,10 @@ ul, ol {
 .home-hero-desc {
   font-size: 0.95rem;
   font-weight: 400;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  margin-bottom: 2.5rem;
-  max-width: 480px;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 2.75rem;
+  max-width: 500px;
 }
 
 .home-hero-visual {
@@ -503,7 +437,7 @@ ul, ol {
   color: #000000;
   padding: 6px 12px;
   font-family: var(--font-heading);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -512,7 +446,7 @@ ul, ol {
 
 /* Home Section Layout */
 .home-section {
-  padding: 4.5rem 0;
+  padding: 5rem 0;
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -521,7 +455,7 @@ ul, ol {
   justify-content: space-between;
   align-items: flex-end;
   padding-bottom: 1.25rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -535,7 +469,7 @@ ul, ol {
 
 .home-section-link {
   font-family: var(--font-heading);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -553,18 +487,18 @@ ul, ol {
 .home-about-snippet {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 4.5rem;
-  padding: 4.5rem 0;
+  gap: 5rem;
+  padding: 5rem 0;
   border-bottom: 1px solid var(--border-light);
 }
 
 /* ==========================================================================
-   WARDROBE CATALOGUE PAGE (FIRUSAS + SSENSE DESIGN)
+   WARDROBE / ARCHIVE CATALOGUE PAGE
    ========================================================================== */
 .page-head {
-  padding: 2.5rem 0 2rem 0;
+  padding: 3rem 0 2.25rem 0;
   border-bottom: 1px solid var(--border-light);
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -572,7 +506,7 @@ ul, ol {
 
 .page-title {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
+  font-size: 1.85rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -580,14 +514,14 @@ ul, ol {
 }
 
 .page-subtitle {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+  font-size: 0.88rem;
+  color: var(--text-muted);
 }
 
 .catalogue-layout {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 3.5rem;
+  grid-template-columns: 220px 1fr;
+  gap: 4rem;
   margin-bottom: 6rem;
 }
 
@@ -603,7 +537,7 @@ ul, ol {
 
 .filter-sidebar-title {
   font-family: var(--font-heading);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -618,12 +552,12 @@ ul, ol {
 
 .filter-title {
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--text-primary);
-  padding-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
   margin-bottom: 0.6rem;
   border-bottom: 1px solid var(--border-light);
 }
@@ -639,7 +573,7 @@ ul, ol {
   align-items: center;
   justify-content: space-between;
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   padding: 3px 0;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -663,13 +597,13 @@ ul, ol {
 }
 
 .filter-count {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--text-muted);
 }
 
 .filter-reset-btn {
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -693,8 +627,8 @@ ul, ol {
 
 .active-count {
   font-family: var(--font-heading);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -709,7 +643,7 @@ ul, ol {
 
 .grid-btn {
   font-family: var(--font-heading);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   padding: 4px 8px;
@@ -722,10 +656,12 @@ ul, ol {
   color: var(--text-light);
 }
 
-/* Garments Grid & Cards (SSENSE style) */
+/* ==========================================================================
+   GARMENTS GALLERY GRID & CARDS (PURE SILENT LUXURY)
+   ========================================================================== */
 .garments-grid {
   display: grid;
-  gap: 3rem 1.75rem;
+  gap: 3.5rem 2rem;
 }
 
 .garments-grid.cols-4 {
@@ -753,7 +689,7 @@ ul, ol {
   aspect-ratio: 3 / 4;
   background-color: var(--bg-card);
   overflow: hidden;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.95rem;
 }
 
 .garment-img {
@@ -782,66 +718,7 @@ ul, ol {
 
 .garment-card:hover .garment-img.img-model {
   opacity: 1;
-  transform: scale(1.025);
-}
-
-.badge-status {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-family: var(--font-heading);
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 3px 6px;
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--text-primary);
-  border: 1px solid var(--border-light);
-  z-index: 3;
-}
-
-.badge-status.on-loan {
-  background: #000000;
-  color: #FFFFFF;
-}
-
-.card-ref-overlay {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.9);
-  padding: 2px 5px;
-  z-index: 3;
-}
-
-.quick-inspect-btn {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 10px;
-  background: #000000;
-  color: #FFFFFF;
-  font-family: var(--font-heading);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-align: center;
-  z-index: 4;
-  opacity: 0;
-  transform: translateY(100%);
-  transition: all var(--transition-fast);
-}
-
-.garment-card:hover .quick-inspect-btn {
-  opacity: 1;
-  transform: translateY(0);
+  transform: scale(1.02);
 }
 
 .garment-meta {
@@ -854,7 +731,7 @@ ul, ol {
   font-family: var(--font-heading);
   font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-primary);
 }
@@ -868,29 +745,17 @@ ul, ol {
   text-overflow: ellipsis;
 }
 
-.garment-size-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 5px;
-}
-
-.garment-size {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-}
-
-.garment-rental-tag {
+.garment-season-tag {
   font-family: var(--font-heading);
   font-size: 0.68rem;
-  font-weight: 600;
+  color: var(--text-muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-primary);
+  margin-top: 2px;
 }
 
 /* ==========================================================================
-   LUXURY SHOWROOM PAGINATION
+   PAGINATION
    ========================================================================== */
 .pagination-bar {
   display: flex;
@@ -976,215 +841,105 @@ ul, ol {
 }
 
 /* ==========================================================================
-   MODAL / QUICK VIEW (HIDDEN BY DEFAULT & CLEAN STYLING)
+   PROJECTS (EDITORIAL / LOOKBOOK SPREAD)
    ========================================================================== */
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 1000;
-  display: none; /* Crucial: strictly hidden when not active */
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity var(--transition-normal);
-  padding: 1rem;
-}
-
-.modal-backdrop.active {
-  display: flex !important;
-  opacity: 1;
-}
-
-.modal-sheet {
-  background: #FFFFFF;
-  width: 100%;
-  max-width: 1020px;
-  max-height: 90vh;
-  max-height: 90dvh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
-  border: 1px solid var(--border-light);
-}
-
-.modal-close-btn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  font-family: var(--font-heading);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  z-index: 10;
-  padding: 6px 12px;
-  background: #FFFFFF;
-  border: 1px solid var(--border-light);
-  transition: all var(--transition-fast);
-  cursor: pointer;
-}
-
-.modal-close-btn:hover {
-  background: #000000;
-  color: #FFFFFF;
-}
-
-.modal-grid {
+.projects-grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem 2.5rem;
+  margin-bottom: 6rem;
 }
 
-@media (max-width: 860px) {
-  .modal-grid {
-    grid-template-columns: 1fr;
-  }
-  .modal-gallery-pane {
-    padding: 1.5rem !important;
-  }
-  .modal-info-pane {
-    padding: 1.5rem 1.25rem !important;
-  }
-}
-
-.modal-gallery-pane {
-  background: var(--bg-card);
-  padding: 2.5rem;
+.project-editorial-card {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-.modal-main-img-wrap {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  background: #FFFFFF;
-  overflow: hidden;
-}
-
-.modal-main-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.modal-thumbnails {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.modal-thumb {
-  width: 70px;
-  aspect-ratio: 3 / 4;
-  border: 1px solid var(--border-medium);
   cursor: pointer;
-  opacity: 0.6;
-  transition: all var(--transition-fast);
 }
 
-.modal-thumb.active,
-.modal-thumb:hover {
-  opacity: 1;
-  border-color: var(--text-primary);
+.project-editorial-card .project-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background: var(--bg-card);
+  margin-bottom: 1.1rem;
 }
 
-.modal-thumb img {
+.project-editorial-card .project-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform var(--transition-slow);
 }
 
-.modal-info-pane {
-  padding: 3.5rem 3rem;
+.project-editorial-card:hover .project-media img {
+  transform: scale(1.025);
+}
+
+.project-editorial-meta {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 4px;
 }
 
-.modal-brand {
-  font-family: var(--font-heading);
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 0.25rem;
-}
-
-.modal-name {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-}
-
-.modal-specs-table {
-  width: 100%;
-  border-top: 1px solid var(--border-light);
-  border-bottom: 1px solid var(--border-light);
-  margin-bottom: 2rem;
-}
-
-.modal-spec-row {
+.project-meta-line {
   display: flex;
   justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border-light);
-  font-size: 0.8rem;
-}
-
-.modal-spec-row:last-child {
-  border-bottom: none;
-}
-
-.modal-spec-label {
+  align-items: center;
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.project-cat-pill {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
   color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  padding: 1px 6px;
 }
 
-.modal-spec-val {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.modal-desc-title {
+.project-editorial-card .project-title {
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-top: 2px;
 }
 
-.modal-desc-text {
-  font-size: 0.88rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
+.project-desc-subtle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-top: 2px;
+}
+
+.project-credits {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-top: 4px;
 }
 
 /* ==========================================================================
-   GARMENT DETAIL PAGE (garment.html)
+   GARMENT DETAIL PAGE (MUSEUM SPECIMEN LAYOUT)
    ========================================================================== */
 .garment-detail-layout {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 5rem;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 5.5rem;
   padding: 3rem 0 6rem 0;
 }
 
 .garment-gallery-column {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .garment-gallery-main {
@@ -1223,7 +978,7 @@ ul, ol {
 
 .detail-brand {
   font-family: var(--font-heading);
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1231,17 +986,17 @@ ul, ol {
 }
 
 .detail-name {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 400;
   color: var(--text-secondary);
-  margin-bottom: 2rem;
+  margin-bottom: 2.25rem;
 }
 
 .detail-specs-table {
   width: 100%;
   border-top: 1px solid var(--border-light);
   border-bottom: 1px solid var(--border-light);
-  margin-bottom: 2rem;
+  margin-bottom: 2.25rem;
 }
 
 .detail-spec-row {
@@ -1277,7 +1032,7 @@ ul, ol {
 }
 
 /* ==========================================================================
-   BUTTONS & COMMON UI
+   BUTTONS & FORM UI
    ========================================================================== */
 .btn-primary {
   display: inline-flex;
@@ -1318,98 +1073,6 @@ ul, ol {
 
 .btn-secondary:hover {
   border-color: var(--text-primary);
-}
-
-/* ==========================================================================
-   PROJECTS, ABOUT & CONTACT
-   ========================================================================== */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-  margin-bottom: 6rem;
-}
-
-.project-card {
-  background: #FFFFFF;
-  border: 1px solid var(--border-light);
-  display: flex;
-  flex-direction: column;
-  transition: transform var(--transition-normal);
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-}
-
-.project-media {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 11;
-  overflow: hidden;
-  background: var(--bg-card);
-}
-
-.project-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--transition-slow);
-}
-
-.project-card:hover .project-media img {
-  transform: scale(1.03);
-}
-
-.project-category-tag {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  font-family: var(--font-heading);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  background: #000000;
-  color: #FFFFFF;
-  padding: 4px 8px;
-}
-
-.project-body {
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-grow: 1;
-}
-
-.project-meta-top {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-heading);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-
-.project-title {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-}
-
-.project-credits-preview {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  border-top: 1px solid var(--border-light);
-  padding-top: 0.75rem;
-  margin-top: 0.75rem;
 }
 
 /* About Layout */
@@ -1526,6 +1189,36 @@ ul, ol {
   border-left: 1px solid var(--border-light);
 }
 
+.contact-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-info-label {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.contact-social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 6px;
+}
+
+.contact-social-link {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 /* ==========================================================================
    FOOTER
    ========================================================================== */
@@ -1557,7 +1250,7 @@ ul, ol {
 }
 
 .footer-brand .brand-location {
-  color: #E5E7EB;
+  color: #CCCCCC;
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 600;
@@ -1579,7 +1272,7 @@ ul, ol {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #F3F4F6;
+  color: #E0E0E0;
   transition: color var(--transition-fast);
   padding: 2px 0;
 }
@@ -1596,12 +1289,14 @@ ul, ol {
   font-family: var(--font-body);
   font-size: 0.8rem;
   font-weight: 500;
-  color: #D1D5DB;
+  color: #B0B0B0;
   letter-spacing: 0.05em;
   line-height: 1.6;
 }
 
-/* Responsive */
+/* ==========================================================================
+   RESPONSIVE DESIGN (STRICT 1-COLUMN MOBILE COLLECTION)
+   ========================================================================== */
 @media (max-width: 1024px) {
   :root {
     --header-height: 60px;
@@ -1636,21 +1331,20 @@ ul, ol {
   }
   .projects-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 1.75rem;
+    gap: 2rem;
   }
   .garments-grid.cols-4,
   .garments-grid.cols-3,
   .garments-grid.cols-2,
   .garments-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2.25rem 1.5rem;
+    gap: 2.5rem 1.5rem;
   }
   .catalogue-sidebar {
     position: static;
     background: #FAFAFA;
     border: 1px solid var(--border-light);
     padding: 1.5rem;
-    border-radius: 4px;
     margin-bottom: 2rem;
   }
   .catalogue-sidebar .filter-list {
@@ -1663,7 +1357,6 @@ ul, ol {
     background: #FFFFFF;
     border: 1px solid var(--border-light);
     padding: 6px 10px;
-    border-radius: 3px;
     font-size: 0.75rem;
   }
   .catalogue-sidebar .filter-item.active {
@@ -1673,9 +1366,6 @@ ul, ol {
   }
   .catalogue-sidebar .filter-item.active::before {
     display: none;
-  }
-  .catalogue-sidebar .filter-item.active .filter-count {
-    color: #E5E7EB;
   }
 }
 
@@ -1697,12 +1387,7 @@ ul, ol {
     gap: 0.6rem;
   }
   .header-actions .lang-switch {
-    display: none; /* Accessible in mobile drawer */
-  }
-  .btn-header-request {
-    padding: 0.45rem 0.75rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
+    display: none;
   }
   .brand-title {
     font-size: 1.2rem;
@@ -1713,7 +1398,7 @@ ul, ol {
     letter-spacing: 0.16em;
   }
   .home-hero {
-    padding: 1.75rem 0 2.25rem 0;
+    padding: 2rem 0 2.5rem 0;
   }
   .home-hero-title {
     font-size: clamp(2.2rem, 8.5vw, 3.2rem);
@@ -1725,8 +1410,8 @@ ul, ol {
   }
   .home-hero-desc {
     font-size: 0.85rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+    margin-bottom: 1.75rem;
+    line-height: 1.65;
   }
   .home-hero-identity div {
     display: flex;
@@ -1740,15 +1425,15 @@ ul, ol {
     padding: 0.9rem 1.5rem;
   }
   .home-section {
-    padding: 3rem 0;
+    padding: 3.5rem 0;
   }
   .home-section-head {
-    margin-bottom: 1.75rem;
+    margin-bottom: 2rem;
     padding-bottom: 1rem;
   }
   .home-about-snippet {
-    padding: 3rem 0;
-    gap: 1.75rem;
+    padding: 3.5rem 0;
+    gap: 2rem;
   }
 
   /* STRICT 1 COLUMN (1 PIECE PER ROW) ON MOBILE */
@@ -1775,30 +1460,17 @@ ul, ol {
     font-size: 0.92rem;
     margin-top: 2px;
   }
-  .garment-size-row {
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px solid var(--border-light);
-    font-size: 0.82rem;
-  }
-  .garment-size {
-    font-size: 0.8rem;
-  }
-  .garment-rental-tag {
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
 
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 2.5rem;
   }
   .page-head {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
-    padding: 1.75rem 0 1.25rem 0;
-    margin-bottom: 1.75rem;
+    padding: 2rem 0 1.5rem 0;
+    margin-bottom: 2rem;
   }
   .page-title {
     font-size: 1.45rem;
@@ -1808,12 +1480,12 @@ ul, ol {
     justify-content: space-between;
   }
   .grid-switcher {
-    display: none !important; /* Single column is fixed on mobile */
+    display: none !important;
   }
   .form-input,
   .form-select,
   .form-textarea {
-    font-size: 16px; /* Prevents iOS auto-zoom */
+    font-size: 16px;
   }
   .form-row-2 {
     grid-template-columns: 1fr;
@@ -1858,10 +1530,6 @@ ul, ol {
   .brand-location {
     font-size: 0.5rem;
     letter-spacing: 0.14em;
-  }
-  .btn-header-request {
-    padding: 0.4rem 0.65rem;
-    font-size: 0.62rem;
   }
   .garments-grid.cols-4,
   .garments-grid.cols-3,

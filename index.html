@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HAUSMAN — Fashion Showroom & Archive Wardrobe Rental Paris</title>
-  <meta name="description" content="Parisian fashion showroom & designer archive rental for stylists, editorial productions, creative directors, and artists." />
+  <title>HAUSMAN — Fashion Showroom & Archive Gallery Paris</title>
+  <meta name="description" content="Parisian fashion showroom & designer archive gallery for stylists, editorial productions, creative directors, and artists." />
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='sans-serif' font-weight='900'>H</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -41,14 +41,15 @@
     <div class="container nav-inner">
       <a href="index.html" class="brand-logo">
         <span class="brand-title">HAUSMAN</span>
-        <span class="brand-location">PARIS SHOWROOM</span>
+        <span class="brand-location">PARIS</span>
       </a>
 
       <nav class="main-nav">
         <a href="index.html" class="nav-link active" data-i18n="nav.home">HOME</a>
-        <a href="wardrobe.html" class="nav-link" data-i18n="nav.wardrobe">WARDROBE</a>
+        <a href="wardrobe.html" class="nav-link" data-i18n="nav.wardrobe">ARCHIVE</a>
         <a href="projects.html" class="nav-link" data-i18n="nav.projects">PROJECTS</a>
         <a href="about.html" class="nav-link" data-i18n="nav.about">ABOUT</a>
+        <a href="contact.html" class="nav-link" data-i18n="nav.contact">CONTACT</a>
       </nav>
 
       <div class="header-actions">
@@ -57,12 +58,6 @@
           <span class="lang-sep">/</span>
           <button class="lang-btn" data-lang="fr">FR</button>
         </div>
-
-        <!-- ONLY CONTACT BUTTON: HIGH-CONTRAST BLACK CTA -->
-        <a href="contact.html" class="btn-header-request">
-          <span data-i18n="nav.contact">PULL REQUEST</span>
-          <span class="pull-count-badge" style="display: none;">0</span>
-        </a>
 
         <!-- MOBILE MENU BURGER BUTTON -->
         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu de navigation">
@@ -77,10 +72,10 @@
       <div class="mobile-nav-content">
         <nav class="mobile-nav-links">
           <a href="index.html" class="mobile-nav-link active" data-i18n="nav.home">HOME</a>
-          <a href="wardrobe.html" class="mobile-nav-link" data-i18n="nav.wardrobe">WARDROBE</a>
+          <a href="wardrobe.html" class="mobile-nav-link" data-i18n="nav.wardrobe">ARCHIVE</a>
           <a href="projects.html" class="mobile-nav-link" data-i18n="nav.projects">PROJECTS</a>
           <a href="about.html" class="mobile-nav-link" data-i18n="nav.about">ABOUT</a>
-          <a href="contact.html" class="mobile-nav-link" data-i18n="nav.contact">PULL REQUEST</a>
+          <a href="contact.html" class="mobile-nav-link" data-i18n="nav.contact">CONTACT</a>
         </nav>
         <div class="mobile-nav-footer">
           <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -105,15 +100,15 @@
     <section class="home-hero">
       <div class="container home-hero-grid">
         <div class="home-hero-identity">
-          <span class="home-showroom-tag" data-i18n="hero.tagline">FASHION SHOWROOM & WARDROBE RENTAL — PARIS</span>
+          <span class="home-showroom-tag" data-i18n="hero.tagline">PARIS SHOWROOM & ARCHIVE WARDROBE</span>
           <h1 class="home-hero-title">HAUSMAN</h1>
           <p class="home-hero-subtitle">Archive & Designer Wardrobe Gallery</p>
           <p class="home-hero-desc" data-i18n="hero.subtitle">
-            A curated Parisian archive of rare designer garments, runway specimens, and contemporary silhouettes exclusively for fashion stylists, creative directors, editorial productions, and artists.
+            An evolving wardrobe of rare designer runway specimens, tailoring, and contemporary silhouettes curated exclusively for fashion imagery, editorial productions, and artists.
           </p>
           <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
-            <a href="wardrobe.html" class="btn-primary" data-i18n="hero.exploreBtn">EXPLORE WARDROBE</a>
-            <a href="contact.html" class="btn-primary" style="background: #1F2937; border-color: #1F2937;" data-i18n="hero.requestBtn">REQUEST APPOINTMENT</a>
+            <a href="wardrobe.html" class="btn-primary" data-i18n="hero.exploreBtn">EXPLORE ARCHIVE</a>
+            <a href="contact.html" class="btn-secondary" data-i18n="hero.requestBtn">INQUIRE FOR LOAN</a>
           </div>
         </div>
 
@@ -130,10 +125,10 @@
         <div class="home-section-head">
           <div>
             <span class="home-showroom-tag" style="margin-bottom: 0.25rem;">CURATED SELECTION</span>
-            <h2 class="home-section-title">LATEST ARRIVALS</h2>
+            <h2 class="home-section-title">CURATED ARCHIVE</h2>
           </div>
           <a href="wardrobe.html" class="home-section-link">
-            <span>VIEW ALL WARDROBE</span>
+            <span>VIEW ALL ARCHIVE</span>
             <span>&rarr;</span>
           </a>
         </div>
@@ -150,7 +145,7 @@
         <div class="home-section-head">
           <div>
             <span class="home-showroom-tag" style="margin-bottom: 0.25rem;" data-i18n="projects.tag">HAUSMAN FILES</span>
-            <h2 class="home-section-title" data-i18n="projects.title">EDITORIALS & PRODUCTIONS</h2>
+            <h2 class="home-section-title" data-i18n="projects.title">PROJECTS</h2>
           </div>
           <a href="projects.html" class="home-section-link">
             <span>VIEW ALL PROJECTS</span>
@@ -196,15 +191,15 @@
         </div>
         <nav class="footer-nav">
           <a href="index.html" data-i18n="nav.home">HOME</a>
-          <a href="wardrobe.html" data-i18n="nav.wardrobe">WARDROBE</a>
+          <a href="wardrobe.html" data-i18n="nav.wardrobe">ARCHIVE</a>
           <a href="projects.html" data-i18n="nav.projects">PROJECTS</a>
           <a href="about.html" data-i18n="nav.about">ABOUT</a>
-          <a href="contact.html" data-i18n="nav.contact">PULL REQUEST</a>
+          <a href="contact.html" data-i18n="nav.contact">CONTACT</a>
         </nav>
       </div>
       <div class="footer-bottom">
         <span>© 2026 HAUSMAN SHOWROOM PARIS. ALL RIGHTS RESERVED.</span>
-        <span>WARDROBE RENTAL FOR CREATIVE IMAGE PROFESSIONALS.</span>
+        <span>WARDROBE ARCHIVE FOR CREATIVE IMAGE PROFESSIONALS.</span>
       </div>
     </div>
   </footer>

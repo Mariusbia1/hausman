@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Garment Archive Specimen — HAUSMAN Paris</title>
+  <title>Archive Specimen — HAUSMAN Paris</title>
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='sans-serif' font-weight='900'>H</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -40,14 +40,15 @@
     <div class="container nav-inner">
       <a href="index.html" class="brand-logo">
         <span class="brand-title">HAUSMAN</span>
-        <span class="brand-location">PARIS SHOWROOM</span>
+        <span class="brand-location">PARIS</span>
       </a>
 
       <nav class="main-nav">
         <a href="index.html" class="nav-link" data-i18n="nav.home">HOME</a>
-        <a href="wardrobe.html" class="nav-link active" data-i18n="nav.wardrobe">WARDROBE</a>
+        <a href="wardrobe.html" class="nav-link active" data-i18n="nav.wardrobe">ARCHIVE</a>
         <a href="projects.html" class="nav-link" data-i18n="nav.projects">PROJECTS</a>
         <a href="about.html" class="nav-link" data-i18n="nav.about">ABOUT</a>
+        <a href="contact.html" class="nav-link" data-i18n="nav.contact">CONTACT</a>
       </nav>
 
       <div class="header-actions">
@@ -56,11 +57,6 @@
           <span class="lang-sep">/</span>
           <button class="lang-btn" data-lang="fr">FR</button>
         </div>
-
-        <a href="contact.html" class="btn-header-request">
-          <span data-i18n="nav.contact">PULL REQUEST</span>
-          <span class="pull-count-badge" style="display: none;">0</span>
-        </a>
 
         <!-- MOBILE MENU BURGER BUTTON -->
         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu de navigation">
@@ -75,10 +71,10 @@
       <div class="mobile-nav-content">
         <nav class="mobile-nav-links">
           <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">HOME</a>
-          <a href="wardrobe.html" class="mobile-nav-link active" data-i18n="nav.wardrobe">WARDROBE</a>
+          <a href="wardrobe.html" class="mobile-nav-link active" data-i18n="nav.wardrobe">ARCHIVE</a>
           <a href="projects.html" class="mobile-nav-link" data-i18n="nav.projects">PROJECTS</a>
           <a href="about.html" class="mobile-nav-link" data-i18n="nav.about">ABOUT</a>
-          <a href="contact.html" class="mobile-nav-link" data-i18n="nav.contact">PULL REQUEST</a>
+          <a href="contact.html" class="mobile-nav-link" data-i18n="nav.contact">CONTACT</a>
         </nav>
         <div class="mobile-nav-footer">
           <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -100,32 +96,34 @@
 
   <main class="container">
     
-    <div style="padding: 1.5rem 0 0.5rem 0; font-family: var(--font-heading); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">
-      <a href="wardrobe.html" style="text-decoration: underline;">&larr; BACK TO WARDROBE</a>
+    <div style="padding: 2rem 0 1rem 0; font-family: var(--font-heading); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">
+      <a href="wardrobe.html" style="text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
+        <span>&larr;</span> <span id="backToArchiveText">BACK TO ARCHIVE</span>
+      </a>
     </div>
 
-    <!-- Garment Detail Layout -->
+    <!-- Garment Detail Specimen Layout -->
     <div class="garment-detail-layout" id="garmentDetailContainer">
       
-      <!-- Gallery -->
+      <!-- Gallery Column -->
       <div class="garment-gallery-column">
         <div class="garment-gallery-main">
-          <img id="detailMainImg" src="assets/img/margiela_trench_flat.jpg" alt="Garment Packshot" />
+          <img id="detailMainImg" src="assets/img/margiela_trench_flat.jpg" alt="Archive Specimen Packshot" />
         </div>
         <div class="garment-gallery-grid">
-          <img id="detailModelImg" src="assets/img/margiela_trench_model.jpg" alt="Garment Worn on Model" />
-          <img id="detailDetailImg" src="assets/img/hero_cover.jpg" alt="Editorial Usage" />
+          <img id="detailModelImg" src="assets/img/margiela_trench_model.jpg" alt="Garment Silhouette Worn on Model" />
+          <img id="detailDetailImg" src="assets/img/hero_cover.jpg" alt="Editorial Styling Context" />
         </div>
       </div>
 
-      <!-- Info Sticky -->
+      <!-- Info Sticky Specimen Column -->
       <div class="garment-info-sticky">
         <h1 class="detail-brand" id="detailBrand">MAISON MARGIELA</h1>
         <h2 class="detail-name" id="detailName">Deconstructed Raw-Edge Trench Coat</h2>
 
         <div class="detail-specs-table">
           <div class="detail-spec-row">
-            <span class="detail-spec-label" data-i18n="modal.ref">HAUSMAN REF.</span>
+            <span class="detail-spec-label" data-i18n="modal.ref">REFERENCE</span>
             <span class="detail-spec-val" id="detailRef">HSM-ARC-024</span>
           </div>
           <div class="detail-spec-row">
@@ -137,18 +135,18 @@
             <span class="detail-spec-val" id="detailCategory">Outerwear</span>
           </div>
           <div class="detail-spec-row">
-            <span class="detail-spec-label" data-i18n="modal.size">SIZE</span>
+            <span class="detail-spec-label" data-i18n="modal.size">SIZE / FIT</span>
             <span class="detail-spec-val" id="detailSize">48 (M/L)</span>
           </div>
           <div class="detail-spec-row">
             <span class="detail-spec-label" data-i18n="modal.status">STATUS</span>
-            <span class="detail-spec-val" id="detailStatus" style="color: var(--status-available);">AVAILABLE IN SHOWROOM</span>
+            <span class="detail-spec-val" id="detailStatus">IN ARCHIVE</span>
           </div>
         </div>
 
         <div class="detail-description">
           <h3 style="font-family: var(--font-heading); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem;" data-i18n="modal.description">
-            CURATION & ARCHIVE NOTES
+            ARCHIVE ESSAY & CURATION NOTES
           </h3>
           <p id="detailDescription">
             Iconic Artisanal concept trench coat featuring asymmetrical patchwork panels, exposed basting stitches, safety pin hardware accents, and unlined raw hem. Heavyweight washed cotton gabardine.
@@ -157,10 +155,10 @@
 
         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
           <a href="#" id="detailRequestBtn" class="btn-primary" style="text-align: center;" data-i18n="modal.requestThisPiece">
-            REQUEST THIS PIECE FOR PULL
+            INQUIRE ABOUT THIS SPECIMEN
           </a>
           <span style="font-size: 0.72rem; color: var(--text-muted); text-align: center; letter-spacing: 0.05em;">
-            RENTAL UPON REQUEST • INDIVIDUALLY VALIDATED FOR CREATIVE PRODUCTIONS
+            INDIVIDUALLY REVIEWED FOR FASHION EDITORIALS & CREATIVE PRODUCTIONS
           </span>
         </div>
       </div>
@@ -179,15 +177,15 @@
         </div>
         <nav class="footer-nav">
           <a href="index.html" data-i18n="nav.home">HOME</a>
-          <a href="wardrobe.html" data-i18n="nav.wardrobe">WARDROBE</a>
+          <a href="wardrobe.html" data-i18n="nav.wardrobe">ARCHIVE</a>
           <a href="projects.html" data-i18n="nav.projects">PROJECTS</a>
           <a href="about.html" data-i18n="nav.about">ABOUT</a>
-          <a href="contact.html" data-i18n="nav.contact">PULL REQUEST</a>
+          <a href="contact.html" data-i18n="nav.contact">CONTACT</a>
         </nav>
       </div>
       <div class="footer-bottom">
         <span>© 2026 HAUSMAN SHOWROOM PARIS. ALL RIGHTS RESERVED.</span>
-        <span>WARDROBE RENTAL FOR CREATIVE IMAGE PROFESSIONALS.</span>
+        <span>WARDROBE ARCHIVE FOR CREATIVE IMAGE PROFESSIONALS.</span>
       </div>
     </div>
   </footer>
@@ -199,17 +197,31 @@
       const params = new URLSearchParams(window.location.search);
       const garmentId = params.get('id') || 'garment-01';
       const garment = HAUSMAN_DATA.garments.find(g => g.id === garmentId) || HAUSMAN_DATA.garments[0];
+      const lang = localStorage.getItem('hausman_lang') || 'en';
 
       if (garment) {
+        const name = lang === 'fr' ? garment.nameFr : garment.name;
+        const desc = lang === 'fr' ? garment.descriptionFr : garment.descriptionEn;
+        const category = lang === 'fr' ? garment.categoryFr : garment.category;
+        const statusLabel = garment.status === 'on_loan' 
+          ? (lang === 'fr' ? 'EN PRÊT' : 'ON LOAN') 
+          : (lang === 'fr' ? 'EN ARCHIVE' : 'IN ARCHIVE');
+
         document.getElementById('detailBrand').textContent = garment.brand;
-        document.getElementById('detailName').textContent = garment.name;
+        document.getElementById('detailName').textContent = name;
         document.getElementById('detailRef').textContent = garment.ref;
         document.getElementById('detailSeason').textContent = garment.season;
-        document.getElementById('detailCategory').textContent = garment.category;
+        document.getElementById('detailCategory').textContent = category;
         document.getElementById('detailSize').textContent = garment.size;
-        document.getElementById('detailDescription').textContent = garment.descriptionEn;
+        document.getElementById('detailStatus').textContent = statusLabel;
+        document.getElementById('detailDescription').textContent = desc;
         document.getElementById('detailMainImg').src = garment.images.flat;
         document.getElementById('detailModelImg').src = garment.images.model;
+
+        const backLink = document.getElementById('backToArchiveText');
+        if (backLink) {
+          backLink.textContent = lang === 'fr' ? 'RETOUR AUX ARCHIVES' : 'BACK TO ARCHIVE';
+        }
 
         const reqBtn = document.getElementById('detailRequestBtn');
         reqBtn.href = `contact.html?piece=${encodeURIComponent(garment.brand + ' (' + garment.ref + ')')}`;

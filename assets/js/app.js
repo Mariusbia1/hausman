@@ -1,5 +1,6 @@
 /**
- * HAUSMAN Fashion Showroom — Front-Office Interactive Engine
+ * HAUSMAN Fashion Showroom & Archive Gallery — Front-Office Interactive Engine
+ * Editorial / Silent Luxury Architecture
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,8 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         size: 'ALL',
         availability: 'ALL',
         gridCols: 3,
-        selectedPiecesForPull: JSON.parse(localStorage.getItem('hausman_pull') || '[]'),
-        currentGarmentModal: null
+        selectedPiecesForPull: JSON.parse(localStorage.getItem('hausman_pull') || '[]')
     };
 
     // DOM Elements Cache
@@ -29,21 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         gridButtons: document.querySelectorAll('.grid-btn'),
         langButtons: document.querySelectorAll('.lang-btn'),
         
-        // Modal
-        modalBackdrop: document.getElementById('garmentModalBackdrop'),
-        modalCloseBtn: document.getElementById('modalCloseBtn'),
-        modalMainImg: document.getElementById('modalMainImg'),
-        modalThumbnails: document.getElementById('modalThumbnails'),
-        modalBrand: document.getElementById('modalBrand'),
-        modalName: document.getElementById('modalName'),
-        modalRefVal: document.getElementById('modalRefVal'),
-        modalSeasonVal: document.getElementById('modalSeasonVal'),
-        modalSizeVal: document.getElementById('modalSizeVal'),
-        modalCategoryVal: document.getElementById('modalCategoryVal'),
-        modalStatusVal: document.getElementById('modalStatusVal'),
-        modalDescText: document.getElementById('modalDescText'),
-        modalRequestBtn: document.getElementById('modalRequestBtn'),
-
         // Projects
         projectsGrid: document.getElementById('projectsGrid'),
 
@@ -55,67 +40,47 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ==========================================
-    // 1. Render Home Page Latest Arrivals & Projects
+    // 1. Render Home Page Components
     // ==========================================
     function renderHomeComponents() {
-        const i18nWardrobe = HAUSMAN_DATA.i18n[state.lang].wardrobe;
-
         // Home Latest Arrivals (Curated 3 items)
         if (elements.homeLatestGarments) {
             const latest = HAUSMAN_DATA.garments.slice(0, 3);
             elements.homeLatestGarments.innerHTML = latest.map(garment => {
                 const name = state.lang === 'fr' ? garment.nameFr : garment.name;
-                const statusLabel = garment.status === 'on_loan' ? i18nWardrobe.statusOnLoan : i18nWardrobe.statusAvailable;
-                const statusClass = garment.status === 'on_loan' ? 'on-loan' : 'available';
 
                 return `
                     <article class="garment-card" onclick="window.location.href='garment.html?id=${garment.id}'">
                         <div class="garment-media-wrap">
                             <img class="garment-img img-flat" src="${garment.images.flat}" alt="${garment.brand} - ${name}" loading="lazy" />
                             <img class="garment-img img-model" src="${garment.images.model}" alt="${garment.brand} worn on model" loading="lazy" />
-                            <div class="card-badges">
-                                <span class="badge-status ${statusClass}">${statusLabel}</span>
-                            </div>
-                            <span class="card-ref-overlay">${garment.ref}</span>
-                            <div class="quick-inspect-btn">${state.lang === 'fr' ? 'VOIR LA PIÈCE' : 'INSPECT ARCHIVE'}</div>
                         </div>
                         <div class="garment-meta">
                             <h3 class="garment-brand">${garment.brand}</h3>
                             <p class="garment-name">${name}</p>
-                            <div class="garment-size-row">
-                                <span class="garment-size">${garment.size} • ${garment.season}</span>
-                                <span class="garment-rental-tag">${i18nWardrobe.rentalUponRequest}</span>
-                            </div>
+                            <span class="garment-season-tag">${garment.season}</span>
                         </div>
                     </article>
                 `;
             }).join('');
         }
 
-        // Home Projects Preview (2 items)
+        // Home Projects Preview (3 editorial items)
         if (elements.homeProjectsPreview) {
             const featuredProjects = HAUSMAN_DATA.projects.slice(0, 3);
             elements.homeProjectsPreview.innerHTML = featuredProjects.map(proj => {
-                const desc = state.lang === 'fr' ? proj.descriptionFr : proj.descriptionEn;
                 return `
-                    <article class="project-card" onclick="window.location.href='projects.html'">
+                    <article class="project-editorial-card" onclick="window.location.href='projects.html'">
                         <div class="project-media">
                             <img src="${proj.coverImage}" alt="${proj.title}" loading="lazy" />
-                            <span class="project-category-tag">${proj.category}</span>
                         </div>
-                        <div class="project-body">
-                            <div>
-                                <div class="project-meta-top">
-                                    <span>${proj.client}</span>
-                                    <span>${proj.year}</span>
-                                </div>
-                                <h3 class="project-title">${proj.title}</h3>
-                                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem;">${desc}</p>
+                        <div class="project-editorial-meta">
+                            <div class="project-meta-line">
+                                <span class="project-client-year">${proj.client} — ${proj.year}</span>
+                                <span class="project-cat-pill">${proj.category}</span>
                             </div>
-                            <div class="project-credits-preview">
-                                <strong style="font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;">CREDITS :</strong><br>
-                                ${proj.photographer} • ${proj.stylist} • ${proj.artist}
-                            </div>
+                            <h3 class="project-title">${proj.title}</h3>
+                            <p class="project-credits">${proj.photographer} • ${proj.stylist}</p>
                         </div>
                     </article>
                 `;
@@ -203,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 3. Render Garments Grid (SSENSE / Firusas Style)
+    // 3. Render Garments Grid (Pure Gallery / Editorial)
     // ==========================================
     function renderGarments() {
         if (!elements.garmentsGrid) return;
@@ -227,57 +192,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (filtered.length === 0) {
             elements.garmentsGrid.innerHTML = `
-                <div style="grid-column: 1 / -1; padding: 4rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                <div style="grid-column: 1 / -1; padding: 5rem 0; text-align: center; color: var(--text-muted); font-size: 0.88rem; letter-spacing: 0.05em;">
                     ${i18n.noResults}
                 </div>
             `;
             return;
         }
 
-        // Build HTML
+        // Build Clean Silent Gallery HTML (No badges, no overlay buttons, pure visual elegance)
         elements.garmentsGrid.innerHTML = filtered.map(garment => {
             const name = state.lang === 'fr' ? garment.nameFr : garment.name;
-            const statusLabel = garment.status === 'on_loan' ? i18n.statusOnLoan : i18n.statusAvailable;
-            const statusClass = garment.status === 'on_loan' ? 'on-loan' : 'available';
 
             return `
-                <article class="garment-card" data-id="${garment.id}">
+                <article class="garment-card" data-id="${garment.id}" onclick="window.location.href='garment.html?id=${garment.id}'">
                     <div class="garment-media-wrap">
                         <img class="garment-img img-flat" src="${garment.images.flat}" alt="${garment.brand} - ${name}" loading="lazy" />
                         <img class="garment-img img-model" src="${garment.images.model}" alt="${garment.brand} worn on model" loading="lazy" />
-                        
-                        <div class="card-badges">
-                            <span class="badge-status ${statusClass}">${statusLabel}</span>
-                        </div>
-                        <span class="card-ref-overlay">${garment.ref}</span>
-                        <div class="quick-inspect-btn">${state.lang === 'fr' ? 'VOIR LA PIÈCE' : 'INSPECT ARCHIVE'}</div>
                     </div>
                     <div class="garment-meta">
                         <h3 class="garment-brand">${garment.brand}</h3>
                         <p class="garment-name">${name}</p>
-                        <div class="garment-size-row">
-                            <span class="garment-size">${garment.size} • ${garment.season}</span>
-                            <span class="garment-rental-tag">${i18n.rentalUponRequest}</span>
-                        </div>
+                        <span class="garment-season-tag">${garment.season}</span>
                     </div>
                 </article>
             `;
         }).join('');
-
-        // Attach click listeners to cards (opens modal or navigates to dedicated garment page)
-        document.querySelectorAll('.garment-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const id = card.getAttribute('data-id');
-                const garment = HAUSMAN_DATA.garments.find(g => g.id === id);
-                if (garment) {
-                    if (elements.modalBackdrop) {
-                        openGarmentModal(garment);
-                    } else {
-                        window.location.href = `garment.html?id=${garment.id}`;
-                    }
-                }
-            });
-        });
 
         // Update Wardrobe Pagination
         const pInfo = document.getElementById('wardrobePaginationInfo');
@@ -304,86 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 4. Garment Detail Modal (Quick View)
-    // ==========================================
-    function openGarmentModal(garment) {
-        state.currentGarmentModal = garment;
-        const i18nModal = HAUSMAN_DATA.i18n[state.lang].modal;
-        const i18nWardrobe = HAUSMAN_DATA.i18n[state.lang].wardrobe;
-
-        const name = state.lang === 'fr' ? garment.nameFr : garment.name;
-        const desc = state.lang === 'fr' ? garment.descriptionFr : garment.descriptionEn;
-        const category = state.lang === 'fr' ? garment.categoryFr : garment.category;
-        const statusLabel = garment.status === 'on_loan' ? i18nWardrobe.statusOnLoan : i18nWardrobe.statusAvailable;
-
-        if (elements.modalBrand) elements.modalBrand.textContent = garment.brand;
-        if (elements.modalName) elements.modalName.textContent = name;
-        if (elements.modalRefVal) elements.modalRefVal.textContent = garment.ref;
-        if (elements.modalSeasonVal) elements.modalSeasonVal.textContent = garment.season;
-        if (elements.modalSizeVal) elements.modalSizeVal.textContent = garment.size;
-        if (elements.modalCategoryVal) elements.modalCategoryVal.textContent = category;
-        if (elements.modalStatusVal) elements.modalStatusVal.textContent = statusLabel;
-        if (elements.modalDescText) elements.modalDescText.textContent = desc;
-
-        // Set main image
-        if (elements.modalMainImg) elements.modalMainImg.src = garment.images.flat;
-
-        // Render thumbnails
-        if (elements.modalThumbnails) {
-            const imagesList = [garment.images.flat, garment.images.model];
-            elements.modalThumbnails.innerHTML = imagesList.map((imgUrl, idx) => `
-                <div class="modal-thumb ${idx === 0 ? 'active' : ''}" data-src="${imgUrl}">
-                    <img src="${imgUrl}" alt="Thumbnail angle ${idx + 1}" />
-                </div>
-            `).join('');
-
-            // Thumbnail switcher
-            document.querySelectorAll('.modal-thumb').forEach(thumb => {
-                thumb.addEventListener('click', () => {
-                    document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
-                    thumb.classList.add('active');
-                    elements.modalMainImg.src = thumb.getAttribute('data-src');
-                });
-            });
-        }
-
-        // Request button handler
-        if (elements.modalRequestBtn) {
-            elements.modalRequestBtn.onclick = () => {
-                addPieceToPull(garment);
-                closeGarmentModal();
-                window.location.href = `contact.html?piece=${encodeURIComponent(garment.brand + ' (' + garment.ref + ')')}`;
-            };
-        }
-
-        // Open modal
-        if (elements.modalBackdrop) {
-            elements.modalBackdrop.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-    }
-
-    function closeGarmentModal() {
-        if (elements.modalBackdrop) {
-            elements.modalBackdrop.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-
-    if (elements.modalCloseBtn) {
-        elements.modalCloseBtn.addEventListener('click', closeGarmentModal);
-    }
-    if (elements.modalBackdrop) {
-        elements.modalBackdrop.addEventListener('click', (e) => {
-            if (e.target === elements.modalBackdrop) closeGarmentModal();
-        });
-    }
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeGarmentModal();
-    });
-
-    // ==========================================
-    // 5. Render Projects / HAUSMAN FILES
+    // 4. Render Projects / HAUSMAN FILES
     // ==========================================
     function renderProjects() {
         if (!elements.projectsGrid) return;
@@ -392,24 +252,18 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.projectsGrid.innerHTML = HAUSMAN_DATA.projects.map(proj => {
             const desc = state.lang === 'fr' ? proj.descriptionFr : proj.descriptionEn;
             return `
-                <article class="project-card">
+                <article class="project-editorial-card">
                     <div class="project-media">
                         <img src="${proj.coverImage}" alt="${proj.title}" loading="lazy" />
-                        <span class="project-category-tag">${proj.category}</span>
                     </div>
-                    <div class="project-body">
-                        <div>
-                            <div class="project-meta-top">
-                                <span>${proj.client}</span>
-                                <span>${proj.year}</span>
-                            </div>
-                            <h3 class="project-title">${proj.title}</h3>
-                            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem;">${desc}</p>
+                    <div class="project-editorial-meta">
+                        <div class="project-meta-line">
+                            <span class="project-client-year">${proj.client} — ${proj.year}</span>
+                            <span class="project-cat-pill">${proj.category}</span>
                         </div>
-                        <div class="project-credits-preview">
-                            <strong style="font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;">${i18n.credits} :</strong><br>
-                            ${proj.photographer} • ${proj.stylist} • ${proj.artist}
-                        </div>
+                        <h3 class="project-title">${proj.title}</h3>
+                        <p class="project-desc-subtle">${desc}</p>
+                        <p class="project-credits">${proj.photographer} • ${proj.stylist}</p>
                     </div>
                 </article>
             `;
@@ -439,16 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 6. Pull Request & Form Management
+    // 5. Contact / Pull Request Form Management
     // ==========================================
-    function addPieceToPull(garment) {
-        if (!state.selectedPiecesForPull.some(p => p.id === garment.id)) {
-            state.selectedPiecesForPull.push(garment);
-            localStorage.setItem('hausman_pull', JSON.stringify(state.selectedPiecesForPull));
-            updateSelectedPiecesUI();
-        }
-    }
-
     function removePieceFromPull(garmentId) {
         state.selectedPiecesForPull = state.selectedPiecesForPull.filter(p => p.id !== garmentId);
         localStorage.setItem('hausman_pull', JSON.stringify(state.selectedPiecesForPull));
@@ -465,8 +311,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (elements.selectedPiecesContainer) {
             if (state.selectedPiecesForPull.length === 0) {
                 elements.selectedPiecesContainer.innerHTML = `
-                    <span style="font-size: 0.75rem; color: var(--text-muted); font-style: italic;">
-                        ${state.lang === 'fr' ? 'Aucune pièce sélectionnée pour le moment. Vous pouvez naviguer sur le catalogue Wardrobe pour en sélectionner.' : 'No pieces selected yet. Browse the Wardrobe catalogue to add pieces.'}
+                    <span style="font-size: 0.78rem; color: var(--text-muted); font-style: italic;">
+                        ${state.lang === 'fr' ? 'Aucune pièce sélectionnée pour le moment.' : 'No pieces selected yet.'}
                     </span>
                 `;
             } else {
@@ -509,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 projectType: formData.get('projectType') || "Editorial",
                 projectDate: formData.get('dates') || "ASAP",
                 requestedPieces: formData.get('requestedPieces') || state.selectedPiecesForPull.map(p => `${p.brand} (${p.ref})`).join(', ') || "Sélection en cours",
-                message: formData.get('message') || "Demande de pull pour projet.",
+                message: formData.get('message') || "Demande de prêt pour projet éditorial.",
                 status: 'new',
                 urgency: 'high'
             };
@@ -517,7 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
             HAUSMAN_DATA.inquiries.unshift(newInquiry);
 
             const i18nContact = HAUSMAN_DATA.i18n[state.lang].contact;
-            alert(`${i18nContact.successTitle}\n\n${i18nContact.successMsg}\n\nReference : ${newInquiry.id}\n(Cette demande a été transmise au Panel Admin CMS)`);
+            alert(`${i18nContact.successTitle}\n\n${i18nContact.successMsg}\n\nReference : ${newInquiry.id}`);
             
             elements.rentalForm.reset();
             state.selectedPiecesForPull = [];
@@ -527,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 7. Layout Grid Switcher (2 / 3 / 4 cols)
+    // 6. Layout Grid Switcher (2 / 3 / 4 cols)
     // ==========================================
     elements.gridButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -544,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 8. Reset Filters
+    // 7. Reset Filters
     // ==========================================
     if (elements.resetFiltersBtn) {
         elements.resetFiltersBtn.addEventListener('click', () => {
@@ -558,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 9. Language Switcher (FR / EN)
+    // 8. Language Switcher (FR / EN)
     // ==========================================
     function setLanguage(lang) {
         state.lang = lang;
@@ -597,7 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 10. Mobile Navigation Menu Toggle
+    // 9. Mobile Navigation Menu Toggle
     // ==========================================
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mobileNavDrawer = document.getElementById('mobileNavDrawer');
@@ -619,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 11. Mobile Wardrobe Filter Drawer Toggle
+    // 10. Mobile Wardrobe Filter Drawer Toggle
     // ==========================================
     const mobileFilterToggleBtn = document.getElementById('mobileFilterToggleBtn');
     const catalogueSidebar = document.getElementById('catalogueSidebar');

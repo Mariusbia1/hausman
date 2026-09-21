@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wardrobe Catalogue — HAUSMAN Paris Archive Rental</title>
-  <meta name="description" content="Browse the full archive wardrobe catalogue of HAUSMAN Paris. Outerwear, jackets, tops, knitwear, runway pieces for styling loans." />
+  <title>Archive — HAUSMAN Paris Designer Wardrobe</title>
+  <meta name="description" content="Browse the full designer archive collection of HAUSMAN Paris. Rare runway specimens, outerwear, tailoring, knitwear curated for editorial loans." />
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='sans-serif' font-weight='900'>H</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -41,14 +41,15 @@
     <div class="container nav-inner">
       <a href="index.html" class="brand-logo">
         <span class="brand-title">HAUSMAN</span>
-        <span class="brand-location">PARIS SHOWROOM</span>
+        <span class="brand-location">PARIS</span>
       </a>
 
       <nav class="main-nav">
         <a href="index.html" class="nav-link" data-i18n="nav.home">HOME</a>
-        <a href="wardrobe.html" class="nav-link active" data-i18n="nav.wardrobe">WARDROBE</a>
+        <a href="wardrobe.html" class="nav-link active" data-i18n="nav.wardrobe">ARCHIVE</a>
         <a href="projects.html" class="nav-link" data-i18n="nav.projects">PROJECTS</a>
         <a href="about.html" class="nav-link" data-i18n="nav.about">ABOUT</a>
+        <a href="contact.html" class="nav-link" data-i18n="nav.contact">CONTACT</a>
       </nav>
 
       <div class="header-actions">
@@ -57,11 +58,6 @@
           <span class="lang-sep">/</span>
           <button class="lang-btn" data-lang="fr">FR</button>
         </div>
-
-        <a href="contact.html" class="btn-header-request">
-          <span data-i18n="nav.contact">PULL REQUEST</span>
-          <span class="pull-count-badge" style="display: none;">0</span>
-        </a>
 
         <!-- MOBILE MENU BURGER BUTTON -->
         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu de navigation">
@@ -76,10 +72,10 @@
       <div class="mobile-nav-content">
         <nav class="mobile-nav-links">
           <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">HOME</a>
-          <a href="wardrobe.html" class="mobile-nav-link active" data-i18n="nav.wardrobe">WARDROBE</a>
+          <a href="wardrobe.html" class="mobile-nav-link active" data-i18n="nav.wardrobe">ARCHIVE</a>
           <a href="projects.html" class="mobile-nav-link" data-i18n="nav.projects">PROJECTS</a>
           <a href="about.html" class="mobile-nav-link" data-i18n="nav.about">ABOUT</a>
-          <a href="contact.html" class="mobile-nav-link" data-i18n="nav.contact">PULL REQUEST</a>
+          <a href="contact.html" class="mobile-nav-link" data-i18n="nav.contact">CONTACT</a>
         </nav>
         <div class="mobile-nav-footer">
           <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -101,11 +97,11 @@
 
   <main class="container">
     
-    <!-- PAGE HEAD & CONTROLS (Matching Firusas & SSENSE exact layout) -->
+    <!-- PAGE HEAD & CONTROLS -->
     <div class="page-head">
       <div>
-        <h1 class="page-title" data-i18n="wardrobe.title">WARDROBE ARCHIVE</h1>
-        <p class="page-subtitle" data-i18n="wardrobe.subtitle">Curated designer garments available for professional loan. Rentals handled upon individual request.</p>
+        <h1 class="page-title" data-i18n="wardrobe.title">ARCHIVE</h1>
+        <p class="page-subtitle" data-i18n="wardrobe.subtitle">Curated designer pieces available for professional loan and editorial productions.</p>
       </div>
 
       <div class="catalogue-controls">
@@ -120,21 +116,21 @@
       </div>
     </div>
 
-    <!-- MOBILE FILTER TRIGGER (VISIBLE ONLY ON MOBILE & TABLETS) -->
+    <!-- MOBILE FILTER TRIGGER -->
     <div class="lg:hidden flex justify-between items-center bg-zinc-100 px-4 py-3 mb-6 border border-zinc-200">
       <button id="mobileFilterToggleBtn" class="flex items-center gap-2 font-heading text-xs font-bold uppercase tracking-wider text-black">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
-        <span>FILTRES DU CATALOGUE</span>
+        <span>FILTRES DE L'ARCHIVE</span>
       </button>
-      <span class="text-xs text-zinc-600 font-medium">6 ARCHIVES</span>
+      <span class="text-xs text-zinc-600 font-medium">6 PIÈCES</span>
     </div>
 
-    <!-- CATALOGUE LAYOUT: Left Sidebar "Filtered by:" + Main Garments Grid -->
+    <!-- CATALOGUE LAYOUT: Left Sidebar + Main Garments Grid -->
     <div class="catalogue-layout">
       
       <!-- LEFT SIDEBAR -->
       <aside class="catalogue-sidebar hidden lg:block" id="catalogueSidebar">
-        <h2 class="filter-sidebar-title" data-i18n="wardrobe.filterBy">FILTERED BY:</h2>
+        <h2 class="filter-sidebar-title" data-i18n="wardrobe.filterBy">FILTER:</h2>
 
         <!-- Categories Filter -->
         <div class="filter-group">
@@ -160,24 +156,8 @@
           </ul>
         </div>
 
-        <!-- Availability Filter -->
-        <div class="filter-group">
-          <h3 class="filter-title" data-i18n="wardrobe.availability">AVAILABILITY</h3>
-          <ul class="filter-list" id="filterAvailability">
-            <li class="filter-item active" data-type="availability" data-val="ALL">
-              <span data-i18n="wardrobe.allPieces">ALL PIECES</span>
-            </li>
-            <li class="filter-item" data-type="availability" data-val="available">
-              <span data-i18n="wardrobe.availableOnly">AVAILABLE IN SHOWROOM</span>
-            </li>
-            <li class="filter-item" data-type="availability" data-val="on_loan">
-              <span data-i18n="wardrobe.onLoan">CURRENTLY ON LOAN</span>
-            </li>
-          </ul>
-        </div>
-
         <!-- Reset Button -->
-        <button class="filter-reset-btn" id="resetFiltersBtn">Reset all filters</button>
+        <button class="filter-reset-btn" id="resetFiltersBtn">Reset filters</button>
       </aside>
 
       <!-- MAIN GARMENTS GRID & PAGINATION -->
@@ -203,66 +183,6 @@
 
   </main>
 
-  <!-- PRODUCT DETAIL QUICK-VIEW MODAL -->
-  <div class="modal-backdrop" id="garmentModalBackdrop" style="display: none;">
-    <div class="modal-sheet">
-      <button class="modal-close-btn" id="modalCloseBtn" data-i18n="modal.close">CLOSE [ESC]</button>
-      
-      <div class="modal-grid">
-        <div class="modal-gallery-pane">
-          <div class="modal-main-img-wrap">
-            <img id="modalMainImg" src="assets/img/margiela_trench_flat.jpg" alt="HAUSMAN Archive Piece" />
-          </div>
-          <div class="modal-thumbnails" id="modalThumbnails"></div>
-        </div>
-
-        <div class="modal-info-pane">
-          <div>
-            <h2 class="modal-brand" id="modalBrand">MAISON MARGIELA</h2>
-            <h3 class="modal-name" id="modalName">Deconstructed Trench Coat</h3>
-            
-            <div class="modal-specs-table">
-              <div class="modal-spec-row">
-                <span class="modal-spec-label" data-i18n="modal.ref">HAUSMAN REF.</span>
-                <span class="modal-spec-val" id="modalRefVal">HSM-ARC-024</span>
-              </div>
-              <div class="modal-spec-row">
-                <span class="modal-spec-label" data-i18n="modal.season">SEASON / ARCHIVE</span>
-                <span class="modal-spec-val" id="modalSeasonVal">Spring / Summer 2004</span>
-              </div>
-              <div class="modal-spec-row">
-                <span class="modal-spec-label" data-i18n="modal.category">CATEGORY</span>
-                <span class="modal-spec-val" id="modalCategoryVal">Outerwear</span>
-              </div>
-              <div class="modal-spec-row">
-                <span class="modal-spec-label" data-i18n="modal.size">SIZE</span>
-                <span class="modal-spec-val" id="modalSizeVal">48 (M)</span>
-              </div>
-              <div class="modal-spec-row">
-                <span class="modal-spec-label" data-i18n="modal.status">STATUS</span>
-                <span class="modal-spec-val" id="modalStatusVal">AVAILABLE IN SHOWROOM</span>
-              </div>
-            </div>
-
-            <div class="modal-description-box">
-              <h4 class="modal-desc-title" data-i18n="modal.description">CURATION NOTES</h4>
-              <p class="modal-desc-text" id="modalDescText">Archival piece available for editorial loan.</p>
-            </div>
-          </div>
-
-          <div class="modal-actions">
-            <button class="btn-primary" id="modalRequestBtn" style="width: 100%;" data-i18n="modal.requestThisPiece">
-              REQUEST THIS PIECE FOR PULL
-            </button>
-            <span style="font-size: 0.72rem; color: var(--text-muted); text-align: center; letter-spacing: 0.05em; margin-top: 4px;">
-              RENTAL UPON REQUEST • STRICTLY VALIDATED FOR PROFESSIONAL PRODUCTIONS
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
@@ -273,15 +193,15 @@
         </div>
         <nav class="footer-nav">
           <a href="index.html" data-i18n="nav.home">HOME</a>
-          <a href="wardrobe.html" data-i18n="nav.wardrobe">WARDROBE</a>
+          <a href="wardrobe.html" data-i18n="nav.wardrobe">ARCHIVE</a>
           <a href="projects.html" data-i18n="nav.projects">PROJECTS</a>
           <a href="about.html" data-i18n="nav.about">ABOUT</a>
-          <a href="contact.html" data-i18n="nav.contact">PULL REQUEST</a>
+          <a href="contact.html" data-i18n="nav.contact">CONTACT</a>
         </nav>
       </div>
       <div class="footer-bottom">
         <span>© 2026 HAUSMAN SHOWROOM PARIS. ALL RIGHTS RESERVED.</span>
-        <span>WARDROBE RENTAL FOR CREATIVE IMAGE PROFESSIONALS.</span>
+        <span>WARDROBE ARCHIVE FOR CREATIVE IMAGE PROFESSIONALS.</span>
       </div>
     </div>
   </footer>
