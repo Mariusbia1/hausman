@@ -596,6 +596,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ==========================================
+    // 10. Mobile Navigation Menu Toggle
+    // ==========================================
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileNavDrawer = document.getElementById('mobileNavDrawer');
+
+    if (mobileMenuToggle && mobileNavDrawer) {
+        mobileMenuToggle.addEventListener('click', () => {
+            const isOpen = mobileNavDrawer.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNavDrawer.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
     // Initial setup
     setLanguage(state.lang);
 });

@@ -495,6 +495,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ==========================================
+    // 9. Mobile Sidebar Drawer Logic
+    // ==========================================
+    const adminSidebarToggle = document.getElementById('adminSidebarToggle');
+    const adminSidebar = document.querySelector('.admin-sidebar');
+    const adminSidebarBackdrop = document.getElementById('adminSidebarBackdrop');
+
+    if (adminSidebarToggle && adminSidebar) {
+        adminSidebarToggle.addEventListener('click', () => {
+            const isOpen = adminSidebar.classList.toggle('open');
+            if (adminSidebarBackdrop) adminSidebarBackdrop.classList.toggle('active', isOpen);
+        });
+
+        if (adminSidebarBackdrop) {
+            adminSidebarBackdrop.addEventListener('click', () => {
+                adminSidebar.classList.remove('open');
+                adminSidebarBackdrop.classList.remove('active');
+            });
+        }
+
+        // Auto close sidebar when a navigation item is clicked on mobile/tablet
+        dom.navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    adminSidebar.classList.remove('open');
+                    if (adminSidebarBackdrop) adminSidebarBackdrop.classList.remove('active');
+                }
+            });
+        });
+    }
+
     // Initialize
     refreshMetrics();
     renderWardrobeTable();

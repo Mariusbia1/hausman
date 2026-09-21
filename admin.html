@@ -10,6 +10,20 @@
 </head>
 <body>
 
+  <!-- MOBILE ADMIN TOPBAR (VISIBLE ON SCREENS <= 1024PX) -->
+  <header class="admin-mobile-topbar">
+    <div class="admin-brand" style="border: none; padding: 0; margin: 0;">
+      <span class="admin-brand-title" style="font-size: 1.15rem;">HAUSMAN</span>
+      <span class="admin-brand-sub" style="font-size: 0.55rem;">ADMINISTRATION SHOWROOM</span>
+    </div>
+    <button class="admin-sidebar-toggle" id="adminSidebarToggle" aria-label="Menu administration">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </header>
+
+  <!-- SIDEBAR BACKDROP ON MOBILE -->
+  <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+
   <!-- ==========================================================================
        ADMIN SIDEBAR (EXPANDED TO 340PX, PURE SINGLE-LINE READABILITY)
        ========================================================================== -->
@@ -179,19 +193,21 @@
               </div>
               <button class="btn-icon-action" onclick="document.querySelector('[data-tab=inquiries]').click();">Voir tout &rarr;</button>
             </div>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Demandeur</th>
-                  <th>Projet & Dates</th>
-                  <th>Statut</th>
-                  <th style="text-align: right;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="dashboardRecentInquiries">
-                <!-- Dynamically populated via admin.js -->
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Demandeur</th>
+                    <th>Projet & Dates</th>
+                    <th>Statut</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardRecentInquiries">
+                  <!-- Dynamically populated via admin.js -->
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <!-- Card 2: Recent Archive Garments -->
@@ -327,21 +343,23 @@
           </div>
         </div>
 
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Pièce & Designer</th>
-              <th>Référence</th>
-              <th>Catégorie</th>
-              <th>Taille</th>
-              <th>Statut (Cliquer pour basculer)</th>
-              <th style="text-align: right;">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="wardrobeTableBody">
-            <!-- Dynamically populated -->
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Pièce & Designer</th>
+                <th>Référence</th>
+                <th>Catégorie</th>
+                <th>Taille</th>
+                <th>Statut (Cliquer pour basculer)</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="wardrobeTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
 
         <!-- Table Pagination -->
         <div class="table-pagination">
@@ -375,20 +393,22 @@
       </header>
 
       <div class="admin-table-card">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Projet & Publication</th>
-              <th>Type</th>
-              <th>Styliste / Direction</th>
-              <th>Pièces utilisées</th>
-              <th style="text-align: right;">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="projectsTableBody">
-            <!-- Dynamically populated -->
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Projet & Publication</th>
+                <th>Type</th>
+                <th>Styliste / Direction</th>
+                <th>Pièces utilisées</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="projectsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
 
         <!-- Table Pagination -->
         <div class="table-pagination">
@@ -421,21 +441,23 @@
       </header>
 
       <div class="admin-table-card">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Réf & Date</th>
-              <th>Demandeur / Agence</th>
-              <th>Type & Dates</th>
-              <th>Pièces demandées</th>
-              <th>Statut</th>
-              <th style="text-align: right;">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="inquiriesTableBody">
-            <!-- Dynamically populated -->
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Réf & Date</th>
+                <th>Demandeur / Agence</th>
+                <th>Type & Dates</th>
+                <th>Pièces demandées</th>
+                <th>Statut</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inquiriesTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
 
         <!-- Table Pagination -->
         <div class="table-pagination">
