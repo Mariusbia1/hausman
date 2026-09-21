@@ -1638,6 +1638,13 @@ ul, ol {
     grid-template-columns: 1fr 1fr;
     gap: 1.75rem;
   }
+  .garments-grid.cols-4,
+  .garments-grid.cols-3,
+  .garments-grid.cols-2,
+  .garments-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.25rem 1.5rem;
+  }
   .catalogue-sidebar {
     position: static;
     background: #FAFAFA;
@@ -1743,15 +1750,48 @@ ul, ol {
     padding: 3rem 0;
     gap: 1.75rem;
   }
+
+  /* STRICT 1 COLUMN (1 PIECE PER ROW) ON MOBILE */
   .garments-grid.cols-4,
   .garments-grid.cols-3,
-  .garments-grid.cols-2 {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem 0.75rem;
+  .garments-grid.cols-2,
+  .garments-grid {
+    grid-template-columns: 1fr !important;
+    gap: 3rem 0;
   }
+  .garment-card {
+    width: 100%;
+  }
+  .garment-media-wrap {
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .garment-brand {
+    font-size: 1.05rem;
+    letter-spacing: 0.12em;
+  }
+  .garment-name {
+    font-size: 0.92rem;
+    margin-top: 2px;
+  }
+  .garment-size-row {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-light);
+    font-size: 0.82rem;
+  }
+  .garment-size {
+    font-size: 0.8rem;
+  }
+  .garment-rental-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: 1.75rem;
+    gap: 2rem;
   }
   .page-head {
     flex-direction: column;
@@ -1767,9 +1807,8 @@ ul, ol {
     width: 100%;
     justify-content: space-between;
   }
-  .grid-switcher button[data-cols="4"],
-  .grid-switcher button[data-cols="3"] {
-    display: none;
+  .grid-switcher {
+    display: none !important; /* Single column is fixed on mobile */
   }
   .form-input,
   .form-select,
@@ -1826,18 +1865,10 @@ ul, ol {
   }
   .garments-grid.cols-4,
   .garments-grid.cols-3,
-  .garments-grid.cols-2 {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem 0.5rem;
-  }
-  .garment-brand {
-    font-size: 0.75rem;
-  }
-  .garment-name {
-    font-size: 0.72rem;
-  }
-  .garment-size-row {
-    font-size: 0.65rem;
+  .garments-grid.cols-2,
+  .garments-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem 0;
   }
   .contact-page-layout {
     padding: 1.5rem 0 3.5rem 0;
