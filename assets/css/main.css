@@ -302,20 +302,22 @@ ul, ol {
   position: fixed;
   top: var(--header-height);
   left: 0;
-  width: 100vw;
+  right: 0;
+  width: 100%;
   height: calc(100vh - var(--header-height));
-  background: rgba(255, 255, 255, 0.98);
+  height: calc(100dvh - var(--header-height));
+  background: rgba(255, 255, 255, 0.99);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 998;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2.5rem 2rem 3rem 2rem;
+  padding: 2rem 1.5rem 2.5rem 1.5rem;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
   overflow-y: auto;
   border-bottom: 1px solid var(--border-light);
@@ -980,9 +982,11 @@ ul, ol {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 1000;
@@ -991,6 +995,7 @@ ul, ol {
   justify-content: center;
   opacity: 0;
   transition: opacity var(--transition-normal);
+  padding: 1rem;
 }
 
 .modal-backdrop.active {
@@ -1000,28 +1005,31 @@ ul, ol {
 
 .modal-sheet {
   background: #FFFFFF;
-  width: 90%;
-  max-width: 1050px;
+  width: 100%;
+  max-width: 1020px;
   max-height: 90vh;
+  max-height: 90dvh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-light);
 }
 
 .modal-close-btn {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   font-family: var(--font-heading);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   z-index: 10;
-  padding: 8px 12px;
+  padding: 6px 12px;
   background: #FFFFFF;
   border: 1px solid var(--border-light);
   transition: all var(--transition-fast);
+  cursor: pointer;
 }
 
 .modal-close-btn:hover {
@@ -1032,6 +1040,18 @@ ul, ol {
 .modal-grid {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
+}
+
+@media (max-width: 860px) {
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
+  .modal-gallery-pane {
+    padding: 1.5rem !important;
+  }
+  .modal-info-pane {
+    padding: 1.5rem 1.25rem !important;
+  }
 }
 
 .modal-gallery-pane {
@@ -1584,11 +1604,11 @@ ul, ol {
 /* Responsive */
 @media (max-width: 1024px) {
   :root {
-    --header-height: 64px;
+    --header-height: 60px;
   }
   .container {
-    padding-left: 1.75rem;
-    padding-right: 1.75rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
   .home-hero-grid,
   .home-about-snippet,
@@ -1597,40 +1617,64 @@ ul, ol {
   .about-page-layout,
   .contact-page-layout {
     grid-template-columns: 1fr;
-    gap: 2.75rem;
+    gap: 2.5rem;
   }
   .home-hero-visual {
-    max-height: 480px;
+    max-height: 420px;
     overflow: hidden;
   }
   .home-hero-visual img {
     height: 100%;
-    max-height: 480px;
+    max-height: 420px;
     object-fit: cover;
   }
   .contact-sidebar {
     padding-left: 0;
     border-left: none;
     border-top: 1px solid var(--border-light);
-    padding-top: 2.75rem;
+    padding-top: 2.5rem;
   }
   .projects-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1.75rem;
   }
   .catalogue-sidebar {
     position: static;
-    border-right: none;
-    padding-right: 0;
-    border-bottom: 1px solid var(--border-light);
-    padding-bottom: 1.75rem;
-    margin-bottom: 1.5rem;
+    background: #FAFAFA;
+    border: 1px solid var(--border-light);
+    padding: 1.5rem;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+  }
+  .catalogue-sidebar .filter-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .catalogue-sidebar .filter-item {
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
+    padding: 6px 10px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+  }
+  .catalogue-sidebar .filter-item.active {
+    background: #000000;
+    color: #FFFFFF;
+    border-color: #000000;
+  }
+  .catalogue-sidebar .filter-item.active::before {
+    display: none;
+  }
+  .catalogue-sidebar .filter-item.active .filter-count {
+    color: #E5E7EB;
   }
 }
 
 @media (max-width: 768px) {
   :root {
-    --header-height: 58px;
+    --header-height: 56px;
   }
   .container {
     padding-left: 1.25rem;
@@ -1643,44 +1687,61 @@ ul, ol {
     display: flex;
   }
   .header-actions {
-    gap: 0.75rem;
+    gap: 0.6rem;
+  }
+  .header-actions .lang-switch {
+    display: none; /* Accessible in mobile drawer */
   }
   .btn-header-request {
-    padding: 0.5rem 0.85rem;
-    font-size: 0.68rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
   }
   .brand-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     letter-spacing: 0.14em;
   }
   .brand-location {
-    font-size: 0.58rem;
-    letter-spacing: 0.18em;
+    font-size: 0.55rem;
+    letter-spacing: 0.16em;
   }
   .home-hero {
-    padding: 2rem 0 2.5rem 0;
+    padding: 1.75rem 0 2.25rem 0;
   }
   .home-hero-title {
-    font-size: clamp(2.2rem, 8.5vw, 3.4rem);
+    font-size: clamp(2.2rem, 8.5vw, 3.2rem);
     margin-bottom: 0.5rem;
   }
   .home-hero-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 1.25rem;
+    font-size: 0.92rem;
+    margin-bottom: 1rem;
   }
   .home-hero-desc {
-    font-size: 0.86rem;
+    font-size: 0.85rem;
     margin-bottom: 1.5rem;
+    line-height: 1.6;
   }
   .home-hero-identity div {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem !important;
+    gap: 0.65rem !important;
   }
   .home-hero-identity div .btn-primary {
     width: 100%;
     text-align: center;
     justify-content: center;
+    padding: 0.9rem 1.5rem;
+  }
+  .home-section {
+    padding: 3rem 0;
+  }
+  .home-section-head {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+  }
+  .home-about-snippet {
+    padding: 3rem 0;
+    gap: 1.75rem;
   }
   .garments-grid.cols-4,
   .garments-grid.cols-3,
@@ -1695,8 +1756,12 @@ ul, ol {
   .page-head {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.25rem;
-    padding: 2rem 0 1.5rem 0;
+    gap: 1rem;
+    padding: 1.75rem 0 1.25rem 0;
+    margin-bottom: 1.75rem;
+  }
+  .page-title {
+    font-size: 1.45rem;
   }
   .catalogue-controls {
     width: 100%;
@@ -1705,6 +1770,11 @@ ul, ol {
   .grid-switcher button[data-cols="4"],
   .grid-switcher button[data-cols="3"] {
     display: none;
+  }
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px; /* Prevents iOS auto-zoom */
   }
   .form-row-2 {
     grid-template-columns: 1fr;
@@ -1729,9 +1799,11 @@ ul, ol {
     flex-direction: column;
     gap: 1rem;
     align-items: center;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
   }
   .pagination-info {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -1740,20 +1812,17 @@ ul, ol {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  .header-actions .lang-switch {
-    display: none; /* Accessible in mobile navigation drawer */
-  }
   .brand-title {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     letter-spacing: 0.12em;
   }
   .brand-location {
-    font-size: 0.52rem;
+    font-size: 0.5rem;
     letter-spacing: 0.14em;
   }
   .btn-header-request {
-    padding: 0.45rem 0.7rem;
-    font-size: 0.65rem;
+    padding: 0.4rem 0.65rem;
+    font-size: 0.62rem;
   }
   .garments-grid.cols-4,
   .garments-grid.cols-3,
@@ -1762,15 +1831,18 @@ ul, ol {
     gap: 1rem 0.5rem;
   }
   .garment-brand {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
   }
   .garment-name {
-    font-size: 0.74rem;
+    font-size: 0.72rem;
   }
   .garment-size-row {
-    font-size: 0.68rem;
+    font-size: 0.65rem;
   }
   .contact-page-layout {
-    padding: 1.5rem 0 4rem 0;
+    padding: 1.5rem 0 3.5rem 0;
+  }
+  .site-footer {
+    padding: 3.5rem 0 2.5rem 0;
   }
 }
