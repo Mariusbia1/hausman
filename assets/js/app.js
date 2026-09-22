@@ -56,8 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
             flasherImgs[currentFlashIdx].classList.add('active');
         }, 100);
 
-        // Click on logo or splash enters the site
+        // Click on logo or splash enters the site (or skips)
+        let autoTransitionTimer = null;
         const enterSite = () => {
+            if (autoTransitionTimer) clearTimeout(autoTransitionTimer);
             clearInterval(flashInterval);
             splashOverlay.classList.add('hidden-splash');
             sessionStorage.setItem('hausman_intro_seen', 'true');
@@ -68,9 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Auto check if intro should be shown (always on fresh visit or when requested via URL ?intro=1)
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('intro') === '1') {
+        const shouldShowIntro = urlParams.get('intro') === '1' || !sessionStorage.getItem('hausman_intro_seen');
+
+        if (shouldShowIntro) {
             splashOverlay.classList.remove('hidden-splash');
-        } else if (sessionStorage.getItem('hausman_intro_seen') === 'true' && !urlParams.get('intro')) {
+            // Automatic fade transition to Menu after 1.8 seconds (Section 3: between 1.5s and 2.5s)
+            autoTransitionTimer = setTimeout(enterSite, 1800);
+        } else {
             splashOverlay.classList.add('hidden-splash');
         }
     }
