@@ -24,37 +24,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const splashLogo = document.getElementById('splashLogo');
 
     if (splashOverlay && splashFlasher) {
-        // Collect 20-30 garments photos for flashing sequence
-        const flashImages = [
-            'assets/img/rick_leather_flat.jpg',
-            'assets/img/margiela_trench_flat.jpg',
-            'assets/img/balenciaga_bomber_flat.jpg',
-            'assets/img/yohji_coat_flat.jpg',
-            'assets/img/jpg_mesh_flat.jpg',
-            'assets/img/raf_knit_flat.jpg',
-            'assets/img/rick_leather_model.jpg',
-            'assets/img/margiela_trench_model.jpg',
-            'assets/img/balenciaga_bomber_model.jpg',
-            'assets/img/yohji_coat_model.jpg',
-            'assets/img/jpg_mesh_model.jpg',
-            'assets/img/raf_knit_model.jpg',
-            'assets/img/hero_cover.jpg'
-        ];
+        // Collect 25-30 garments photos for flashing sequence (Section 3: 20-30 pieces at ~0.1s)
+        const flashImages = [];
+        if (typeof HAUSMAN_DATA !== 'undefined' && HAUSMAN_DATA.garments) {
+            HAUSMAN_DATA.garments.forEach(g => {
+                if (g.images.flat) flashImages.push(g.images.flat);
+                if (g.images.model) flashImages.push(g.images.model);
+            });
+        }
+        
+        // Fallback default list if needed to ensure 25-30 distinct slides
+        if (flashImages.length < 25) {
+            const fallback = [
+                'assets/img/rick_leather_flat.jpg',
+                'assets/img/margiela_trench_flat.jpg',
+                'assets/img/balenciaga_bomber_flat.jpg',
+                'assets/img/yohji_coat_flat.jpg',
+                'assets/img/jpg_mesh_flat.jpg',
+                'assets/img/raf_knit_flat.jpg',
+                'assets/img/rick_leather_model.jpg',
+                'assets/img/margiela_trench_model.jpg',
+                'assets/img/balenciaga_bomber_model.jpg',
+                'assets/img/yohji_coat_model.jpg',
+                'assets/img/jpg_mesh_model.jpg',
+                'assets/img/raf_knit_model.jpg',
+                'assets/img/hero_cover.jpg'
+            ];
+            while (flashImages.length < 25) {
+                flashImages.push(...fallback);
+            }
+        }
+        
+        // Cap to 25 items for a precise 2.0s cycle (25 * 80ms = 2000ms)
+        const activeFlashImages = flashImages.slice(0, 25);
 
         // Populate flasher container
-        splashFlasher.innerHTML = flashImages.map((src, i) => `
+        splashFlasher.innerHTML = activeFlashImages.map((src, i) => `
             <img class="splash-flasher-img ${i === 0 ? 'active' : ''}" src="${src}" alt="Archive Flash Specimen ${i + 1}" />
         `).join('');
 
         const flasherImgs = splashFlasher.querySelectorAll('.splash-flasher-img');
         let currentFlashIdx = 0;
 
-        // Rapid flashing cycle (~100ms per image as specified in Section 3)
+        // Rapid flashing cycle (80ms per image for 25 images = exactly 2.0s total)
         const flashInterval = setInterval(() => {
             flasherImgs[currentFlashIdx].classList.remove('active');
             currentFlashIdx = (currentFlashIdx + 1) % flasherImgs.length;
             flasherImgs[currentFlashIdx].classList.add('active');
-        }, 100);
+        }, 80);
 
         // Click on logo or splash enters the site (or skips)
         let autoTransitionTimer = null;
@@ -74,8 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (shouldShowIntro) {
             splashOverlay.classList.remove('hidden-splash');
-            // Automatic fade transition to Menu after 1.8 seconds (Section 3: between 1.5s and 2.5s)
-            autoTransitionTimer = setTimeout(enterSite, 1800);
+            // Automatic fade transition to Menu after exactly 2.0 seconds (Section 3: 20-30 pieces at ~0.1s)
+            autoTransitionTimer = setTimeout(enterSite, 2000);
         } else {
             splashOverlay.classList.add('hidden-splash');
         }
