@@ -1,9 +1,10 @@
 /**
  * HAUSMAN Paris — Admin Panel CMS Engine
+ * V1 Specification Compliant (Sections 14, 29, 30, 32)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Current Admin State (Default to Dashboard)
+    // Current Admin State
     const adminState = {
         activeTab: 'dashboard',
         garmentSearch: '',
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dashboard widgets
         dashboardRecentInquiries: document.getElementById('dashboardRecentInquiries'),
 
-        // Wardrobe
+        // Collection / Wardrobe
         wardrobeTableBody: document.getElementById('wardrobeTableBody'),
         adminSearchInput: document.getElementById('adminGarmentSearch'),
         adminCategoryFilter: document.getElementById('adminCategoryFilter'),
@@ -37,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
         modalAddGarment: document.getElementById('modalAddGarment'),
         modalCloseAddGarment: document.getElementById('modalCloseAddGarment'),
         formAddGarment: document.getElementById('formAddGarment'),
-        newGarmentBrandSelect: document.getElementById('newGarmentBrand'),
         newGarmentCategorySelect: document.getElementById('newGarmentCategory'),
 
         // Inquiries Table
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     function refreshMetrics() {
         const totalGarments = HAUSMAN_DATA.garments.length;
-        const onLoan = HAUSMAN_DATA.garments.filter(g => g.status === 'on_loan').length;
+        const onLoan = HAUSMAN_DATA.garments.filter(g => g.internalStatus === 'on_loan').length;
         const totalProjects = HAUSMAN_DATA.projects.length;
         const newInquiries = HAUSMAN_DATA.inquiries.filter(i => i.status === 'new').length;
 
@@ -126,11 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
             recentGarmentsContainer.innerHTML = recentG.map(g => {
                 let statusLabel = 'Disponible';
                 let statusClass = 'status-available';
-                if (g.status === 'on_loan') {
+                if (g.internalStatus === 'on_loan') {
                     statusLabel = 'En Location';
                     statusClass = 'status-on_loan';
-                } else if (g.status === 'hidden') {
-                    statusLabel = 'Masqué';
+                } else if (g.internalStatus === 'reserved') {
+                    statusLabel = 'Réservé';
+                    statusClass = 'status-in_progress';
+                } else if (g.internalStatus === 'unavailable') {
+                    statusLabel = 'Indisponible';
                     statusClass = 'status-hidden';
                 }
 
@@ -139,73 +142,47 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="mini-item-info">
                             <img class="mini-thumb" src="${g.images.flat}" alt="${g.name}" />
                             <div>
-                                <div class="mini-title">${g.brand}</div>
-                                <div class="mini-sub">${g.name} • <strong style="color: #111;">${g.ref}</strong></div>
+                                <div class="mini-item-title">${g.brand}</div>
+                                <div class="mini-item-meta">${g.ref} • ${g.category}</div>
                             </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <span class="status-pill ${statusClass}" style="font-size: 0.65rem;">${statusLabel}</span>
-                            <button class="btn-icon-action" style="font-size: 0.72rem; padding: 4px 8px;" onclick="document.querySelector('[data-tab=wardrobe]').click();">Éditer</button>
-                        </div>
+                        <span class="status-pill ${statusClass}">${statusLabel}</span>
                     </div>
                 `;
             }).join('');
         }
-
-        // Render Dashboard Recent Projects
-        const recentProjectsContainer = document.getElementById('dashboardRecentProjectsList');
-        if (recentProjectsContainer) {
-            const recentP = HAUSMAN_DATA.projects.slice(0, 2);
-            recentProjectsContainer.innerHTML = recentP.map(p => `
-                <div style="display: flex; gap: 0.85rem; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--admin-border-subtle);">
-                    <img style="width: 54px; height: 38px; object-fit: cover; border-radius: 3px; border: 1px solid var(--admin-border);" src="${p.coverImage}" alt="${p.title}" />
-                    <div style="flex-grow: 1;">
-                        <strong style="font-family: var(--font-heading); font-size: 0.78rem; text-transform: uppercase;">${p.title}</strong>
-                        <div style="font-size: 0.72rem; color: var(--admin-text-muted);">${p.client} • Stylisme : ${p.stylist}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
     }
 
     // ==========================================
-    // 3. Render Wardrobe Inventory Table
+    // 3. Render Collection Table (Sections 14 & 29)
     // ==========================================
     function renderWardrobeTable() {
         if (!dom.wardrobeTableBody) return;
 
         let filtered = HAUSMAN_DATA.garments.filter(g => {
             if (adminState.garmentCategoryFilter !== 'ALL' && g.category !== adminState.garmentCategoryFilter) return false;
-            if (adminState.garmentStatusFilter !== 'ALL' && g.status !== adminState.garmentStatusFilter) return false;
+            if (adminState.garmentStatusFilter !== 'ALL' && g.internalStatus !== adminState.garmentStatusFilter) return false;
             if (adminState.garmentSearch) {
-                const q = adminState.garmentSearch.toLowerCase();
-                const match = g.brand.toLowerCase().includes(q) || 
-                              g.name.toLowerCase().includes(q) || 
-                              g.ref.toLowerCase().includes(q);
-                if (!match) return false;
+                const q = adminState.garmentSearch.toLowerCase().trim();
+                const matchB = g.brand.toLowerCase().includes(q);
+                const matchN = g.name.toLowerCase().includes(q);
+                const matchR = g.ref.toLowerCase().includes(q);
+                if (!matchB && !matchN && !matchR) return false;
             }
             return true;
         });
 
-        if (filtered.length === 0) {
-            dom.wardrobeTableBody.innerHTML = `
-                <tr>
-                    <td colspan="6" style="text-align: center; padding: 3rem; color: var(--admin-text-muted);">
-                        Aucune pièce d'archive trouvée.
-                    </td>
-                </tr>
-            `;
-            return;
-        }
-
         dom.wardrobeTableBody.innerHTML = filtered.map(g => {
             let statusLabel = 'Disponible';
             let statusClass = 'status-available';
-            if (g.status === 'on_loan') {
+            if (g.internalStatus === 'on_loan') {
                 statusLabel = 'En Location';
                 statusClass = 'status-on_loan';
-            } else if (g.status === 'hidden') {
-                statusLabel = 'Masqué';
+            } else if (g.internalStatus === 'reserved') {
+                statusLabel = 'Réservé';
+                statusClass = 'status-in_progress';
+            } else if (g.internalStatus === 'unavailable') {
+                statusLabel = 'Indisponible';
                 statusClass = 'status-hidden';
             }
 
@@ -224,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${g.category}</td>
                     <td>${g.size}</td>
                     <td>
-                        <button class="status-pill ${statusClass} btn-toggle-status" data-id="${g.id}" title="Cliquer pour changer le statut">
+                        <button class="status-pill ${statusClass} btn-toggle-status" data-id="${g.id}" title="Statut interne (non public)">
                             ● ${statusLabel}
                         </button>
                     </td>
@@ -238,15 +215,16 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }).join('');
 
-        // Attach Status Toggle listeners
+        // Attach Status Toggle listeners (Section 14: Available -> Reserved -> On Loan -> Unavailable)
         document.querySelectorAll('.btn-toggle-status').forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.getAttribute('data-id');
                 const garment = HAUSMAN_DATA.garments.find(g => g.id === id);
                 if (garment) {
-                    if (garment.status === 'available') garment.status = 'on_loan';
-                    else if (garment.status === 'on_loan') garment.status = 'hidden';
-                    else garment.status = 'available';
+                    if (garment.internalStatus === 'available') garment.internalStatus = 'reserved';
+                    else if (garment.internalStatus === 'reserved') garment.internalStatus = 'on_loan';
+                    else if (garment.internalStatus === 'on_loan') garment.internalStatus = 'unavailable';
+                    else garment.internalStatus = 'available';
 
                     renderWardrobeTable();
                     refreshMetrics();
@@ -266,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Update Table Pagination Info
         const pTableInfo = document.getElementById('wardrobeTablePaginationInfo');
         if (pTableInfo) {
             pTableInfo.textContent = `Affichage de 1 à ${filtered.length} sur ${HAUSMAN_DATA.garments.length} pièces`;
@@ -274,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 4. Render Rental Inquiries (Demandes de Pull)
+    // 4. Render Inquiries Table
     // ==========================================
     function renderInquiriesTable() {
         if (!dom.inquiriesTableBody) return;
@@ -283,10 +260,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let statusLabel = 'Nouveau';
             let statusClass = 'status-new';
             if (inq.status === 'in_progress') {
-                statusLabel = 'En traitement';
+                statusLabel = 'En cours';
                 statusClass = 'status-in_progress';
             } else if (inq.status === 'confirmed') {
-                statusLabel = 'Validé / Prêt';
+                statusLabel = 'Validé';
                 statusClass = 'status-confirmed';
             }
 
@@ -298,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>
                     <td>
                         <strong>${inq.name}</strong><br>
-                        <span style="color: var(--admin-text-muted);">${inq.agency}</span>
+                        <span style="color: var(--admin-text-muted);">${inq.email}</span>
                     </td>
                     <td>
                         <span style="font-size: 0.8rem; font-weight: 600;">${inq.projectType}</span><br>
@@ -314,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>
                     <td>
                         <div class="row-actions">
-                            <a href="mailto:${inq.email}?subject=HAUSMAN Paris - Demande de pull ${inq.id}" class="btn-icon-action" title="Répondre par Email">Email</a>
+                            <a href="mailto:${inq.email}?subject=HAUSMAN Paris - Inquiry ${inq.id}" class="btn-icon-action">Email</a>
                             <button class="btn-icon-action btn-toggle-inq-status" data-id="${inq.id}">Changer statut</button>
                         </div>
                     </td>
@@ -322,7 +299,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }).join('');
 
-        // Attach inquiry status toggles
         document.querySelectorAll('.btn-toggle-inq-status').forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.getAttribute('data-id');
@@ -340,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 5. Render Editorial Projects Table
+    // 5. Render Projects Table (Section 30)
     // ==========================================
     function renderProjectsTable() {
         if (!dom.projectsTableBody) return;
@@ -349,19 +325,19 @@ document.addEventListener('DOMContentLoaded', () => {
             <tr>
                 <td>
                     <div class="cell-garment-info">
-                        <img class="cell-thumb" style="width: 60px; height: 42px;" src="${proj.coverImage}" alt="${proj.title}" />
+                        <img class="cell-thumb" style="width: 50px; height: 60px;" src="${proj.coverImage}" alt="${proj.title}" />
                         <div>
                             <div class="cell-garment-title">${proj.title}</div>
-                            <div class="cell-garment-sub">${proj.client} • ${proj.year}</div>
+                            <div class="cell-garment-sub">${proj.category} • ${proj.year}</div>
                         </div>
                     </div>
                 </td>
                 <td><span class="status-pill" style="background: #F3F4F6; color: #111;">${proj.category}</span></td>
-                <td>${proj.stylist}</td>
-                <td>${proj.garmentsUsed.join(', ')}</td>
+                <td>${proj.credits['Styling'] || proj.credits['Photography'] || 'Équipe HAUSMAN'}</td>
+                <td>${proj.landscapeImages.length} photos</td>
                 <td>
                     <div class="row-actions">
-                        <button class="btn-icon-action">Modifier</button>
+                        <a href="project.html?id=${proj.id}" target="_blank" class="btn-icon-action">Voir</a>
                         <button class="btn-icon-action" style="color: #DC2626;">Supprimer</button>
                     </div>
                 </td>
@@ -370,20 +346,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 6. Add Garment Modal Logic
+    // 6. Modal Add Garment (Auto HSMN-xxx ref generation)
     // ==========================================
-    function populateFormSelects() {
-        if (dom.newGarmentBrandSelect) {
-            dom.newGarmentBrandSelect.innerHTML = HAUSMAN_DATA.designers.map(d => `<option value="${d}">${d}</option>`).join('');
-        }
-        if (dom.newGarmentCategorySelect) {
-            dom.newGarmentCategorySelect.innerHTML = HAUSMAN_DATA.categories.map(c => `<option value="${c}">${c}</option>`).join('');
-        }
-    }
-
     if (dom.btnAddGarment) {
         dom.btnAddGarment.addEventListener('click', () => {
-            populateFormSelects();
+            if (dom.newGarmentCategorySelect) {
+                const cats = HAUSMAN_DATA.categories.filter(c => c !== 'ALL');
+                dom.newGarmentCategorySelect.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
+            }
+            const brandSelect = document.getElementById('newGarmentBrand');
+            if (brandSelect) {
+                brandSelect.innerHTML = HAUSMAN_DATA.designers.map(d => `<option value="${d}">${d}</option>`).join('');
+            }
             dom.modalAddGarment.classList.add('active');
         });
     }
@@ -398,34 +372,39 @@ document.addEventListener('DOMContentLoaded', () => {
         dom.formAddGarment.addEventListener('submit', (e) => {
             e.preventDefault();
             const formData = new FormData(dom.formAddGarment);
-            
+
+            // Auto-generate strict HSMN-xxx reference (Section 9)
+            const nextIndex = HAUSMAN_DATA.garments.length + 1;
+            const refNumber = nextIndex < 10 ? `00${nextIndex}` : (nextIndex < 100 ? `0${nextIndex}` : `${nextIndex}`);
+            const autoRef = `HSMN-${refNumber}`;
+
             const newGarment = {
-                id: `garment-${Date.now()}`,
-                ref: formData.get('ref') || `HSM-ARC-${Math.floor(100 + Math.random() * 900)}`,
-                brand: formData.get('brand') || "MAISON MARGIELA",
-                name: formData.get('name') || "Nouvelle Pièce d'Archive",
-                nameFr: formData.get('name') || "Nouvelle Pièce d'Archive",
-                category: formData.get('category') || "Outerwear",
-                categoryFr: formData.get('category') || "Manteaux",
-                size: formData.get('size') || "48 (M)",
-                season: formData.get('season') || "Archive Collection",
-                status: "available",
-                featured: true,
+                id: `hsmn-${refNumber.toLowerCase()}`,
+                ref: autoRef,
+                brand: formData.get('brand') || "Rick Owens",
+                name: formData.get('name') || "Archival Garment",
+                nameFr: formData.get('name') || "Pièce d'archive",
+                category: formData.get('category') || "OUTERWEAR",
+                size: formData.get('size') || "48",
+                modelHeight: "185 cm",
+                modelSize: formData.get('size') || "48",
+                descriptionEn: formData.get('description') || "Archival showroom specimen.",
+                descriptionFr: formData.get('description') || "Pièce d'archive pour showroom.",
                 images: {
-                    flat: "assets/img/margiela_trench_flat.jpg",
-                    model: "assets/img/margiela_trench_model.jpg",
-                    gallery: [
-                        "assets/img/margiela_trench_flat.jpg",
-                        "assets/img/margiela_trench_model.jpg"
-                    ]
+                    flat: "assets/img/rick_leather_flat.jpg",
+                    flatBack: "assets/img/rick_leather_flat.jpg",
+                    flatDetail: "assets/img/hero_cover.jpg",
+                    model: "assets/img/rick_leather_model.jpg",
+                    modelAlt: "assets/img/rick_leather_model.jpg"
                 },
-                descriptionEn: formData.get('description') || "Archival showroom piece.",
-                descriptionFr: formData.get('description') || "Pièce d'archive pour showroom."
+                internalStatus: "available",
+                order: nextIndex,
+                published: true
             };
 
             HAUSMAN_DATA.garments.unshift(newGarment);
-            alert(`La pièce ${newGarment.brand} (${newGarment.ref}) a été ajoutée avec succès au catalogue HAUSMAN.`);
-            
+            alert(`Pièce créée avec succès : ${newGarment.brand} (Réf. ${newGarment.ref})`);
+
             dom.formAddGarment.reset();
             dom.modalAddGarment.classList.remove('active');
             renderWardrobeTable();
@@ -434,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 7. Filters & Search Handlers
+    // 7. Search and Filter Handlers in Admin
     // ==========================================
     if (dom.adminSearchInput) {
         dom.adminSearchInput.addEventListener('input', (e) => {
@@ -455,81 +434,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==========================================
-    // 8. Admin Authentication & Login Logic
-    // ==========================================
-    const userCard = document.getElementById('adminUserCard');
-    const btnLogout = document.getElementById('btnLogoutAdmin');
-    const btnLogin = document.getElementById('btnLoginAdmin');
-    const modalLogin = document.getElementById('modalAdminLogin');
-    const formLogin = document.getElementById('formAdminLogin');
-
-    if (btnLogout) {
-        btnLogout.addEventListener('click', () => {
-            if (confirm('Voulez-vous vous déconnecter de l\'administration HAUSMAN ?')) {
-                if (userCard) userCard.style.display = 'none';
-                if (btnLogin) btnLogin.style.display = 'flex';
-                if (modalLogin) modalLogin.classList.add('active');
-            }
-        });
-    }
-
-    if (btnLogin) {
-        btnLogin.addEventListener('click', () => {
-            if (modalLogin) modalLogin.classList.add('active');
-        });
-    }
-
-    if (formLogin) {
-        formLogin.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const emailInput = document.getElementById('loginEmailInput');
-            const email = emailInput ? emailInput.value : 'admin@hausman-paris.com';
-            
-            // Success feedback
-            if (modalLogin) modalLogin.classList.remove('active');
-            if (userCard) userCard.style.display = 'flex';
-            if (btnLogin) btnLogin.style.display = 'none';
-
-            alert(`Authentification réussie. Bienvenue sur le CMS HAUSMAN (${email}).`);
-        });
-    }
-
-    // ==========================================
-    // 9. Mobile Sidebar Drawer Logic
-    // ==========================================
-    const adminSidebarToggle = document.getElementById('adminSidebarToggle');
-    const adminSidebar = document.querySelector('.admin-sidebar');
-    const adminSidebarBackdrop = document.getElementById('adminSidebarBackdrop');
-
-    if (adminSidebarToggle && adminSidebar) {
-        adminSidebarToggle.addEventListener('click', () => {
-            const isOpen = adminSidebar.classList.toggle('open');
-            if (adminSidebarBackdrop) adminSidebarBackdrop.classList.toggle('active', isOpen);
-        });
-
-        if (adminSidebarBackdrop) {
-            adminSidebarBackdrop.addEventListener('click', () => {
-                adminSidebar.classList.remove('open');
-                adminSidebarBackdrop.classList.remove('active');
-            });
-        }
-
-        // Auto close sidebar when a navigation item is clicked on mobile/tablet
-        dom.navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                if (window.innerWidth <= 1024) {
-                    adminSidebar.classList.remove('open');
-                    if (adminSidebarBackdrop) adminSidebarBackdrop.classList.remove('active');
-                }
-            });
-        });
-    }
-
-    // Initialize
+    // Initial Renders
     refreshMetrics();
     renderWardrobeTable();
     renderInquiriesTable();
     renderProjectsTable();
 });
-

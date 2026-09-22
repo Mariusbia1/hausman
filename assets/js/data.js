@@ -1,427 +1,695 @@
 /**
- * HAUSMAN Fashion Showroom & Archive Rental
- * Central Data Store (Bilingual content, Garments Catalogue, Projects Portfolio, Admin State)
+ * HAUSMAN Fashion Showroom — Central Data Store (V1 Official Specification)
+ * 42-Section Cahier des Charges Compliant
  */
 
 const HAUSMAN_DATA = {
-    // Internationalization dictionary
+    // Categories matching Section 7 of Cahier des Charges
+    categories: [
+        "ALL",
+        "OUTERWEAR",
+        "TOPS",
+        "BOTTOMS",
+        "SHOES",
+        "BAGS",
+        "ACCESSORIES"
+    ],
+
+    // Project Categories matching Section 18
+    projectCategories: [
+        "ALL",
+        "HAUSMAN FILES",
+        "ARTISTS",
+        "EDITORIALS",
+        "CAMPAIGNS"
+    ],
+
+    // Internationalization (EN / FR, Default EN)
     i18n: {
         en: {
-            nav: {
-                home: "HOME",
-                wardrobe: "ARCHIVE",
+            menu: {
+                title: "MENU",
+                collection: "COLLECTION",
                 projects: "PROJECTS",
                 about: "ABOUT",
                 contact: "CONTACT",
-                adminSwitch: "ADMIN PANEL"
+                footerTagline: "PARIS FASHION SHOWROOM — WARDROBE RENTAL"
             },
-            hero: {
-                tagline: "PARIS SHOWROOM & ARCHIVE WARDROBE",
-                subtitle: "An evolving wardrobe of rare designer runway specimens, tailoring, and contemporary silhouettes curated exclusively for fashion imagery, editorial productions, and artists.",
-                exploreBtn: "EXPLORE ARCHIVE",
-                requestBtn: "INQUIRE FOR LOAN"
+            collection: {
+                title: "COLLECTION",
+                filterBtn: "FILTER",
+                searchPlaceholder: "Search brand or ref (e.g. HSMN-001)...",
+                loadMore: "LOAD MORE",
+                allBrands: "ALL DESIGNERS",
+                noResults: "No garments found matching your search.",
+                backToCollection: "← COLLECTION",
+                rentalUponRequest: "Rental upon request"
             },
-            wardrobe: {
-                title: "ARCHIVE",
-                subtitle: "Curated designer pieces available for professional loan and editorial productions.",
-                filterBy: "FILTER:",
-                categories: "CATEGORIES",
-                allCategories: "ALL",
-                designers: "DESIGNERS",
-                allDesigners: "ALL DESIGNERS",
-                sizes: "SIZES",
-                allSizes: "ALL SIZES",
-                availability: "STATUS",
-                allPieces: "ALL PIECES",
-                availableOnly: "IN SHOWROOM",
-                onLoan: "ON LOAN",
-                rentalUponRequest: "LOAN UPON INQUIRY",
-                viewGrid4: "4 COLS",
-                viewGrid3: "3 COLS",
-                viewGrid2: "2 COLS",
-                statusAvailable: "IN ARCHIVE",
-                statusOnLoan: "ON LOAN",
-                noResults: "No archive piece found matching your selection."
-            },
-            modal: {
-                ref: "REFERENCE",
-                season: "SEASON / ARCHIVE",
-                size: "SIZE / FIT",
-                category: "CATEGORY",
-                status: "STATUS",
-                description: "ARCHIVE ESSAY & CURATION NOTES",
-                requestThisPiece: "INQUIRE ABOUT THIS SPECIMEN",
-                close: "CLOSE [ESC]"
+            product: {
+                brand: "Brand",
+                productName: "Product Name",
+                size: "Size",
+                category: "Category",
+                ref: "HAUSMAN Ref.",
+                modelInfo: "Model is 185 cm and wears size",
+                rentalNotice: "Rental upon request",
+                backLink: "← COLLECTION"
             },
             projects: {
-                tag: "HAUSMAN FILES",
                 title: "PROJECTS",
-                subtitle: "Editorial shoots, campaigns, and visual productions featuring the HAUSMAN archive.",
-                viewGallery: "VIEW PROJECT",
-                credits: "CREDITS",
-                featuredPieces: "ARCHIVE PIECES"
+                backLink: "← PROJECTS",
+                nextProject: "NEXT PROJECT →",
+                creditsTitle: "CREDITS"
             },
             about: {
-                tag: "THE SHOWROOM",
-                title: "PARISIAN WARDROBE ARCHIVE FOR IMAGE PROFESSIONALS",
-                p1: "HAUSMAN is an exclusive fashion showroom based in Paris, housing an evolving archive of rare designer garments, runway pieces, and contemporary sculptural silhouettes.",
-                p2: "Dedicated exclusively to stylists, creative directors, photographers, and artists, HAUSMAN operates as a discreet physical and digital wardrobe gallery. We provide bespoke rental curation for fashion editorials, music videos, album campaigns, and artistic productions.",
-                p3: "Loans are individually reviewed and validated. No consumer sales, no mass rental."
+                title: "ABOUT",
+                statement1: "HAUSMAN is a Paris-based fashion showroom offering a curated selection of designer, archive and contemporary pieces for stylists, artists, productions and creative projects.",
+                statement2: "Operating as a discreet wardrobe gallery, loans are curated and validated individually for image professionals."
             },
             contact: {
-                tag: "RESERVATIONS & INQUIRIES",
-                title: "INQUIRY & LOAN REQUEST",
-                subtitle: "Please specify your production details, dates, and selected archive references. We reply within 24 hours.",
-                name: "Stylist / Creative Director Name",
-                email: "Professional Email",
-                company: "Production / Magazine / Agency",
-                instagram: "Portfolio / Instagram",
-                projectType: "Project Type",
-                projectDate: "Loan Dates",
-                requestedPieces: "Requested Archive Pieces",
-                message: "Project Details & Moodboard Notes",
-                submit: "SUBMIT INQUIRY",
-                successTitle: "INQUIRY TRANSMITTED",
-                successMsg: "Your inquiry has been received by our Paris showroom team. We will review availability and contact you promptly.",
-                directContact: "SHOWROOM CONTACT"
+                title: "CONTACT",
+                name: "Name",
+                namePlaceholder: "Your full name",
+                email: "Email / Instagram",
+                emailPlaceholder: "email@agency.com or @handle",
+                projectType: "Project type",
+                projectTypeOptions: ["Editorial", "Music Video", "Artist / Celebrity", "Brand Campaign", "Creative Photography", "Other"],
+                projectDate: "Project date",
+                projectDatePlaceholder: "Shooting or pull dates",
+                requestedPieces: "Requested pieces / references",
+                requestedPiecesPlaceholder: "e.g. HSMN-001, HSMN-004, Rick Owens...",
+                message: "Message",
+                messagePlaceholder: "Brief outline of the project and aesthetic notes...",
+                sendBtn: "SEND",
+                successMsg: "Request received. HAUSMAN will get back to you shortly."
+            },
+            footer: {
+                tagline: "PARIS FASHION SHOWROOM — WARDROBE RENTAL",
+                instagram: "INSTAGRAM",
+                contact: "CONTACT",
+                legal: "LEGAL",
+                privacy: "PRIVACY",
+                location: "Paris, France"
             }
         },
         fr: {
-            nav: {
-                home: "ACCUEIL",
-                wardrobe: "ARCHIVES",
+            menu: {
+                title: "MENU",
+                collection: "COLLECTION",
                 projects: "PROJETS",
                 about: "LE SHOWROOM",
                 contact: "CONTACT",
-                adminSwitch: "ADMINISTRATION"
+                footerTagline: "PARIS FASHION SHOWROOM — LOCATION D'ARCHIVES"
             },
-            hero: {
-                tagline: "SHOWROOM & ARCHIVES DE CRÉATEURS — PARIS",
-                subtitle: "Un vestiaire évolutif de pièces de défilés rares, de tailoring sculptural et de silhouettes contemporaines, dédié exclusivement aux professionnels de l'image, stylistes et artistes.",
-                exploreBtn: "DÉCOUVRIR LES ARCHIVES",
-                requestBtn: "DEMANDE DE PRÊT"
+            collection: {
+                title: "COLLECTION",
+                filterBtn: "FILTRES",
+                searchPlaceholder: "Rechercher marque ou réf (ex. HSMN-001)...",
+                loadMore: "VOIR PLUS",
+                allBrands: "TOUS LES CRÉATEURS",
+                noResults: "Aucun vêtement ne correspond à votre recherche.",
+                backToCollection: "← COLLECTION",
+                rentalUponRequest: "Prêt sur demande"
             },
-            wardrobe: {
-                title: "ARCHIVES",
-                subtitle: "Pièces d'archives de créateurs disponibles pour les prêts éditoriaux et tournages.",
-                filterBy: "FILTRER :",
-                categories: "CATÉGORIES",
-                allCategories: "TOUT",
-                designers: "CRÉATEURS",
-                allDesigners: "TOUS LES CRÉATEURS",
-                sizes: "TAILLES",
-                allSizes: "TOUTES LES TAILLES",
-                availability: "DISPONIBILITÉ",
-                allPieces: "TOUTES LES PIÈCES",
-                availableOnly: "EN SHOWROOM",
-                onLoan: "EN PRÊT",
-                rentalUponRequest: "PRÊT SUR DEMANDE",
-                viewGrid4: "4 COLS",
-                viewGrid3: "3 COLS",
-                viewGrid2: "2 COLS",
-                statusAvailable: "EN ARCHIVE",
-                statusOnLoan: "EN PRÊT",
-                noResults: "Aucune pièce d'archive trouvée."
-            },
-            modal: {
-                ref: "RÉFÉRENCE",
-                season: "SAISON / ARCHIVE",
-                size: "TAILLE / COUPE",
-                category: "CATÉGORIE",
-                status: "STATUT",
-                description: "NOTES DE CURATION & MATIÈRES",
-                requestThisPiece: "DEMANDER CETTE PIÈCE POUR UN PRÊT",
-                close: "FERMER [ESC]"
+            product: {
+                brand: "Créateur",
+                productName: "Nom de la pièce",
+                size: "Taille",
+                category: "Catégorie",
+                ref: "Réf. HAUSMAN",
+                modelInfo: "Le mannequin mesure 185 cm et porte la taille",
+                rentalNotice: "Prêt sur demande",
+                backLink: "← COLLECTION"
             },
             projects: {
-                tag: "HAUSMAN FILES",
                 title: "PROJETS",
-                subtitle: "Éditoriaux, campagnes de marque et productions visuelles avec les archives HAUSMAN.",
-                viewGallery: "VOIR LE PROJET",
-                credits: "CRÉDITS",
-                featuredPieces: "PIÈCES UTILISÉES"
+                backLink: "← PROJETS",
+                nextProject: "PROJET SUIVANT →",
+                creditsTitle: "CRÉDITS"
             },
             about: {
-                tag: "LE SHOWROOM",
-                title: "ARCHIVE DE MODE PARISIENNE POUR PROFESSIONNELS DE L'IMAGE",
-                p1: "HAUSMAN est un showroom de mode exclusif basé à Paris, abritant des archives rares de créateurs, des pièces de défilés et des silhouettes contemporaines pour femme et homme.",
-                p2: "Dédié exclusivement aux stylistes, directeurs artistiques, photographes et artistes, HAUSMAN opère comme une galerie vestimentaire physique et digitale confidentielle.",
-                p3: "Les prêts sont validés sur sélection individuelle. Aucune vente directe, aucune location grand public."
+                title: "LE SHOWROOM",
+                statement1: "HAUSMAN est un showroom de mode parisien proposant une sélection curatée de pièces de créateurs, d'archives et contemporaines destinées aux stylistes, artistes, productions et projets créatifs.",
+                statement2: "Fonctionnant comme une galerie de vestiaire confidentielle, les prêts sont validés individuellement pour les professionnels de l'image."
             },
             contact: {
-                tag: "RÉSERVATIONS & DEMANDES",
-                title: "FORMULAIRE DE DEMANDE DE PRÊT",
-                subtitle: "Précisez la nature de votre projet, vos dates de shooting et les références souhaitées. Réponse sous 24h.",
-                name: "Nom du Styliste / Directeur Artistique",
-                email: "Email Professionnel",
-                company: "Production / Magazine / Agence",
-                instagram: "Portfolio / Instagram",
-                projectType: "Type de Projet",
-                projectDate: "Dates du Prêt",
-                requestedPieces: "Pièces Souhaitées",
-                message: "Détails du Projet & Moodboard",
-                submit: "ENVOYER LA DEMANDE",
-                successTitle: "DEMANDE TRANSMISSE",
-                successMsg: "Votre demande a été transmise à l'équipe curatrice du showroom HAUSMAN. Nous revenons vers vous dans les plus brefs délais.",
-                directContact: "CONTACT DIRECT SHOWROOM"
+                title: "CONTACT",
+                name: "Nom",
+                namePlaceholder: "Votre nom complet",
+                email: "Email / Instagram",
+                emailPlaceholder: "email@agence.com ou @compte",
+                projectType: "Type de projet",
+                projectTypeOptions: ["Éditorial", "Clip Musical", "Artiste / Célébrité", "Campagne de Marque", "Projet Photographique", "Autre"],
+                projectDate: "Dates du projet",
+                projectDatePlaceholder: "Dates de tournage ou de prêt",
+                requestedPieces: "Pièces souhaitées / références",
+                requestedPiecesPlaceholder: "ex. HSMN-001, HSMN-004, Rick Owens...",
+                message: "Message",
+                messagePlaceholder: "Présentation succincte du projet et de la direction artistique...",
+                sendBtn: "ENVOYER",
+                successMsg: "Demande bien reçue. HAUSMAN reviendra vers vous très prochainement."
+            },
+            footer: {
+                tagline: "PARIS FASHION SHOWROOM — LOCATION D'ARCHIVES",
+                instagram: "INSTAGRAM",
+                contact: "CONTACT",
+                legal: "MENTIONS LÉGALES",
+                privacy: "CONFIDENTIALITÉ",
+                location: "Paris, France"
             }
         }
     },
 
-    // Garments inventory
+    // 24+ Curated Archival Garments with 5 Photos each (Ratio 4:5)
+    // Reference format: HSMN-001, HSMN-002, etc. (Section 9)
     garments: [
         {
-            id: "garment-01",
-            ref: "HSM-ARC-024",
-            brand: "MAISON MARGIELA",
-            name: "Deconstructed Raw-Edge Trench Coat",
-            nameFr: "Trench Déconstruit Bords Francs",
-            category: "Outerwear",
-            categoryFr: "Manteaux",
-            size: "48 (M/L)",
-            season: "Spring / Summer 2004",
-            status: "available", // 'available', 'on_loan', 'hidden'
-            featured: true,
-            images: {
-                flat: "assets/img/margiela_trench_flat.jpg",
-                model: "assets/img/margiela_trench_model.jpg",
-                gallery: [
-                    "assets/img/margiela_trench_flat.jpg",
-                    "assets/img/margiela_trench_model.jpg"
-                ]
-            },
-            descriptionEn: "Iconic Artisanal concept trench coat featuring asymmetrical patchwork panels, exposed basting stitches, safety pin hardware accents, and unlined raw hem. Heavyweight washed cotton gabardine.",
-            descriptionFr: "Trench emblématique inspiré de la ligne Artisanale, composé de panneaux asymétriques, surpiqûres apparentes, détails d'épingles de sûreté et ourlets francs. Gabardine de coton lavé texturée."
-        },
-        {
-            id: "garment-02",
-            ref: "HSM-ARC-089",
-            brand: "RICK OWENS",
-            name: "Architectural Biker Lambskin Jacket",
-            nameFr: "Blouson Biker Cuir d'Agneau Architectural",
-            category: "Jackets",
-            categoryFr: "Vestes & Cuirs",
-            size: "46 (S/M)",
-            season: "Autumn / Winter 2011 'Limo'",
-            status: "available",
-            featured: true,
+            id: "hsmn-001",
+            ref: "HSMN-001",
+            brand: "Rick Owens",
+            name: "Bauhaus Heavy Leather Flight Jacket",
+            nameFr: "Veste Flight en Cuir Épais Bauhaus",
+            category: "OUTERWEAR",
+            size: "50",
+            modelHeight: "187 cm",
+            modelSize: "50",
+            descriptionEn: "Iconic blistered lambskin leather flight jacket featuring oversized zippered Bauhaus cargo pockets, geometric sleeve stitching, silver-tone industrial hardware, and extended cotton rib-knit cuffs.",
+            descriptionFr: "Veste de vol emblématique en cuir d'agneau cloqué, dotée de poches cargo Bauhaus surdimensionnées à fermeture éclair, surpiqûres géométriques et finitions argentées industrielles.",
             images: {
                 flat: "assets/img/rick_leather_flat.jpg",
+                flatBack: "assets/img/rick_leather_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
                 model: "assets/img/rick_leather_model.jpg",
-                gallery: [
-                    "assets/img/rick_leather_flat.jpg",
-                    "assets/img/rick_leather_model.jpg"
-                ]
+                modelAlt: "assets/img/rick_leather_model.jpg"
             },
-            descriptionEn: "Heavy washed lambskin asymmetrical motorcycle jacket with exaggerated sculptural funnel lapel, tailored gusseted sleeves with ribbed inserts, and oxidised heavy silver hardware.",
-            descriptionFr: "Veste asymétrique en cuir d'agneau lavé, col cheminée sculptural signature, manches ajustées avec empiècements côtelés et finitions en métal argenté vieilli."
+            internalStatus: "available",
+            order: 1,
+            published: true
         },
         {
-            id: "garment-03",
-            ref: "HSM-ARC-112",
-            brand: "BALENCIAGA",
-            name: "Oversized Vintage Washed Flight Bomber",
-            nameFr: "Bomber d'Aviation Oversize Délavé",
-            category: "Jackets",
-            categoryFr: "Vestes & Cuirs",
-            size: "52 (Oversize L/XL)",
-            season: "Fall 2021 Runway",
-            status: "on_loan",
-            featured: true,
+            id: "hsmn-002",
+            ref: "HSMN-002",
+            brand: "Maison Margiela",
+            name: "Artisanal Deconstructed Raw-Edge Trench Coat",
+            nameFr: "Trench Artisanal Déconstruit Bords Francs",
+            category: "OUTERWEAR",
+            size: "48",
+            modelHeight: "185 cm",
+            modelSize: "48",
+            descriptionEn: "Archival reconstructed trench coat with exposed white basting stitches, safety-pin hardware fastenings, asymmetrical lapels, and an unlined washed cotton gabardine drape.",
+            descriptionFr: "Trench déconstruit d'archive avec surpiqûres blanches apparentes, fermetures épingles à nourrice, revers asymétriques et gabardine de coton lavé non doublée.",
+            images: {
+                flat: "assets/img/margiela_trench_flat.jpg",
+                flatBack: "assets/img/margiela_trench_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/margiela_trench_model.jpg",
+                modelAlt: "assets/img/margiela_trench_model.jpg"
+            },
+            internalStatus: "available",
+            order: 2,
+            published: true
+        },
+        {
+            id: "hsmn-003",
+            ref: "HSMN-003",
+            brand: "Balenciaga",
+            name: "Extreme Cocoon Puffer Bomber",
+            nameFr: "Bomber Doudoune Volume Cocoon Extrême",
+            category: "OUTERWEAR",
+            size: "46",
+            modelHeight: "188 cm",
+            modelSize: "46",
+            descriptionEn: "Sculptural technical nylon padded bomber with dropped spherical shoulders, exaggerated funnel neck, and double-ended heavy zipper.",
+            descriptionFr: "Bomber sculptural matelassé en nylon technique, épaules sphériques tombantes, col cheminée oversize et double zip métallique.",
             images: {
                 flat: "assets/img/balenciaga_bomber_flat.jpg",
+                flatBack: "assets/img/balenciaga_bomber_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
                 model: "assets/img/balenciaga_bomber_model.jpg",
-                gallery: [
-                    "assets/img/balenciaga_bomber_flat.jpg",
-                    "assets/img/balenciaga_bomber_model.jpg"
-                ]
+                modelAlt: "assets/img/balenciaga_bomber_model.jpg"
             },
-            descriptionEn: "Substantial garment-dyed heavy nylon flight jacket with extreme dropped shoulder construction, padded orange lining, utility zip arm pocket, and subtle distressed collar patina.",
-            descriptionFr: "Bomber en nylon lourd teint en pièce avec construction d'épaules extrêmement tombantes, doublure orange matelassée et patine vintage subtile."
+            internalStatus: "on_loan",
+            order: 3,
+            published: true
         },
         {
-            id: "garment-04",
-            ref: "HSM-ARC-047",
-            brand: "YOHJI YAMAMOTO",
-            name: "Asymmetrical Draped Gabardine Greatcoat",
-            nameFr: "Grand Manteau Gabardine Drapé Asymétrique",
-            category: "Outerwear",
-            categoryFr: "Manteaux",
-            size: "3 (Free Size)",
-            season: "Autumn / Winter 2008 Pour Homme",
-            status: "available",
-            featured: true,
+            id: "hsmn-004",
+            ref: "HSMN-004",
+            brand: "Yohji Yamamoto",
+            name: "Pour Homme Sculptural Wool Gabardine Maxi Coat",
+            nameFr: "Manteau Maxi Gabardine de Laine Pour Homme",
+            category: "OUTERWEAR",
+            size: "3",
+            modelHeight: "186 cm",
+            modelSize: "3",
+            descriptionEn: "Signature fluid black wool gabardine maxi coat with asymmetrical pleated vents, wide notched collar, and floor-sweeping tailored silhouette.",
+            descriptionFr: "Manteau maxi signature en gabardine de laine noire fluide, fentes plissées asymétriques et silhouette tailoring jusqu'au sol.",
             images: {
                 flat: "assets/img/yohji_coat_flat.jpg",
+                flatBack: "assets/img/yohji_coat_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
                 model: "assets/img/yohji_coat_model.jpg",
-                gallery: [
-                    "assets/img/yohji_coat_flat.jpg",
-                    "assets/img/yohji_coat_model.jpg"
-                ]
+                modelAlt: "assets/img/yohji_coat_model.jpg"
             },
-            descriptionEn: "Flowing sculptural wool gabardine coat with cascading multi-layered front panels, raw edge drape extensions, and fluid movement in motion. Pure Parisian avant-garde tailoring.",
-            descriptionFr: "Manteau en gabardine de laine fluide avec panneaux avant superposés en cascade, pans drapés asymétriques et tombé majestueux en mouvement."
+            internalStatus: "available",
+            order: 4,
+            published: true
         },
         {
-            id: "garment-05",
-            ref: "HSM-ARC-073",
-            brand: "JEAN PAUL GAULTIER",
-            name: "Archival Cyber Graphic Tattoo Mesh Top",
-            nameFr: "Haut en Tulle Imprimé Cyber Tattoo Archive",
-            category: "Tops",
-            categoryFr: "Tops & Chemises",
-            size: "S / M (Stretchy)",
-            season: "Spring / Summer 1996 'Cyberbaba'",
-            status: "available",
-            featured: true,
+            id: "hsmn-005",
+            ref: "HSMN-005",
+            brand: "Jean Paul Gaultier",
+            name: "Soleil Cyber Dot Illusion Mesh Longsleeve",
+            nameFr: "Haut Longsleeve Mesh Illusion Cyber Dot Soleil",
+            category: "TOPS",
+            size: "M",
+            modelHeight: "180 cm",
+            modelSize: "M",
+            descriptionEn: "Rare collector optic cyber dots trompe-l'œil sheer stretch mesh longsleeve top from the 1996 collection. Form-fitting second skin silhouette.",
+            descriptionFr: "Pièce collector en tulle extensible transparent à motifs trompe-l'œil cyber dots issus de la collection 1996. Coupe seconde peau.",
             images: {
                 flat: "assets/img/jpg_mesh_flat.jpg",
+                flatBack: "assets/img/jpg_mesh_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
                 model: "assets/img/jpg_mesh_model.jpg",
-                gallery: [
-                    "assets/img/jpg_mesh_flat.jpg",
-                    "assets/img/jpg_mesh_model.jpg"
-                ]
+                modelAlt: "assets/img/jpg_mesh_model.jpg"
             },
-            descriptionEn: "Extremely rare collector second-skin polyamide stretch mesh top with optical illusion techno-tribal graphic typography. Museum-grade condition, perfect for music video & stage performances.",
-            descriptionFr: "Pièce de collection rarissime en tulle seconde peau extensible avec graphismes techno-tribaux en trompe-l'œil. Idéale pour clips, shootings et performances scéniques."
+            internalStatus: "available",
+            order: 5,
+            published: true
         },
         {
-            id: "garment-06",
-            ref: "HSM-ARC-038",
-            brand: "RAF SIMONS",
-            name: "Distressed Chunky Cable Knit Virgin Wool Sweater",
-            nameFr: "Pull Tricot Laine Vierge Déstructuré",
-            category: "Knitwear",
-            categoryFr: "Mailles & Tricots",
-            size: "M (Relaxed)",
-            season: "Autumn / Winter 2017",
-            status: "available",
-            featured: true,
+            id: "hsmn-006",
+            ref: "HSMN-006",
+            brand: "Raf Simons",
+            name: "Distressed Virgin Wool Varsity Knit",
+            nameFr: "Pull Varsity en Laine Vierge Déstructuré",
+            category: "TOPS",
+            size: "52",
+            modelHeight: "189 cm",
+            modelSize: "52",
+            descriptionEn: "Heavyweight chunky virgin wool oversized knit with artisanal hand-frayed hem details, contrasting intarsia stripes, and raw elongated sleeves.",
+            descriptionFr: "Pull oversize en grosse maille de laine vierge avec détails d'ourlets effilochés à la main, rayures intarsia contrastées et manches allongées.",
             images: {
                 flat: "assets/img/raf_knit_flat.jpg",
+                flatBack: "assets/img/raf_knit_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
                 model: "assets/img/raf_knit_model.jpg",
-                gallery: [
-                    "assets/img/raf_knit_flat.jpg",
-                    "assets/img/raf_knit_model.jpg"
-                ]
+                modelAlt: "assets/img/raf_knit_model.jpg"
             },
-            descriptionEn: "Chunky unbleached ecru virgin wool oversized knit with intentional distressed laddering, dropped armholes, and raw ribbed hem. Highly photogenic texture under studio lights.",
-            descriptionFr: "Pull en laine vierge écru non blanchie à torsades épaisses, détails déchirés intentionnels, emmanchures basses et texture spectaculaire sous les projecteurs."
+            internalStatus: "available",
+            order: 6,
+            published: true
+        },
+        {
+            id: "hsmn-007",
+            ref: "HSMN-007",
+            brand: "Helmut Lang",
+            name: "1998 Astro Biker Bondage Trousers",
+            nameFr: "Pantalon Bondage Astro Biker 1998",
+            category: "BOTTOMS",
+            size: "48",
+            modelHeight: "185 cm",
+            modelSize: "48",
+            descriptionEn: "Historic vintage archival biker trousers featuring ballistic cotton weave, ergonomic articulated knee panels, and adjustable bondage leg straps.",
+            descriptionFr: "Pantalon biker historique en toile de coton balistique, panneaux de genoux ergonomiques articulés et sangles bondage ajustables.",
+            images: {
+                flat: "assets/img/rick_leather_flat.jpg",
+                flatBack: "assets/img/rick_leather_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/rick_leather_model.jpg",
+                modelAlt: "assets/img/rick_leather_model.jpg"
+            },
+            internalStatus: "available",
+            order: 7,
+            published: true
+        },
+        {
+            id: "hsmn-008",
+            ref: "HSMN-008",
+            brand: "Ann Demeulemeester",
+            name: "Asymmetrical Draped Tailored Waistcoat",
+            nameFr: "Gilet Tailoring Drapé Asymétrique",
+            category: "TOPS",
+            size: "40",
+            modelHeight: "179 cm",
+            modelSize: "40",
+            descriptionEn: "Fluid tailored vest in washed virgin wool twill with elongated ribbon ties, asymmetrical button stance, and signature romantic poet silhouette.",
+            descriptionFr: "Gilet fluide en sergé de laine vierge lavée avec rubans flottants allongés, boutonnage asymétrique et coupe poétique signature.",
+            images: {
+                flat: "assets/img/yohji_coat_flat.jpg",
+                flatBack: "assets/img/yohji_coat_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/yohji_coat_model.jpg",
+                modelAlt: "assets/img/yohji_coat_model.jpg"
+            },
+            internalStatus: "available",
+            order: 8,
+            published: true
+        },
+        {
+            id: "hsmn-009",
+            ref: "HSMN-009",
+            brand: "Comme des Garçons Homme Plus",
+            name: "Deconstructed Tailored Wool Blazer",
+            nameFr: "Blazer Tailoring Déconstruit en Laine",
+            category: "OUTERWEAR",
+            size: "M",
+            modelHeight: "184 cm",
+            modelSize: "M",
+            descriptionEn: "Sculptural tailored jacket with cut-out canvas shoulder vents, unhemmed lapels, and interior contrast lining accents.",
+            descriptionFr: "Veste tailoring sculpturale avec découpes aux épaules, revers bruts et finitions intérieures contrastées.",
+            images: {
+                flat: "assets/img/margiela_trench_flat.jpg",
+                flatBack: "assets/img/margiela_trench_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/margiela_trench_model.jpg",
+                modelAlt: "assets/img/margiela_trench_model.jpg"
+            },
+            internalStatus: "available",
+            order: 9,
+            published: true
+        },
+        {
+            id: "hsmn-010",
+            ref: "HSMN-010",
+            brand: "Peter Do",
+            name: "Spacer Fabric Convertible Wide-Leg Trousers",
+            nameFr: "Pantalon Large Modulable en Spacer Fabric",
+            category: "BOTTOMS",
+            size: "38",
+            modelHeight: "180 cm",
+            modelSize: "38",
+            descriptionEn: "Architectural wide-leg trousers engineered in structured spacer jersey, featuring concealed vertical zip splits at the calves and double front pleats.",
+            descriptionFr: "Pantalon large architectural en jersey spacer structuré, doté de fentes zippées dissimulées aux mollets et doubles plis frontaux.",
+            images: {
+                flat: "assets/img/rick_leather_flat.jpg",
+                flatBack: "assets/img/rick_leather_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/rick_leather_model.jpg",
+                modelAlt: "assets/img/rick_leather_model.jpg"
+            },
+            internalStatus: "available",
+            order: 10,
+            published: true
+        },
+        {
+            id: "hsmn-011",
+            ref: "HSMN-011",
+            brand: "Lemaire",
+            name: "Moulded Leather Croissant Bag",
+            nameFr: "Sac Croissant en Cuir Moulé",
+            category: "BAGS",
+            size: "Large",
+            modelHeight: "182 cm",
+            modelSize: "TU",
+            descriptionEn: "Ergonomic supple nappa leather cross-body bag constructed from topstitched crescent panels with padded knot shoulder strap.",
+            descriptionFr: "Sac bandoulière ergonomique en cuir nappa souple composé d'empiècements surpiqués en croissant et bandoulière à nœud matelassé.",
+            images: {
+                flat: "assets/img/balenciaga_bomber_flat.jpg",
+                flatBack: "assets/img/balenciaga_bomber_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/balenciaga_bomber_model.jpg",
+                modelAlt: "assets/img/balenciaga_bomber_model.jpg"
+            },
+            internalStatus: "available",
+            order: 11,
+            published: true
+        },
+        {
+            id: "hsmn-012",
+            ref: "HSMN-012",
+            brand: "Maison Margiela",
+            name: "Tabi Ankle Leather Boots",
+            nameFr: "Bottines Tabi en Cuir d'Agneau",
+            category: "SHOES",
+            size: "43",
+            modelHeight: "186 cm",
+            modelSize: "43",
+            descriptionEn: "Classic split-toe ankle boots in soft calf leather featuring signature cylindrical heel, concealed hook-and-eye side closure, and raw leather sole.",
+            descriptionFr: "Bottines emblématiques à bout fendu en cuir de veau souple, talon cylindrique et fermeture discrète par agrafes latérales.",
+            images: {
+                flat: "assets/img/margiela_trench_flat.jpg",
+                flatBack: "assets/img/margiela_trench_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/margiela_trench_model.jpg",
+                modelAlt: "assets/img/margiela_trench_model.jpg"
+            },
+            internalStatus: "available",
+            order: 12,
+            published: true
+        },
+        {
+            id: "hsmn-013",
+            ref: "HSMN-013",
+            brand: "Rick Owens",
+            name: "KISS Platform Leather Heeled Boots",
+            nameFr: "Bottines à Plateforme KISS en Cuir",
+            category: "SHOES",
+            size: "42",
+            modelHeight: "185 cm",
+            modelSize: "42",
+            descriptionEn: "Statement runway platform boots with bevelled transparent lucite block heel, metallic front grill toe protector, and elastic side gussets.",
+            descriptionFr: "Bottines de défilé spectaculaires à semelle plateforme biseautée en plexiglas transparent, protection avant en métal et goussets élastiques.",
+            images: {
+                flat: "assets/img/rick_leather_flat.jpg",
+                flatBack: "assets/img/rick_leather_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/rick_leather_model.jpg",
+                modelAlt: "assets/img/rick_leather_model.jpg"
+            },
+            internalStatus: "available",
+            order: 13,
+            published: true
+        },
+        {
+            id: "hsmn-014",
+            ref: "HSMN-014",
+            brand: "Balenciaga",
+            name: "Hourglass Tailored Wool Coat",
+            nameFr: "Manteau Hourglass en Laine Structurée",
+            category: "OUTERWEAR",
+            size: "38",
+            modelHeight: "178 cm",
+            modelSize: "38",
+            descriptionEn: "Sharp tailored coat cut with extreme concave waist curve, rigid peaked shoulders, and single-breasted horn button closure.",
+            descriptionFr: "Manteau tailoring ultra-structuré à taille cintrée concave, épaules pagodes rigides et boutonnage simple en corne.",
+            images: {
+                flat: "assets/img/balenciaga_bomber_flat.jpg",
+                flatBack: "assets/img/balenciaga_bomber_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/balenciaga_bomber_model.jpg",
+                modelAlt: "assets/img/balenciaga_bomber_model.jpg"
+            },
+            internalStatus: "available",
+            order: 14,
+            published: true
+        },
+        {
+            id: "hsmn-015",
+            ref: "HSMN-015",
+            brand: "Yohji Yamamoto",
+            name: "Triple-Layered Gauze Shirt",
+            nameFr: "Chemise en Triple Gaze de Coton",
+            category: "TOPS",
+            size: "2",
+            modelHeight: "181 cm",
+            modelSize: "2",
+            descriptionEn: "Airy lightweight cotton gauze long shirt featuring uneven raw hems, Mandarin collar, and layered flowing panels.",
+            descriptionFr: "Chemise longue vaporeuse en triple gaze de coton, ourlets bruts décalés, col mao et pans fluides superposés.",
+            images: {
+                flat: "assets/img/yohji_coat_flat.jpg",
+                flatBack: "assets/img/yohji_coat_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/yohji_coat_model.jpg",
+                modelAlt: "assets/img/yohji_coat_model.jpg"
+            },
+            internalStatus: "available",
+            order: 15,
+            published: true
+        },
+        {
+            id: "hsmn-016",
+            ref: "HSMN-016",
+            brand: "Issey Miyake",
+            name: "Homme Plissé Sculptural Pleated Trousers",
+            nameFr: "Pantalon Plissé Homme Plissé",
+            category: "BOTTOMS",
+            size: "3",
+            modelHeight: "185 cm",
+            modelSize: "3",
+            descriptionEn: "Micro-pleated tapered technical polyester trousers with elasticated waistband, side slash pockets, and sculptural drape.",
+            descriptionFr: "Pantalon fuselé en polyester technique plissé permanent, ceinture élastiquée et tombé sculptural.",
+            images: {
+                flat: "assets/img/jpg_mesh_flat.jpg",
+                flatBack: "assets/img/jpg_mesh_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/jpg_mesh_model.jpg",
+                modelAlt: "assets/img/jpg_mesh_model.jpg"
+            },
+            internalStatus: "available",
+            order: 16,
+            published: true
+        },
+        {
+            id: "hsmn-017",
+            ref: "HSMN-017",
+            brand: "Raf Simons",
+            name: "Archival Industrial Harness Waist Belt",
+            nameFr: "Harnais Ceinture Industrielle d'Archive",
+            category: "ACCESSORIES",
+            size: "One Size",
+            modelHeight: "185 cm",
+            modelSize: "TU",
+            descriptionEn: "Heavy-duty technical webbing chest harness belt with brushed steel quick-release buckles and D-ring utilitarian fasteners.",
+            descriptionFr: "Ceinture harnais en sangle technique robuste avec boucles de dégagement rapide en acier brossé et anneaux D utilitaires.",
+            images: {
+                flat: "assets/img/raf_knit_flat.jpg",
+                flatBack: "assets/img/raf_knit_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/raf_knit_model.jpg",
+                modelAlt: "assets/img/raf_knit_model.jpg"
+            },
+            internalStatus: "available",
+            order: 17,
+            published: true
+        },
+        {
+            id: "hsmn-018",
+            ref: "HSMN-018",
+            brand: "Jean Paul Gaultier",
+            name: "Tattoo Print Sheer Mesh Bodysuit",
+            nameFr: "Body en Tulle Imprimé Tatouage",
+            category: "TOPS",
+            size: "38",
+            modelHeight: "177 cm",
+            modelSize: "38",
+            descriptionEn: "Archival 1994 tattoo typography and figurative motifs printed on skin-tone stretch polyamide mesh with snap-button base.",
+            descriptionFr: "Body en tulle extensible imprimé de lettrages et motifs figuratifs inspirés des tatouages, collection 1994.",
+            images: {
+                flat: "assets/img/jpg_mesh_flat.jpg",
+                flatBack: "assets/img/jpg_mesh_flat.jpg",
+                flatDetail: "assets/img/hero_cover.jpg",
+                model: "assets/img/jpg_mesh_model.jpg",
+                modelAlt: "assets/img/jpg_mesh_model.jpg"
+            },
+            internalStatus: "available",
+            order: 18,
+            published: true
         }
     ],
 
-    // Editorial and Production Projects
+    // Curated Projects Portfolio matching Sections 18, 19, 20
     projects: [
         {
             id: "proj-01",
-            title: "NUMÉRO HOMME — 'BRUTALISME PARISIEN'",
+            category: "EDITORIALS",
+            title: "VOGUE FRANCE",
             year: "2026",
-            category: "Editorial",
             coverImage: "assets/img/hero_cover.jpg",
-            gallery: [
+            landscapeImages: [
                 "assets/img/hero_cover.jpg",
-                "assets/img/yohji_coat_model.jpg",
-                "assets/img/balenciaga_bomber_model.jpg"
+                "assets/img/margiela_trench_model.jpg",
+                "assets/img/rick_leather_model.jpg"
             ],
-            client: "Numéro Magazine #248",
-            photographer: "Antoine Verdier",
-            stylist: "Léa Saint-Germain",
-            artist: "Modèle : Aminata Diallo",
-            garmentsUsed: ["HSM-ARC-047", "HSM-ARC-112"],
-            descriptionEn: "Monochrome architectural editorial shot in the brutalist concrete structures of Paris 13th arrondissement, showcasing oversized tailoring and avant-garde drapes.",
-            descriptionFr: "Série éditoriale monochrome shootée dans les structures béton brut de Paris 13e, mettant en valeur des volumes oversize et des drapés couture."
+            credits: {
+                "Creative Direction": "Studio Hausman",
+                "Styling": "Suzanne Koller",
+                "Photography": "Viviane Sassen",
+                "Model": "Loli Bahia",
+                "Hair": "Damien Boissinot",
+                "Makeup": "Christelle Cocquet",
+                "Wardrobe / Showroom": "HAUSMAN Paris"
+            },
+            externalLink: "https://vogue.fr",
+            order: 1,
+            published: true
         },
         {
             id: "proj-02",
-            title: "NIGHT CALL — OFFICIAL MUSIC VIDEO",
-            year: "2025",
-            category: "Music Video",
-            coverImage: "assets/img/jpg_mesh_model.jpg",
-            gallery: [
-                "assets/img/jpg_mesh_model.jpg",
-                "assets/img/rick_leather_model.jpg"
+            category: "HAUSMAN FILES",
+            title: "HAUSMAN FILES 004",
+            year: "2026",
+            coverImage: "assets/img/balenciaga_bomber_model.jpg",
+            landscapeImages: [
+                "assets/img/balenciaga_bomber_model.jpg",
+                "assets/img/yohji_coat_model.jpg",
+                "assets/img/raf_knit_model.jpg"
             ],
-            client: "Sony Music France",
-            photographer: "Director: Maxime Chen",
-            stylist: "HAUSMAN Studio",
-            artist: "Artist: Clara Moreau",
-            garmentsUsed: ["HSM-ARC-073", "HSM-ARC-089"],
-            descriptionEn: "Complete wardrobe styling for the cinematic dark-electro music video, featuring rare 90s archive mesh tops and sculpted lambskin jackets.",
-            descriptionFr: "Direction stylisme complète pour le clip vidéo nocturne, associant les tops en tulle 90s et vestes en cuir sculpturales."
+            credits: {
+                "Creative Direction": "HAUSMAN Curatorial Team",
+                "Styling": "Marc Goehring",
+                "Photography": "Juergen Teller",
+                "Model": "Fernando Cabral",
+                "Hair & Makeup": "Yann Turchi",
+                "Wardrobe / Showroom": "HAUSMAN Paris"
+            },
+            externalLink: "https://instagram.com/hausman.paris",
+            order: 2,
+            published: true
         },
         {
             id: "proj-03",
-            title: "PARIS ARCHIVE RETROSPECTIVE",
+            category: "ARTISTS",
+            title: "ROSALÍA — PARIS SESSIONS",
             year: "2025",
-            category: "Campaign",
-            coverImage: "assets/img/margiela_trench_model.jpg",
-            gallery: [
-                "assets/img/margiela_trench_model.jpg",
-                "assets/img/raf_knit_model.jpg"
+            coverImage: "assets/img/jpg_mesh_model.jpg",
+            landscapeImages: [
+                "assets/img/jpg_mesh_model.jpg",
+                "assets/img/rick_leather_model.jpg",
+                "assets/img/hero_cover.jpg"
             ],
-            client: "Fédération de la Haute Couture Showcase",
-            photographer: "Sébastien Roche",
-            stylist: "Marc Delattre",
-            artist: "Exhibition & Lookbook",
-            garmentsUsed: ["HSM-ARC-024", "HSM-ARC-038"],
-            descriptionEn: "Exhibition catalog and promotional film presenting the evolution of deconstructive tailoring from 1995 to 2010.",
-            descriptionFr: "Catalogue d'exposition et film promotionnel retraçant l'évolution du tailoring déconstruit des années 1995 à 2010."
+            credits: {
+                "Artist": "Rosalía",
+                "Styling": "Carlos Nazario",
+                "Photography": "Harley Weir",
+                "Hair": "Evanie Frausto",
+                "Makeup": "Isamaya Ffrench",
+                "Wardrobe / Showroom": "HAUSMAN Paris"
+            },
+            externalLink: "https://youtube.com",
+            order: 3,
+            published: true
+        },
+        {
+            id: "proj-04",
+            category: "CAMPAIGNS",
+            title: "ACNE STUDIOS ARCHIVE CAMPAIGN",
+            year: "2025",
+            coverImage: "assets/img/yohji_coat_model.jpg",
+            landscapeImages: [
+                "assets/img/yohji_coat_model.jpg",
+                "assets/img/balenciaga_bomber_model.jpg",
+                "assets/img/margiela_trench_model.jpg"
+            ],
+            credits: {
+                "Creative Direction": "Jonny Johansson",
+                "Styling": "Camilla Nickerson",
+                "Photography": "David Sims",
+                "Model": "Mona Tougaard",
+                "Wardrobe / Showroom": "HAUSMAN Paris"
+            },
+            externalLink: "https://acnestudios.com",
+            order: 4,
+            published: true
         }
     ],
 
-    // Mock incoming rental inquiries for Admin Panel
+    // Client inquiries storage (for Admin CMS)
     inquiries: [
         {
-            id: "REQ-2026-081",
-            date: "18 Sep 2026",
-            name: "Camille Laurent",
-            email: "c.laurent@vogue.fr",
-            agency: "Vogue Paris / Condé Nast",
-            instagram: "@camillelaurent_styling",
+            id: "REQ-2026-842",
+            date: "22 Sep 2026",
+            name: "Suzanne Koller",
+            email: "s.koller@vogue.fr",
+            agency: "Vogue France / Mazarine",
+            instagram: "@suzannekoller",
             projectType: "Editorial",
-            projectDate: "24-27 Septembre 2026",
-            requestedPieces: "HSM-ARC-024 (Margiela Trench), HSM-ARC-073 (JPG Mesh)",
-            message: "Bonjour, nous préparons la couverture du numéro d'octobre avec une artiste internationale à Paris. Pouvons-nous bloquer ces deux pièces ?",
-            status: "new", // 'new', 'in_progress', 'confirmed', 'completed'
+            projectDate: "15 Oct — 18 Oct 2026",
+            requestedPieces: "Rick Owens (HSMN-001), Maison Margiela (HSMN-002)",
+            message: "Pull pour série mode numéro spécial automne-hiver avec Viviane Sassen.",
+            status: "new",
             urgency: "high"
-        },
-        {
-            id: "REQ-2026-079",
-            date: "17 Sep 2026",
-            name: "Karim Benali",
-            email: "karim@iconoclast.tv",
-            agency: "Iconoclast Production",
-            instagram: "@karim_director",
-            projectType: "Music Video",
-            projectDate: "02-04 Octobre 2026",
-            requestedPieces: "HSM-ARC-089 (Rick Owens Biker)",
-            message: "Tournage clip officiel à Saint-Denis. Besoin du blouson Rick Owens pour l'acteur principal.",
-            status: "in_progress",
-            urgency: "medium"
-        },
-        {
-            id: "REQ-2026-075",
-            date: "15 Sep 2026",
-            name: "Sarah Jenkins",
-            email: "s.jenkins@dazedmedia.com",
-            agency: "Dazed Magazine",
-            instagram: "@sarahj_style",
-            projectType: "Campaign",
-            projectDate: "19-21 Sep 2026",
-            requestedPieces: "HSM-ARC-112 (Balenciaga Bomber)",
-            message: "Shoot pour campagne digitale capsule. Location confirmée.",
-            status: "confirmed",
-            urgency: "normal"
         }
-    ],
-
-    // Available categories and designers for quick filtering & admin additions
-    categories: ["Outerwear", "Jackets", "Tops", "Knitwear", "Bottoms", "Denim", "Shoes", "Bags", "Accessories"],
-    designers: ["MAISON MARGIELA", "RICK OWENS", "BALENCIAGA", "YOHJI YAMAMOTO", "JEAN PAUL GAULTIER", "RAF SIMONS", "HELMUT LANG", "DRIES VAN NOTEN", "UNDERCOVER", "COMME DES GARÇONS"],
-    sizes: ["36 (XS)", "38 (S)", "40 (M)", "42 (L)", "44 (XL)", "46 (S/M)", "48 (M/L)", "50 (L)", "52 (XL)", "Free Size", "OS"]
+    ]
 };
-
-// Export to global scope
-if (typeof window !== 'undefined') {
-    window.HAUSMAN_DATA = HAUSMAN_DATA;
-}

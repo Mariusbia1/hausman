@@ -3,206 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HAUSMAN — Fashion Showroom & Archive Gallery Paris</title>
-  <meta name="description" content="Parisian fashion showroom & designer archive gallery for stylists, editorial productions, creative directors, and artists." />
+  <title>HAUSMAN — Paris Fashion Showroom</title>
+  <meta name="description" content="Paris fashion showroom & curated designer archive wardrobe for stylists, artists, and creative productions." />
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='sans-serif' font-weight='900'>H</text></svg>">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            heading: ['Chillax', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            body: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-          },
-          colors: {
-            hausman: {
-              black: '#000000',
-              dark: '#0C0D0E',
-              charcoal: '#111827',
-              gray: '#374151',
-              muted: '#6B7280',
-              light: '#F8F9FA',
-              border: '#E5E7EB',
-              subtle: '#F3F4F6'
-            }
-          }
-        }
-      }
-    }
-  </script>
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="container nav-inner">
-      <a href="index.html" class="brand-logo">
-        <span class="brand-title">HAUSMAN</span>
-        <span class="brand-location">PARIS</span>
-      </a>
+  <!-- SECTION 3: INTRO / SPLASH SCREEN -->
+  <div class="splash-overlay" id="splashOverlay">
+    <div class="splash-flasher-container" id="splashFlasher">
+      <!-- Populated dynamically with 20-30 cutouts cycling at 0.1s -->
+    </div>
+    <div class="splash-logo-foreground" id="splashLogo">
+      HAUSMAN
+    </div>
+  </div>
 
-      <nav class="main-nav">
-        <a href="index.html" class="nav-link active" data-i18n="nav.home">HOME</a>
-        <a href="wardrobe.html" class="nav-link" data-i18n="nav.wardrobe">ARCHIVE</a>
-        <a href="projects.html" class="nav-link" data-i18n="nav.projects">PROJECTS</a>
-        <a href="about.html" class="nav-link" data-i18n="nav.about">ABOUT</a>
-        <a href="contact.html" class="nav-link" data-i18n="nav.contact">CONTACT</a>
+  <!-- SECTION 4: MENU / HOMEPAGE -->
+  <div class="menu-page-layout">
+    
+    <!-- Top Left Brand Link (Click relanches Intro) -->
+    <header class="menu-page-header">
+      <a class="menu-brand-link" id="menuBrandLink" title="HAUSMAN — Click to replay intro">HAUSMAN</a>
+    </header>
+
+    <!-- Center Menu Block -->
+    <main class="menu-center-block">
+      <span class="menu-section-title">MENU</span>
+      <nav class="menu-nav-links">
+        <a href="collection.html" class="menu-nav-item" data-i18n="menu.collection">COLLECTION</a>
+        <a href="projects.html" class="menu-nav-item" data-i18n="menu.projects">PROJECTS</a>
+        <a href="about.html" class="menu-nav-item" data-i18n="menu.about">ABOUT</a>
+        <a href="contact.html" class="menu-nav-item" data-i18n="menu.contact">CONTACT</a>
       </nav>
+    </main>
 
-      <div class="header-actions">
-        <div class="lang-switch">
-          <button class="lang-btn active" data-lang="en">EN</button>
-          <span class="lang-sep">/</span>
-          <button class="lang-btn" data-lang="fr">FR</button>
-        </div>
-
-        <!-- MOBILE MENU BURGER BUTTON -->
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu de navigation">
-          <span class="burger-bar"></span>
-          <span class="burger-bar"></span>
-        </button>
+    <!-- Bottom Minimal Footer -->
+    <footer class="menu-page-footer">
+      <span data-i18n="menu.footerTagline">PARIS FASHION SHOWROOM — WARDROBE RENTAL</span>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <span class="lang-sep">/</span>
+        <button class="lang-btn" data-lang="fr">FR</button>
       </div>
-    </div>
+    </footer>
 
-    <!-- MOBILE NAVIGATION DRAWER -->
-    <div class="mobile-nav-drawer" id="mobileNavDrawer">
-      <div class="mobile-nav-content">
-        <nav class="mobile-nav-links">
-          <a href="index.html" class="mobile-nav-link active" data-i18n="nav.home">HOME</a>
-          <a href="wardrobe.html" class="mobile-nav-link" data-i18n="nav.wardrobe">ARCHIVE</a>
-          <a href="projects.html" class="mobile-nav-link" data-i18n="nav.projects">PROJECTS</a>
-          <a href="about.html" class="mobile-nav-link" data-i18n="nav.about">ABOUT</a>
-          <a href="contact.html" class="mobile-nav-link" data-i18n="nav.contact">CONTACT</a>
-        </nav>
-        <div class="mobile-nav-footer">
-          <div style="display: flex; align-items: center; justify-content: space-between;">
-            <span style="font-family: var(--font-heading); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">LANGUE :</span>
-            <div class="lang-switch" style="display: flex;">
-              <button class="lang-btn active" data-lang="en">EN</button>
-              <span class="lang-sep">/</span>
-              <button class="lang-btn" data-lang="fr">FR</button>
-            </div>
-          </div>
-          <div class="mobile-showroom-meta">
-            <strong>HAUSMAN PARIS</strong>
-            <span>75003 Le Marais • Showroom d'archives</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <!-- 1. HERO SECTION -->
-    <section class="home-hero">
-      <div class="container home-hero-grid">
-        <div class="home-hero-identity">
-          <span class="home-showroom-tag" data-i18n="hero.tagline">PARIS SHOWROOM & ARCHIVE WARDROBE</span>
-          <h1 class="home-hero-title">HAUSMAN</h1>
-          <p class="home-hero-subtitle">Archive & Designer Wardrobe Gallery</p>
-          <p class="home-hero-desc" data-i18n="hero.subtitle">
-            An evolving wardrobe of rare designer runway specimens, tailoring, and contemporary silhouettes curated exclusively for fashion imagery, editorial productions, and artists.
-          </p>
-          <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
-            <a href="wardrobe.html" class="btn-primary" data-i18n="hero.exploreBtn">EXPLORE ARCHIVE</a>
-            <a href="contact.html" class="btn-secondary" data-i18n="hero.requestBtn">INQUIRE FOR LOAN</a>
-          </div>
-        </div>
-
-        <div class="home-hero-visual">
-          <img src="assets/img/hero_cover.jpg" alt="HAUSMAN Paris Editorial Archive Look" />
-          <div class="home-hero-visual-caption">PARIS 2026 • ARCHIVE EDITORIAL</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. LATEST ARRIVALS -->
-    <section class="home-section">
-      <div class="container">
-        <div class="home-section-head">
-          <div>
-            <span class="home-showroom-tag" style="margin-bottom: 0.25rem;">CURATED SELECTION</span>
-            <h2 class="home-section-title">CURATED ARCHIVE</h2>
-          </div>
-          <a href="wardrobe.html" class="home-section-link">
-            <span>VIEW ALL ARCHIVE</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-
-        <div class="garments-grid cols-3" id="homeLatestGarments">
-          <!-- Populated dynamically via app.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. HAUSMAN FILES / PROJECTS PREVIEW -->
-    <section class="home-section" style="background: #FAFAFA;">
-      <div class="container">
-        <div class="home-section-head">
-          <div>
-            <span class="home-showroom-tag" style="margin-bottom: 0.25rem;" data-i18n="projects.tag">HAUSMAN FILES</span>
-            <h2 class="home-section-title" data-i18n="projects.title">PROJECTS</h2>
-          </div>
-          <a href="projects.html" class="home-section-link">
-            <span>VIEW ALL PROJECTS</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-
-        <div class="projects-grid" id="homeProjectsPreview">
-          <!-- Populated dynamically via app.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. SHORT ABOUT STATEMENT -->
-    <section class="container">
-      <div class="home-about-snippet">
-        <div>
-          <span class="home-showroom-tag" data-i18n="about.tag">THE SHOWROOM</span>
-          <h2 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
-            PARIS 75003 — LE MARAIS
-          </h2>
-        </div>
-        <div>
-          <p style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 500; line-height: 1.45; margin-bottom: 1.5rem; color: var(--text-primary);" data-i18n="about.p1">
-            HAUSMAN is an exclusive fashion showroom based in Paris, housing an evolving archive of rare designer garments, runway pieces, and contemporary sculptural menswear and womenswear.
-          </p>
-          <a href="about.html" class="home-section-link">
-            <span>READ FULL STATEMENT & APPOINTMENT PROTOCOL</span>
-            <span>&rarr;</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <span class="brand-title">HAUSMAN</span>
-          <span class="brand-location">PARIS SHOWROOM & WARDROBE ARCHIVE</span>
-        </div>
-        <nav class="footer-nav">
-          <a href="index.html" data-i18n="nav.home">HOME</a>
-          <a href="wardrobe.html" data-i18n="nav.wardrobe">ARCHIVE</a>
-          <a href="projects.html" data-i18n="nav.projects">PROJECTS</a>
-          <a href="about.html" data-i18n="nav.about">ABOUT</a>
-          <a href="contact.html" data-i18n="nav.contact">CONTACT</a>
-        </nav>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 HAUSMAN SHOWROOM PARIS. ALL RIGHTS RESERVED.</span>
-        <span>WARDROBE ARCHIVE FOR CREATIVE IMAGE PROFESSIONALS.</span>
-      </div>
-    </div>
-  </footer>
+  </div>
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/app.js"></script>

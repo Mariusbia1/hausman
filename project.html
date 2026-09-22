@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archive Specimen — HAUSMAN Paris</title>
-  <meta name="description" content="Garment archive specimen details — HAUSMAN Paris Fashion Showroom." />
+  <title>Project Details — HAUSMAN Paris</title>
+  <meta name="description" content="Editorial project showcase — HAUSMAN Paris." />
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='sans-serif' font-weight='900'>H</text></svg>">
   <link rel="stylesheet" href="assets/css/main.css" />
@@ -17,7 +17,7 @@
       <a href="index.html" class="site-brand-logo">HAUSMAN</a>
 
       <div class="site-nav-actions">
-        <a href="collection.html" class="btn-nav-action" data-i18n="product.backLink">← COLLECTION</a>
+        <a href="projects.html" class="btn-nav-action" data-i18n="projects.backLink">← PROJECTS</a>
       </div>
 
       <!-- Mobile Hamburger -->
@@ -41,63 +41,41 @@
     </nav>
   </div>
 
-  <!-- SECTION 15: FULLSCREEN LIGHTBOX MODAL -->
-  <div class="lightbox-modal" id="lightboxModal">
-    <button class="lightbox-close-btn" id="lightboxCloseBtn">✕</button>
-    <button class="lightbox-nav-btn prev-btn" id="lightboxPrevBtn">←</button>
-    <div class="lightbox-main-img-wrap">
-      <img class="lightbox-main-img" id="lightboxMainImg" src="" alt="Fullscreen zoom view" />
-    </div>
-    <button class="lightbox-nav-btn next-btn" id="lightboxNextBtn">→</button>
-  </div>
-
-  <!-- MAIN PRODUCT VIEW (Section 10, 11, 12, 13, 16) -->
-  <main class="container garment-view-container">
+  <!-- MAIN PROJECT DETAIL VIEW (Section 19 & 20) -->
+  <main class="container project-page-layout">
     
-    <!-- Top Back to Collection (Section 16) -->
-    <div class="garment-back-row">
-      <a href="collection.html" class="garment-back-link" data-i18n="product.backLink">
-        ← COLLECTION
+    <!-- Top Back Link (Section 19) -->
+    <div style="padding-bottom: 2rem;">
+      <a href="projects.html" class="garment-back-link" data-i18n="projects.backLink">
+        ← PROJECTS
       </a>
     </div>
 
-    <div class="garment-specimen-layout">
-      
-      <!-- Vertical Editorial Stream of 5 Photos in Ratio 4:5 (Section 10 & 11) -->
-      <div class="garment-gallery-stream" id="garmentGalleryStream">
+    <!-- Title -->
+    <h1 style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;" id="projectDetailTitle">
+      VOGUE FRANCE
+    </h1>
+
+    <!-- Stream of Large Horizontal Images (Section 19) -->
+    <div class="project-stream-images" id="projectStreamImages">
+      <!-- Populated dynamically via app.js -->
+    </div>
+
+    <!-- Project Credits (Section 20) -->
+    <div>
+      <h2 style="font-family: var(--font-heading); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.25rem; color: var(--text-muted);" data-i18n="projects.creditsTitle">
+        CREDITS
+      </h2>
+      <div class="project-credits-table" id="projectCreditsTable">
         <!-- Populated dynamically via app.js -->
       </div>
+    </div>
 
-      <!-- Sticky Info Panel (Section 13) -->
-      <div class="garment-info-sticky">
-        <h1 class="specimen-brand" id="specimenBrand">RICK OWENS</h1>
-        <h2 class="specimen-product-name" id="specimenName">Bauhaus Leather Flight Jacket</h2>
-
-        <div class="specimen-specs-list">
-          <div class="specimen-spec-row">
-            <span class="specimen-spec-label" data-i18n="product.size">SIZE</span>
-            <span class="specimen-spec-val" id="specimenSizeVal">50</span>
-          </div>
-          <div class="specimen-spec-row">
-            <span class="specimen-spec-label" data-i18n="product.category">CATEGORY</span>
-            <span class="specimen-spec-val" id="specimenCategoryVal">OUTERWEAR</span>
-          </div>
-          <div class="specimen-spec-row">
-            <span class="specimen-spec-label" data-i18n="product.ref">HAUSMAN REF.</span>
-            <span class="specimen-spec-val" id="specimenRefVal">HSMN-001</span>
-          </div>
-        </div>
-
-        <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;" id="specimenModelVal">
-          Model is 187 cm and wears size 50
-        </p>
-
-        <!-- Pure subtle text, no button (Section 13) -->
-        <div class="specimen-rental-text" id="specimenRentalText" data-i18n="product.rentalNotice">
-          Rental upon request
-        </div>
-      </div>
-
+    <!-- Next Project Link (Section 19) -->
+    <div class="project-next-nav">
+      <a href="#" class="btn-next-project" id="btnNextProject" data-i18n="projects.nextProject">
+        NEXT PROJECT →
+      </a>
     </div>
 
   </main>
