@@ -1,0 +1,22 @@
+{
+  "name": "hausman-showroom",
+  "version": "1.0.0",
+  "description": "HAUSMAN Paris — Digital Showroom & Wardrobe Archive (Website V1)",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8089",
+    "serve": "npx -y serve -l 8089 .",
+    "pdf": "python3 generate_pdf_proposal.py"
+  },
+  "keywords": [
+    "hausman",
+    "showroom",
+    "paris",
+    "fashion",
+    "archive",
+    "wardrobe",
+    "minimalist"
+  ],
+  "author": "HAUSMAN Paris",
+  "license": "ISC"
+}
