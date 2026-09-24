@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 """
 HAUSMAN Paris — Générateur de Devis PDF
-Structure 100% conforme au modèle fourni par Marius BIAOU
+Structure 100% conforme au modèle Marius BIAOU
+Intégration intégrale des 42 sections du Cahier des Charges HAUSMAN V1
+Montant : 620 € Net
 """
 
 from reportlab.lib.pagesizes import A4
@@ -10,7 +12,7 @@ from reportlab.lib import colors
 from reportlab.lib.units import mm, cm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, HRFlowable
+    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable
 )
 from reportlab.pdfgen import canvas
 
@@ -183,10 +185,11 @@ def build_pdf_devis():
     story.append(Paragraph("1. Objet du projet", sec_title_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#0A0A0A"), spaceAfter=5))
     story.append(Paragraph(
-        "Conception et développement du site HAUSMAN : un showroom digital de mode présentant le catalogue "
-        "de location de vêtements, accessoires et pièces designer / archive, ainsi que les projets réalisés "
-        "(éditoriaux, campagnes, collaborations). Le site fonctionne comme une vitrine et une galerie; il ne "
-        "comporte aucune fonctionnalité e-commerce (pas de panier, pas de paiement en ligne, pas de "
+        "Conception et développement du site HAUSMAN : un showroom digital de mode et catalogue de vestiaire "
+        "d'archives basé à Paris, présentant une sélection curatée de pièces designer, archive et contemporaines "
+        "destinées aux stylistes, artistes, productions, photographes, magazines et projets créatifs. "
+        "Le site fonctionne comme une vitrine confidentielle et une galerie éditoriale; il ne comporte aucune "
+        "fonctionnalité e-commerce (pas de panier, pas de prix publics, pas de pastilles de statut visibles, pas de paiement en ligne, pas de "
         "réservation automatique).",
         body_style
     ))
@@ -196,21 +199,22 @@ def build_pdf_devis():
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#0A0A0A"), spaceAfter=5))
     
     techs = [
-        "• <b>Framework & Front-end :</b> Front-end sur-mesure ultra-léger (HTML5, CSS3, Vanilla JS) avec architecture Laravel (PHP) et Blade pour un rendu serveur natif, ultra-fluide, garantissant un temps de chargement instantané (< 0.3s) et un référencement naturel (SEO) optimal.",
-        "• <b>Base de données :</b> MySQL.",
+        "• <b>Framework & Front-end :</b> Front-end sur-mesure ultra-léger (HTML5, CSS3, Vanilla JS) avec architecture Laravel (PHP 8+) et Blade pour un rendu serveur natif, ultra-fluide, garantissant un temps de chargement instantané (< 0.3s) et un référencement naturel (SEO) optimal.",
+        "• <b>Base de données :</b> MySQL avec structuration des pièces, photographies HD ratio 4:5 et projets.",
         "• <b>Panel d'administration sur-mesure (CMS custom développé en Laravel) :</b> ajout, modification, masquage des vêtements (avec auto-référence HSMN-xxx et 4 statuts privés), upload des 5 photos par pièce et gestion des projets, sans intervention du développeur.",
         "• <b>Hébergement :</b> OVH (mutualisé ou VPS selon le volume de trafic et de stockage).",
-        "• <b>Compte d'hébergement OVH et nom de domaine créés au nom de HAUSMAN</b>, avec transfert complet des accès à la livraison."
+        "• <b>Compte d'hébergement OVH et nom de domaine créés au nom de HAUSMAN</b>, avec transfert complet des accès et cession de propriété à la livraison."
     ]
     for t in techs:
         story.append(Paragraph(t, bullet_style))
     
     story.append(Spacer(1, 3))
     story.append(Paragraph(
-        "Cette stack permet d'obtenir un résultat visuel et fonctionnel équivalent à une solution type Webflow, "
-        "avec une interface d'administration entièrement adaptée aux besoins spécifiques de HAUSMAN (fiches "
-        "vêtements multi-photos, catégories, filtres). L'ensemble (code, hébergement, données) reste hébergé en "
-        "France chez OVH, et la propriété du site est entièrement transférée à HAUSMAN.",
+        "Cette stack permet d'obtenir un résultat visuel et fonctionnel d'une pureté absolue, sans aucune contrainte "
+        "de template rigide WordPress, avec une interface d'administration entièrement adaptée aux besoins spécifiques "
+        "de HAUSMAN (fiches vêtements à 5 photos HD, 9 catégories officielles, statuts confidentiels, filtres overlay). "
+        "L'ensemble (code source, hébergement, base de données) reste hébergé en France chez OVH, et la propriété intégrale "
+        "du site est transférée à HAUSMAN.",
         body_style
     ))
 
@@ -220,14 +224,14 @@ def build_pdf_devis():
     story.append(Paragraph("<b>Pages et fonctionnalités</b>", bold_label))
 
     perims = [
-        "• <b>Home / Intro :</b> animation flash de 20-30 pièces d'archives (~2.0s) puis transition fluide vers le Menu central",
-        "• <b>Menu d'accueil :</b> logo fixe, 4 liens majeurs épurés (COLLECTION, PROJECTS, ABOUT, CONTACT), footer discret",
-        "• <b>Collection :</b> catalogue filtrable au ratio 4:5 (marque, catégories), survol révélant la silhouette portée mannequin, overlay filtres et recherche loupe par référence (HSMN-xxx)",
-        "• <b>Fiche vêtement :</b> galerie de 5 photos haute définition (plat face, dos, détail, porté face, silhouette), informations sobres (marque, nom, catégorie, taille, mensurations mannequin), mention discrète \"Rental upon request\"",
+        "• <b>Home / Intro :</b> animation flash de 25 pièces d'archives (~2.0s) puis transition fluide vers le Menu central",
+        "• <b>Menu d'accueil :</b> logo fixe, 4 liens majeurs épurés (COLLECTION, PROJECTS, ABOUT, CONTACT), footer discret. Interaction logo : clic sur HAUSMAN relance l'intro depuis le Menu",
+        "• <b>Collection :</b> catalogue filtrable au ratio strict 4:5 (marque, catégories), survol révélant la silhouette portée mannequin, overlay filtres et recherche loupe par référence (HSMN-xxx)",
+        "• <b>Fiche vêtement :</b> galerie de strictement 5 photos haute définition au ratio 4:5 (plat face, dos, détail, porté face, silhouette), informations sobres (marque, nom, catégorie, taille, mensurations mannequin), mention discrète \"Rental upon request\"",
         "• <b>Projects :</b> portfolio 4:5 avec titre, année, publication, crédits détaillés, défilement horizontal fluide des visuels et bouton NEXT PROJECT →",
         "• <b>About :</b> page courte et épurée présentant HAUSMAN comme entité indépendante de curation",
         "• <b>Contact :</b> formulaire structuré typographique (nom, email/Instagram, type de projet, dates, pièces demandées, message) + anti-spam invisible et liens directs WhatsApp, Instagram, Email",
-        "• <b>Design :</b> direction artistique minimaliste, silencieuse, inspirée galerie/mode (fond blanc pur, grands espaces, typographie sobre, 0 bruit)",
+        "• <b>Design :</b> direction artistique minimaliste, silencieuse, inspirée galerie/mode (fond blanc pur #FFFFFF, grands espaces, typographie sobre, 0 bruit)",
         "• <b>Navigation bilingue FR / EN</b> (voir section coût dédié ci-dessous)",
         "• <b>Responsive mobile-first</b> (1 colonne stricte sur smartphone pour une pureté visuelle absolue)",
         "• <b>Panel d'administration sur-mesure</b> pour gérer vêtements (auto-référence HSMN-xxx, 4 statuts privés) et projets en totale autonomie",
@@ -242,7 +246,7 @@ def build_pdf_devis():
     story.append(Spacer(1, 3))
     story.append(Paragraph("<b>Maquettes et corrections</b>", bold_label))
     mqs = [
-        "• 1 proposition de direction artistique (maquette de la Home + 1 fiche vêtement)",
+        "• 1 proposition de direction artistique (maquette complète validée)",
         "• 2 allers-retours de corrections inclus sur la maquette et sur le développement",
         "• Au-delà : ajustements facturés en supplément sur devis"
     ]
@@ -256,7 +260,7 @@ def build_pdf_devis():
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#0A0A0A"), spaceAfter=5))
     non_incs = [
         "• Fonctionnalités e-commerce (panier, paiement en ligne, checkout, réservation automatique, calendrier public, caution en ligne)",
-        "• Espace professionnels, CRM, gestion des dépôts, contrats - évolutions possibles ultérieurement",
+        "• Espace professionnels complexe, CRM externe, gestion des dépôts physiques, contrats légaux - évolutions possibles ultérieurement",
         "• Rédaction des textes et fourniture des photographies (fournies par HAUSMAN)",
         "• Achat du nom de domaine (facturé au prix réel du registrar, au nom de HAUSMAN)"
     ]
@@ -326,7 +330,7 @@ def build_pdf_devis():
 
     t_tot_data = [
         [
-            Paragraph("Développement complet du site HAUSMAN<br/>(V1) périmètre décrit en section 3", table_cell),
+            Paragraph("Développement complet du site HAUSMAN<br/>(V1) périmètre décrit en section 3 (conforme aux 42 sections)", table_cell),
             Paragraph("<b>620 €</b>", table_cell_right_bold)
         ]
     ]

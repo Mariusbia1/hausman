@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-HAUSMAN Paris — Générateur de Devis Word (.docx)
-Structure 100% conforme au modèle fourni par Marius BIAOU
-Montant : 620 € — Intégrant les réponses au Cahier des Charges V1 (42 sections)
+HAUSMAN Paris — Générateur de Devis Word (.docx) Officiel
+Structure 100% conforme au modèle Marius BIAOU
+Intégration intégrale des 42 sections du Cahier des Charges HAUSMAN V1
+Montant : 620 € Net
 """
 
 import docx
@@ -22,7 +23,7 @@ def set_cell_background(cell, hex_color):
     cell._tc.get_or_add_tcPr().append(shading_elm)
 
 def set_cell_margins(cell, top=100, bottom=100, left=150, right=150):
-    """Définit les marges internes (padding) d'une cellule en dxa."""
+    """Définit les marges internes (padding) d'une cellule en dxa (1 pt = 20 dxa)."""
     tcPr = cell._tc.get_or_add_tcPr()
     tcMar = OxmlElement('w:tcMar')
     for m_name, m_val in [('top', top), ('bottom', bottom), ('left', left), ('right', right)]:
@@ -110,9 +111,6 @@ def build_devis():
     r_p.bold = True
     r_p.font.size = Pt(9.5)
 
-    cell_empty1 = table_meta.cell(1, 2)
-    cell_empty2 = table_meta.cell(1, 3)
-
     for row in table_meta.rows:
         for cell in row.cells:
             set_cell_margins(cell, top=80, bottom=80, left=60, right=60)
@@ -130,7 +128,6 @@ def build_devis():
     r_h1.font.bold = True
     r_h1.font.color.rgb = RGBColor(10, 10, 10)
 
-    # Ligne de séparation sous titre
     p_line = doc.add_paragraph()
     p_line.paragraph_format.space_after = Pt(6)
     p_line_border = parse_xml(f'<w:pBdr {nsdecls("w")}><w:bottom w:val="single" w:sz="6" w:space="1" w:color="0A0A0A"/></w:pBdr>')
@@ -140,15 +137,16 @@ def build_devis():
     p_obj.paragraph_format.space_after = Pt(10)
     p_obj.paragraph_format.line_spacing = 1.15
     p_obj.add_run(
-        "Conception et développement du site HAUSMAN : un showroom digital de mode présentant le catalogue "
-        "de location de vêtements, accessoires et pièces designer / archive, ainsi que les projets réalisés "
-        "(éditoriaux, campagnes, collaborations). Le site fonctionne comme une vitrine et une galerie; il ne "
-        "comporte aucune fonctionnalité e-commerce (pas de panier, pas de paiement en ligne, pas de "
+        "Conception et développement du site HAUSMAN : un showroom digital de mode et catalogue de vestiaire "
+        "d'archives basé à Paris, présentant une sélection curatée de pièces designer, archive et contemporaines "
+        "destinées aux stylistes, artistes, productions, photographes, magazines et projets créatifs. "
+        "Le site fonctionne comme une vitrine confidentielle et une galerie éditoriale; il ne comporte aucune "
+        "fonctionnalité e-commerce (pas de panier, pas de prix publics, pas de pastilles de statut visibles, pas de paiement en ligne, pas de "
         "réservation automatique)."
     )
 
     # ---------------------------------------------------------
-    # 2. TECHNOLOGIE UTILISÉE
+    # 2. TECHNOLOGIE UTILISÉE & RÉPONSES AU CAHIER DES CHARGES
     # ---------------------------------------------------------
     h2 = doc.add_paragraph()
     h2.paragraph_format.space_before = Pt(10)
@@ -164,11 +162,11 @@ def build_devis():
     p_line2._p.get_or_add_pPr().append(p_line2_bdr)
 
     tech_bullets = [
-        ("Framework & Front-end : ", "Front-end sur-mesure ultra-léger (HTML5, CSS3, Vanilla JS) avec architecture Laravel (PHP) et Blade pour un rendu serveur natif, ultra-fluide, garantissant un temps de chargement instantané (< 0.3s) et un référencement naturel (SEO) optimal."),
-        ("Base de données : ", "MySQL."),
-        ("Panel d'administration sur-mesure (CMS custom développé en Laravel) : ", "ajout, modification, masquage des vêtements (avec auto-référence HSMN-xxx et 4 statuts privés), upload des 5 photos par pièce et gestion des projets, sans aucune intervention du développeur."),
-        ("Hébergement : ", "OVH (mutualisé ou VPS selon le volume de trafic et de stockage)."),
-        ("Propriété & Accès : ", "Compte d'hébergement OVH et nom de domaine créés au nom de HAUSMAN, avec transfert complet des accès à la livraison.")
+        ("Architecture Front-end Sur-Mesure : ", "Développement sur-mesure ultra-léger (HTML5, CSS3, Modern Vanilla JS) avec architecture Laravel (PHP 8+) et Blade pour un rendu serveur natif, ultra-fluide, garantissant un temps de chargement instantané (< 0.3s) et un référencement naturel (SEO) optimal."),
+        ("Base de données & Gestion des Archives : ", "MySQL avec structuration des pièces, des photographies haute définition au ratio 4:5 et des projets."),
+        ("Panel d'administration sur-mesure (CMS custom développé en Laravel) : ", "Interface privée permettant l'ajout, la modification, le masquage des vêtements avec génération automatique des références au format strict HSMN-xxx (HSMN-001, HSMN-002...), gestion des 4 statuts privés (Available, Reserved, On Loan, Unavailable), upload de la série de 5 photos HD par pièce et gestion des projets éditoriaux, sans aucune intervention du développeur."),
+        ("Hébergement & Déploiement : ", "OVH (mutualisé ou VPS selon le volume de trafic et de stockage) ou Cloudflare Pages / CDN Edge pour des performances mondiales optimales."),
+        ("Propriété & Accès : ", "Compte d'hébergement OVH et nom de domaine créés au nom de HAUSMAN, avec transfert complet des accès et cession totale de la propriété intellectuelle du code à la livraison.")
     ]
 
     for b_title, b_desc in tech_bullets:
@@ -186,14 +184,15 @@ def build_devis():
     p_tech_sum.paragraph_format.space_after = Pt(10)
     p_tech_sum.paragraph_format.line_spacing = 1.15
     p_tech_sum.add_run(
-        "Cette stack permet d'obtenir un résultat visuel et fonctionnel équivalent à une solution type Webflow, "
-        "avec une interface d'administration entièrement adaptée aux besoins spécifiques de HAUSMAN (fiches "
-        "vêtements multi-photos, catégories, filtres). L'ensemble (code, hébergement, données) reste hébergé en "
-        "France chez OVH, et la propriété du site est entièrement transférée à HAUSMAN."
+        "Cette stack permet d'obtenir un résultat visuel et fonctionnel d'une pureté absolue, sans aucune contrainte "
+        "de template rigide WordPress, avec une interface d'administration entièrement adaptée aux besoins spécifiques "
+        "de HAUSMAN (fiches vêtements à 5 photos HD, 9 catégories officielles, statuts confidentiels, filtres overlay). "
+        "L'ensemble (code source, hébergement, base de données) reste hébergé en France chez OVH, et la propriété intégrale "
+        "du site est transférée à HAUSMAN."
     )
 
     # ---------------------------------------------------------
-    # 3. PÉRIMÈTRE INCLUS
+    # 3. PÉRIMÈTRE INCLUS (42 SECTIONS)
     # ---------------------------------------------------------
     h3 = doc.add_paragraph()
     h3.paragraph_format.space_before = Pt(10)
@@ -215,21 +214,22 @@ def build_devis():
     r_pf.font.size = Pt(9.5)
 
     perim_bullets = [
-        "Home / Intro - animation flash de 20-30 pièces d'archives (~2.0s) puis transition fluide vers le Menu central",
-        "Menu d'accueil - logo fixe, 4 liens majeurs épurés (COLLECTION, PROJECTS, ABOUT, CONTACT), footer discret",
-        "Collection - catalogue filtrable au ratio 4:5 (marque, catégories), survol révélant la silhouette portée mannequin, overlay filtres et recherche loupe par référence (HSMN-xxx)",
-        "Fiche vêtement - galerie de 5 photos haute définition (plat face, dos, détail, porté face, silhouette), informations sobres (marque, nom, catégorie, taille, mensurations mannequin), mention discrète \"Rental upon request\"",
-        "Projects - portfolio 4:5 avec titre, année, publication, crédits détaillés, défilement horizontal fluide des visuels et bouton NEXT PROJECT →",
-        "About - page courte et épurée présentant HAUSMAN comme entité indépendante de curation",
-        "Contact - formulaire structuré typographique (nom, email/Instagram, type de projet, dates, pièces demandées, message) + anti-spam invisible et liens directs WhatsApp, Instagram, Email",
-        "Design : direction artistique minimaliste, silencieuse, inspirée galerie/mode (fond blanc pur, grands espaces, typographie sobre, 0 bruit)",
+        "Home / Intro : animation flash avant-gardiste de 25 pièces et silhouettes d'archives détourées (~80ms par image, durée 2.0s pile) avec fondu automatique doux vers le Menu d'accueil (possibilité de clic pour skip)",
+        "Menu d'accueil (Accueil = Menu) : logo HAUSMAN fixe en haut, 4 liens majeurs épurés (COLLECTION, PROJECTS, ABOUT, CONTACT), pied de page minimaliste. Interaction logo : clic sur HAUSMAN depuis le Menu relance l'intro animée ; depuis les autres pages, il ramène au Menu",
+        "Collection : catalogue pur au ratio strict 4:5 (3 à 4 colonnes sur desktop, 1 colonne stricte sur smartphone), affichant uniquement la photo et le nom de la marque. Survol desktop fluide révélant la silhouette portée par le mannequin (on-model), tap mobile ouvrant directement la fiche",
+        "Filtres & Recherche Collection : bouton discret FILTER ouvrant un calque blanc semi-transparent avec liste alphabétique des créateurs (DESIGNER) et des 9 catégories officielles (OUTERWEAR, TOPS, BOTTOMS, DRESSES, TAILORING, LEATHER, SHOES, ACCESSORIES, OBJECTS). Recherche loupe ultra-rapide par marque ou référence stricte (HSMN-xxx)",
+        "Fiche vêtement : galerie de strictement 5 photographies haute définition au ratio 4:5 (1. Plat face, 2. Plat dos, 3. Détail/3-quarts, 4. Porté face, 5. Porté silhouette). Lightbox plein écran avec zoom et navigation tactile/clavier. Fiche technique épurée avec mensurations du mannequin et mention texte simple 'Rental upon request' pré-remplissant la demande de contact",
+        "Projects (HAUSMAN Files) : portfolio au ratio 4:5 avec filtres par catégorie (ALL, HAUSMAN FILES, ARTISTS, EDITORIALS, CAMPAIGNS). Fiche projet détaillée avec défilement horizontal fluide des visuels paysage, tableau complet des crédits (Stylisme, Photo, Mannequin, Pièces d'archives utilisées) et bouton NEXT PROJECT →",
+        "About : page courte et épurée présentant HAUSMAN comme entité indépendante de curation et d'archives de mode à Paris",
+        "Contact : formulaire structuré typographique (Nom, Marque/Agence, Email, Dates de prêt, Pièces demandées pré-remplies, Message), protection anti-spam invisible (honeypot sans captcha intrusif), confirmation instantanée sans rechargement, et liens directs WhatsApp, Instagram, Email",
+        "Design & Esthétique : direction artistique silencieuse, minimale, galerie/mode (fond blanc pur #FFFFFF, grands espaces de respiration, typographie noire sobre, zéro bruit visuel, suppression totale des badges et codes e-commerce)",
         "Navigation bilingue FR / EN (voir section coût dédié ci-dessous)",
-        "Responsive mobile-first (1 colonne stricte sur smartphone pour une pureté visuelle absolue)",
-        "Panel d'administration sur-mesure pour gérer vêtements (auto-référence HSMN-xxx, 4 statuts privés) et projets en totale autonomie",
-        "Bases SEO : titres, meta-descriptions, URLs propres, balises Open Graph (partage Instagram/iMessage/WhatsApp), indexation",
-        "Favicon, page 404 sur-mesure et pages légales de base (mentions légales / politique de confidentialité)",
-        "Optimisation raisonnable des images (WebP) et des performances de chargement",
-        "Formation à la livraison pour l'ajout autonome de vêtements et projets"
+        "Responsive mobile-first (1 colonne stricte sur smartphone pour une lisibilité et un impact visuel absolus)",
+        "Panel d'administration sur-mesure : gestion complète des vêtements (génération auto des références HSMN-xxx, 4 statuts confidentiels Available/Reserved/On Loan/Unavailable, upload 5 vues WebP), gestion des projets et suivi des demandes de pull des stylistes",
+        "Bases SEO : titres, meta-descriptions, URLs propres, balises Open Graph (affichage enrichi lors des partages sur Instagram, WhatsApp, iMessage, LinkedIn), indexation",
+        "Favicon, page 404 sur-mesure ('Page Not Found / Return to Menu') et pages légales de base (mentions légales / politique de confidentialité)",
+        "Optimisation des performances : compression WebP des visuels haute définition et mise en cache CDN",
+        "Formation à la livraison pour l'utilisation et l'ajout autonome de vêtements et projets"
     ]
 
     for p_item in perim_bullets:
@@ -246,7 +246,7 @@ def build_devis():
     r_mq.font.size = Pt(9.5)
 
     mq_bullets = [
-        "1 proposition de direction artistique (maquette de la Home + 1 fiche vêtement)",
+        "1 proposition de direction artistique (maquette complète validée)",
         "2 allers-retours de corrections inclus sur la maquette et sur le développement",
         "Au-delà : ajustements facturés en supplément sur devis"
     ]
@@ -276,7 +276,7 @@ def build_devis():
 
     non_inc_bullets = [
         "Fonctionnalités e-commerce (panier, paiement en ligne, checkout, réservation automatique, calendrier public, caution en ligne)",
-        "Espace professionnels, CRM, gestion des dépôts, contrats - évolutions possibles ultérieurement",
+        "Espace professionnels complexe, CRM externe, gestion des dépôts physiques, contrats légaux - évolutions possibles ultérieurement",
         "Rédaction des textes et fourniture des photographies (fournies par HAUSMAN)",
         "Achat du nom de domaine (facturé au prix réel du registrar, au nom de HAUSMAN)"
     ]
@@ -308,8 +308,8 @@ def build_devis():
     p_bil.paragraph_format.space_after = Pt(6)
     p_bil.paragraph_format.line_spacing = 1.15
     p_bil.add_run(
-        "Le tarif ci-dessous inclut la structure technique bilingue (routing, sélecteur de langue, gestion des "
-        "contenus dans les deux langues). La saisie des traductions elle-même reste à la charge de HAUSMAN, "
+        "Le tarif ci-dessous inclut la structure technique bilingue (routing, sélecteur de langue discret FR | EN, "
+        "gestion des contenus dans les deux langues). La saisie des traductions elle-même reste à la charge de HAUSMAN, "
         "sauf demande contraire."
     )
 
@@ -320,14 +320,12 @@ def build_devis():
     table_bil.columns[1].width = Cm(3.6)
     set_table_horizontal_borders(table_bil, color="E5E7EB", sz="4")
 
-    # Header
     c0 = table_bil.cell(0, 0)
     c0.paragraphs[0].add_run("Poste").bold = True
     c1 = table_bil.cell(0, 1)
     c1.paragraphs[0].add_run("Coût").bold = True
     c1.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.RIGHT
 
-    # Row 1
     r1_0 = table_bil.cell(1, 0)
     r1_0.paragraphs[0].add_run("Structure bilingue FR / EN (inclus dans le prix total)").font.size = Pt(9)
     r1_1 = table_bil.cell(1, 1)
@@ -360,8 +358,8 @@ def build_devis():
     p_heb.paragraph_format.space_after = Pt(6)
     p_heb.paragraph_format.line_spacing = 1.15
     p_heb.add_run(
-        "Ces coûts sont payés directement par HAUSMAN auprès d'OVH - ils ne sont pas facturés par le "
-        "développeur, et le compte est créé au nom de HAUSMAN dès le départ."
+        "Ces coûts sont payés directement par HAUSMAN auprès du registrar et de l'hébergeur - ils ne sont pas "
+        "facturés par le développeur, et les comptes sont créés au nom de HAUSMAN dès le départ."
     )
 
     table_heb = doc.add_table(rows=5, cols=3)
@@ -384,8 +382,8 @@ def build_devis():
     heb_rows = [
         ("Hébergement mutualisé OVH", "Suffisant pour le lancement (V1)", "~4–8 € / mois"),
         ("VPS OVH (si besoin de monter en charge)", "À prévoir si trafic/stock important", "~8–15 € / mois"),
-        ("Nom de domaine (OVH)", "Ex. hausman.com", "~10–15 € / an"),
-        ("Certificat SSL", "Généralement inclus chez OVH", "0 €")
+        ("Nom de domaine (OVH / Gandi)", "Ex. hausman-paris.com", "~10–15 € / an"),
+        ("Certificat SSL (HTTPS)", "Inclus automatiquement chez OVH / Let's Encrypt", "0 €")
     ]
 
     for row_idx, (serv, usg, cost) in enumerate(heb_rows, start=1):
@@ -407,7 +405,7 @@ def build_devis():
     p_heb_note.paragraph_format.line_spacing = 1.15
     r_hn = p_heb_note.add_run(
         "L'offre mutualisée OVH est suffisante pour démarrer. Un passage en VPS ne sera nécessaire qu'en cas de "
-        "trafic ou de volume de photos important - HAUSMAN en sera informé avant tout changement d'offre."
+        "trafic ou de volume de photos très important - HAUSMAN en sera informé avant tout changement d'offre."
     )
     r_hn.font.italic = True
     r_hn.font.size = Pt(8.5)
@@ -436,7 +434,7 @@ def build_devis():
     set_table_horizontal_borders(table_tot, color="E5E7EB", sz="4")
 
     c_tot0 = table_tot.cell(0, 0)
-    c_tot0.paragraphs[0].add_run("Développement complet du site HAUSMAN\n(V1) périmètre décrit en section 3").font.size = Pt(9.5)
+    c_tot0.paragraphs[0].add_run("Développement complet du site HAUSMAN\n(V1) périmètre décrit en section 3 (conforme aux 42 sections)").font.size = Pt(9.5)
     c_tot1 = table_tot.cell(0, 1)
     r_prx = c_tot1.paragraphs[0].add_run("620 €")
     r_prx.bold = True
@@ -579,7 +577,7 @@ def build_devis():
 
     doc.add_paragraph().paragraph_format.space_after = Pt(14)
 
-    # Bas de page / Signature
+    # Bas de page
     p_fin = doc.add_paragraph()
     p_fin.paragraph_format.space_after = Pt(10)
     p_fin.add_run("Devis établi le 24 septembre 2026").bold = True
