@@ -154,7 +154,7 @@
           <p class="admin-desc">Console de gestion des archives, prêts pour tournages et demandes éditoriales.</p>
         </div>
         <div class="admin-actions">
-          <button class="btn-icon-action" onclick="document.querySelector('[data-tab=projects]').click();">
+          <button class="btn-icon-action" onclick="document.querySelector('[data-tab=projects]').click(); if (document.getElementById('btnAddProject')) document.getElementById('btnAddProject').click();">
             + Nouveau projet
           </button>
           <button class="btn-admin-primary" onclick="document.querySelector('[data-tab=wardrobe]').click(); document.getElementById('btnAddGarment').click();">
@@ -171,8 +171,8 @@
             <span class="metric-label">Garde-robe au catalogue</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
           </div>
-          <div class="metric-value" id="metricTotalPieces">6</div>
-          <span class="metric-sub">6 maisons • 100% numérisées</span>
+          <div class="metric-value" id="metricTotalPieces">18</div>
+          <span class="metric-sub">18 pièces d'archives • 100% numérisées</span>
         </div>
 
         <div class="metric-card" onclick="document.querySelector('[data-tab=wardrobe]').click(); document.getElementById('adminStatusFilter').value='on_loan'; document.getElementById('adminStatusFilter').dispatchEvent(new Event('change'));">
@@ -180,8 +180,8 @@
             <span class="metric-label">En cours de prêt</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
-          <div class="metric-value" id="metricOnLoan">1</div>
-          <span class="metric-sub">Margiela Trench • Retour 24/09</span>
+          <div class="metric-value" id="metricOnLoan">2</div>
+          <span class="metric-sub">Prêts tournages & éditos en cours</span>
         </div>
 
         <div class="metric-card" onclick="document.querySelector('[data-tab=projects]').click();">
@@ -189,8 +189,8 @@
             <span class="metric-label">HAUSMAN Files</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
           </div>
-          <div class="metric-value" id="metricTotalProjects">3</div>
-          <span class="metric-sub">Éditos Vogue, Numéro, Dazed</span>
+          <div class="metric-value" id="metricTotalProjects">4</div>
+          <span class="metric-sub">Éditos Vogue, Numéro, Dazed & Campagnes</span>
         </div>
 
         <div class="metric-card" onclick="document.querySelector('[data-tab=inquiries]').click();">
@@ -199,22 +199,20 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
           <div class="metric-value" id="metricNewInquiries">1</div>
-          <span class="metric-sub">Vogue Paris / Iconoclast • À valider</span>
+          <span class="metric-sub">Demandes formulées par les stylistes</span>
         </div>
       </section>
 
-      <!-- Dashboard Split Grid (2 Columns) -->
+      <!-- Dashboard Split Grid (2 Balanced Uncluttered Columns) -->
       <div class="dashboard-summary-grid">
         
-        <!-- Left Column: Operations & Lists -->
+        <!-- Left Column: Stylist Inquiries -->
         <div class="dashboard-col">
-          
-          <!-- Card 1: Recent Inquiries -->
-          <div class="admin-table-card">
-            <div class="table-toolbar">
+          <div class="admin-table-card" style="padding: 1.5rem;">
+            <div class="table-toolbar" style="margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--admin-border);">
               <div>
                 <h2 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Demandes de pull récentes</h2>
-                <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Demandes formulées par les stylistes et productions</span>
+                <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Demandes de prêt formulées par les stylistes et productions</span>
               </div>
               <button class="btn-icon-action" onclick="document.querySelector('[data-tab=inquiries]').click();">Voir tout &rarr;</button>
             </div>
@@ -234,94 +232,22 @@
               </table>
             </div>
           </div>
-
-          <!-- Card 2: Recent Archive Garments -->
-          <div class="admin-table-card">
-            <div class="table-toolbar">
-              <div>
-                <h2 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Pièces récemment ajoutées au showroom</h2>
-                <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Dernières acquisitions et archives numérisées</span>
-              </div>
-              <button class="btn-icon-action" onclick="document.querySelector('[data-tab=wardrobe]').click();">Catalogue complet &rarr;</button>
-            </div>
-            <div id="dashboardRecentGarmentsList">
-              <!-- Dynamically populated via admin.js -->
-            </div>
-          </div>
-
         </div>
 
-        <!-- Right Column: Showroom Health & Highlights -->
+        <!-- Right Column: Recent Archive Pieces -->
         <div class="dashboard-col">
-          
-          <!-- Card 3: Stock Status & Active Loans -->
           <div class="admin-table-card" style="padding: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--admin-border);">
-              <h2 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Disponibilités du stock</h2>
-              <span class="status-pill status-available">83% Disponible</span>
+            <div class="table-toolbar" style="margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--admin-border);">
+              <div>
+                <h2 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Dernières pièces numérisées</h2>
+                <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Acquisitions d'archives et pièces au showroom</span>
+              </div>
+              <button class="btn-icon-action" onclick="document.querySelector('[data-tab=wardrobe]').click();">Garde-robe &rarr;</button>
             </div>
-
-            <!-- Visual Capacity Bar (Sleek Monochrome) -->
-            <div class="capacity-progress-wrap">
-              <div class="capacity-progress-bar">
-                <div class="capacity-progress-fill" style="width: 83%;" title="5 Disponibles"></div>
-                <div class="capacity-progress-loan" style="width: 17%;" title="1 En prêt"></div>
-              </div>
-              <div class="capacity-legend">
-                <span>5 Disponibles (83%)</span>
-                <span>1 En Tournage (17%)</span>
-              </div>
-            </div>
-
-            <!-- Structured Inventory Breakdown -->
-            <div class="stock-breakdown-list">
-              <div class="stock-breakdown-item">
-                <span class="stock-breakdown-label">Pièces au catalogue</span>
-                <span class="stock-breakdown-val">6</span>
-              </div>
-              <div class="stock-breakdown-item">
-                <span class="stock-breakdown-label">Prêtes en showroom (Paris Marais)</span>
-                <span class="stock-breakdown-val">5</span>
-              </div>
-              <div class="stock-breakdown-item">
-                <span class="stock-breakdown-label">Sorties en shooting / tournage</span>
-                <span class="stock-breakdown-val">1</span>
-              </div>
-              <div class="stock-breakdown-item">
-                <span class="stock-breakdown-label">Maisons de couture répertoriées</span>
-                <span class="stock-breakdown-val">6</span>
-              </div>
-            </div>
-
-            <!-- Active Loan Spotlight (Sober Luxury) -->
-            <div style="font-family: var(--font-heading); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--admin-text-secondary); margin-top: 1.25rem;">
-              Pièce actuellement en shooting :
-            </div>
-            <div class="active-loan-banner">
-              <img class="active-loan-thumb" src="assets/img/margiela_trench_flat.jpg" alt="Margiela Trench" />
-              <div class="active-loan-info">
-                <div class="active-loan-brand">MAISON MARGIELA</div>
-                <div class="active-loan-desc">Deconstructed Trench (HSM-ARC-024)</div>
-                <div class="active-loan-date">Styliste : Emmanuelle Alt • Retour prévu 24/09</div>
-              </div>
-            </div>
-
-            <button class="btn-icon-action" style="width: 100%; margin-top: 1.25rem; padding: 0.75rem; text-align: center; justify-content: center;" onclick="document.querySelector('[data-tab=wardrobe]').click();">
-              Gérer l'inventaire complet &rarr;
-            </button>
-          </div>
-
-          <!-- Card 4: Editorial Projects Preview -->
-          <div class="admin-table-card" style="padding: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--admin-border);">
-              <h2 style="font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">HAUSMAN Files récents</h2>
-              <button class="btn-icon-action" onclick="document.querySelector('[data-tab=projects]').click();">Voir tout &rarr;</button>
-            </div>
-            <div id="dashboardRecentProjectsList" style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <div id="dashboardRecentGarmentsList" style="display: flex; flex-direction: column; gap: 0.85rem;">
               <!-- Dynamically populated via admin.js -->
             </div>
           </div>
-
         </div>
 
       </div>
@@ -416,7 +342,7 @@
           <p class="admin-desc">Gérez vos collaborations, éditoriaux magazines, clips musicaux et lookbooks.</p>
         </div>
         <div class="admin-actions">
-          <button class="btn-admin-primary" onclick="alert('Module d\'ajout de projet prêt pour l\'intégration Laravel.');">
+          <button class="btn-admin-primary" id="btnAddProject">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             <span>+ Nouveau projet</span>
           </button>
@@ -443,7 +369,7 @@
 
         <!-- Table Pagination -->
         <div class="table-pagination">
-          <span class="table-pagination-info">Affichage de 1 à 3 sur 3 projets éditoriaux</span>
+          <span class="table-pagination-info" id="projectsTablePaginationInfo">Affichage de 1 à 3 sur 3 projets éditoriaux</span>
           <div class="table-pagination-controls">
             <button class="table-pagination-btn" disabled>&larr; Précédent</button>
             <span class="table-pagination-page active">1</span>
@@ -465,7 +391,7 @@
           <p class="admin-desc">Consultez et validez les demandes qualifiées reçues depuis le showroom digital.</p>
         </div>
         <div class="admin-actions">
-          <button class="btn-icon-action" style="padding: 0.75rem 1.2rem; font-weight: 600;" onclick="alert('Exportation des demandes en cours (CSV/PDF)...');">
+          <button class="btn-icon-action" id="btnExportInquiries" style="padding: 0.75rem 1.2rem; font-weight: 600;">
             Exporter la liste
           </button>
         </div>
@@ -554,80 +480,200 @@
 
   </main>
 
-  <!-- MODAL: AJOUTER UNE PIÈCE -->
+  <!-- MODAL: AJOUTER / MODIFIER UNE PIÈCE (5 PHOTOS RATIO 4:5) -->
   <div class="admin-modal-backdrop" id="modalAddGarment">
-    <div class="admin-modal-card">
+    <div class="admin-modal-card" style="max-width: 780px;">
       <div class="admin-modal-header">
-        <h2 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700;">Ajouter une pièce à la Garde-robe HAUSMAN</h2>
-        <button id="modalCloseAddGarment" style="font-size: 1.2rem; color: var(--admin-text-secondary); cursor: pointer;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <div>
+          <h2 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;" id="modalGarmentTitle">Ajouter une pièce d'archive au showroom</h2>
+          <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Numérotation automatique et 5 photographies haute fidélité au ratio 4:5</span>
+        </div>
+        <button id="modalCloseAddGarment" style="font-size: 1.2rem; color: var(--admin-text-secondary); cursor: pointer;" aria-label="Fermer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
 
       <form id="formAddGarment">
+        <input type="hidden" id="editingGarmentId" value="" />
         <div class="admin-form-grid">
           
           <div class="admin-form-group">
+            <label class="admin-form-label">Référence HAUSMAN (Automatique)</label>
+            <input class="admin-input" type="text" id="newGarmentRef" name="ref" readonly style="background: #F3F4F6; font-weight: 700; cursor: not-allowed;" value="HSMN-019" />
+          </div>
+
+          <div class="admin-form-group">
             <label class="admin-form-label">Créateur / Marque</label>
-            <select class="admin-select" id="newGarmentBrand" name="brand">
+            <input class="admin-input" type="text" list="brandSuggestions" id="newGarmentBrandInput" name="brand" placeholder="ex. Rick Owens, Maison Margiela..." required />
+            <datalist id="brandSuggestions">
               <!-- Populated via JS -->
+            </datalist>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Nom de la pièce (Modèle)</label>
+            <input class="admin-input" type="text" id="newGarmentName" name="name" placeholder="ex. Bauhaus Heavy Leather Flight Jacket" required />
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Catégorie officielle</label>
+            <select class="admin-select" id="newGarmentCategory" name="category" required>
+              <option value="OUTERWEAR">OUTERWEAR</option>
+              <option value="TOPS">TOPS</option>
+              <option value="BOTTOMS">BOTTOMS</option>
+              <option value="DRESSES">DRESSES</option>
+              <option value="TAILORING">TAILORING</option>
+              <option value="LEATHER">LEATHER</option>
+              <option value="SHOES">SHOES</option>
+              <option value="ACCESSORIES">ACCESSORIES</option>
+              <option value="OBJECTS">OBJECTS</option>
             </select>
           </div>
 
           <div class="admin-form-group">
-            <label class="admin-form-label">Nom de la pièce</label>
-            <input class="admin-input" type="text" name="name" placeholder="ex. Veste Tailleur Déconstruite" required />
+            <label class="admin-form-label">Taille & Coupe</label>
+            <input class="admin-input" type="text" id="newGarmentSize" name="size" placeholder="ex. 48 (M) ou 50 (L) ou Free Size" required />
           </div>
 
           <div class="admin-form-group">
-            <label class="admin-form-label">Catégorie</label>
-            <select class="admin-select" id="newGarmentCategory" name="category">
-              <!-- Populated via JS -->
-            </select>
+            <label class="admin-form-label">Mensurations mannequin</label>
+            <input class="admin-input" type="text" id="newGarmentModelInfo" name="modelInfo" placeholder="ex. 185 cm — Porte la taille 48" value="185 cm — Taille 48" />
           </div>
 
-          <div class="admin-form-group">
-            <label class="admin-form-label">Taille</label>
-            <input class="admin-input" type="text" name="size" placeholder="ex. 48 (M) ou Free Size" required />
-          </div>
-
-          <div class="admin-form-group">
-            <label class="admin-form-label">Saison / Archive</label>
-            <input class="admin-input" type="text" name="season" placeholder="ex. Autumn / Winter 2004" required />
-          </div>
-
-          <div class="admin-form-group">
-            <label class="admin-form-label">Référence HAUSMAN</label>
-            <input class="admin-input" type="text" name="ref" placeholder="ex. HSM-ARC-150" required />
-          </div>
-
+          <!-- 5 PHOTOGRAPHIES OBLIGATOIRES (SECTION 10 DU CAHIER DES CHARGES) -->
           <div class="admin-form-group full">
-            <label class="admin-form-label">Photographies de la pièce</label>
-            <div class="photo-upload-zone">
-              <div style="margin-bottom: 0.5rem;">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <label class="admin-form-label" style="display: flex; justify-content: space-between;">
+              <span>Série de 5 Photographies Haute Définition (Ratio strict 4:5)</span>
+              <span style="font-size: 0.72rem; color: var(--admin-text-muted); font-weight: normal;">Obligatoire : 3 vues à plat + 2 vues portées</span>
+            </label>
+            
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 6px;">
+              
+              <!-- Vue 1: Plat Face -->
+              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+                <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">1. Plat Face</span>
+                <img id="prevImg1" src="assets/img/rick_leather_flat.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 1" />
+                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
               </div>
-              <strong style="font-family: var(--font-heading); font-size: 0.85rem;">Glissez-déposez vos photos haute définition ici</strong>
-              <p style="font-size: 0.75rem; color: var(--admin-text-muted); margin-top: 4px;">
-                Formats JPG, PNG, WEBP acceptés • Traitement et compression automatique
-              </p>
-              <div class="upload-thumbs-preview">
-                <img class="upload-thumb-item" src="assets/img/margiela_trench_flat.jpg" alt="Aperçu photo 1" />
-                <img class="upload-thumb-item" src="assets/img/margiela_trench_model.jpg" alt="Aperçu photo 2" />
+
+              <!-- Vue 2: Plat Dos -->
+              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+                <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">2. Plat Dos</span>
+                <img id="prevImg2" src="assets/img/rick_leather_flat.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 2" />
+                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
               </div>
+
+              <!-- Vue 3: Plat Détail -->
+              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+                <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">3. Détail</span>
+                <img id="prevImg3" src="assets/img/hero_cover.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 3" />
+                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
+              </div>
+
+              <!-- Vue 4: Porté Face -->
+              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+                <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">4. Porté Face</span>
+                <img id="prevImg4" src="assets/img/rick_leather_model.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 4" />
+                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
+              </div>
+
+              <!-- Vue 5: Porté Silhouette -->
+              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+                <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">5. Silhouette</span>
+                <img id="prevImg5" src="assets/img/rick_leather_model.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 5" />
+                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
+              </div>
+
             </div>
           </div>
 
           <div class="admin-form-group full">
-            <label class="admin-form-label">Notes de Curation / Description</label>
-            <textarea class="admin-textarea" name="description" rows="3" placeholder="Détails des matières, spécificités de coupe, usage recommandé..."></textarea>
+            <label class="admin-form-label">Notes de Curation / Description d'archive</label>
+            <textarea class="admin-textarea" id="newGarmentDesc" name="description" rows="3" placeholder="Détails des matières, spécificités de coupe, finitions matérielles et usage recommandé pour tournages..."></textarea>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Statut interne (100% privé)</label>
+            <select class="admin-select" id="newGarmentStatus" name="status">
+              <option value="available">Disponible au showroom</option>
+              <option value="reserved">Réservé pour shooting</option>
+              <option value="on_loan">En cours de prêt (Sorti)</option>
+              <option value="unavailable">Indisponible / En maintenance</option>
+            </select>
           </div>
 
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--admin-border);">
           <button type="button" onclick="document.getElementById('modalAddGarment').classList.remove('active')" class="btn-icon-action" style="padding: 0.7rem 1.4rem;">Annuler</button>
-          <button type="submit" class="btn-admin-primary">Publier au showroom</button>
+          <button type="submit" class="btn-admin-primary">Enregistrer dans les archives</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: AJOUTER UN PROJET (SECTION 28 DU CAHIER DES CHARGES) -->
+  <div class="admin-modal-backdrop" id="modalAddProject">
+    <div class="admin-modal-card" style="max-width: 680px;">
+      <div class="admin-modal-header">
+        <div>
+          <h2 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">Ajouter un projet éditorial</h2>
+          <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Publication magazine, lookbook, clip musical ou collaboration</span>
+        </div>
+        <button id="modalCloseAddProject" style="font-size: 1.2rem; color: var(--admin-text-secondary); cursor: pointer;" aria-label="Fermer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <form id="formAddProject">
+        <div class="admin-form-grid">
+          
+          <div class="admin-form-group">
+            <label class="admin-form-label">Titre du Projet / Publication</label>
+            <input class="admin-input" type="text" id="newProjTitle" name="title" placeholder="ex. VOGUE SCULPTURAL ARCHIVES" required />
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Catégorie de Projet</label>
+            <select class="admin-select" id="newProjCategory" name="category" required>
+              <option value="EDITORIALS">EDITORIALS</option>
+              <option value="HAUSMAN FILES">HAUSMAN FILES</option>
+              <option value="ARTISTS">ARTISTS</option>
+              <option value="CAMPAIGNS">CAMPAIGNS</option>
+            </select>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Année de réalisation</label>
+            <input class="admin-input" type="text" id="newProjYear" name="year" placeholder="ex. 2026" value="2026" required />
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-form-label">Stylisme / Direction Artistique</label>
+            <input class="admin-input" type="text" id="newProjStyling" name="styling" placeholder="ex. Studio HAUSMAN / Emmanuelle Alt" required />
+          </div>
+
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Crédits photographiques & Équipe</label>
+            <input class="admin-input" type="text" id="newProjCredits" name="credits" placeholder="Photographie: David Sims • Modèle: Sasha P. • Lieu: Paris" />
+          </div>
+
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Photographie de couverture (Ratio 4:5)</label>
+            <div style="display: flex; gap: 12px; align-items: center; border: 1px dashed var(--admin-border); padding: 12px; border-radius: 4px;">
+              <img src="assets/img/hero_cover.jpg" style="width: 60px; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Cover" />
+              <div>
+                <span style="font-size: 0.8rem; font-weight: 600;">Cover HD sélectionnée</span>
+                <span style="display: block; font-size: 0.72rem; color: var(--admin-text-muted);">Format portrait 4:5 optimal pour la grille des projets</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--admin-border);">
+          <button type="button" onclick="document.getElementById('modalAddProject').classList.remove('active')" class="btn-icon-action" style="padding: 0.7rem 1.4rem;">Annuler</button>
+          <button type="submit" class="btn-admin-primary">Publier le projet</button>
         </div>
       </form>
     </div>
