@@ -154,11 +154,12 @@
           <p class="admin-desc">Console de gestion des archives, prêts pour tournages et demandes éditoriales.</p>
         </div>
         <div class="admin-actions">
-          <button class="btn-icon-action" onclick="document.querySelector('[data-tab=projects]').click(); if (document.getElementById('btnAddProject')) document.getElementById('btnAddProject').click();">
-            + Nouveau projet
+          <button class="btn-admin-secondary" onclick="document.querySelector('[data-tab=projects]').click(); if (document.getElementById('btnAddProject')) document.getElementById('btnAddProject').click();">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Nouveau projet</span>
           </button>
           <button class="btn-admin-primary" onclick="document.querySelector('[data-tab=wardrobe]').click(); document.getElementById('btnAddGarment').click();">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             <span>Ajouter une pièce</span>
           </button>
         </div>
@@ -391,8 +392,9 @@
           <p class="admin-desc">Consultez et validez les demandes qualifiées reçues depuis le showroom digital.</p>
         </div>
         <div class="admin-actions">
-          <button class="btn-icon-action" id="btnExportInquiries" style="padding: 0.75rem 1.2rem; font-weight: 600;">
-            Exporter la liste
+          <button class="btn-admin-secondary" id="btnExportInquiries">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Exporter la liste</span>
           </button>
         </div>
       </header>
