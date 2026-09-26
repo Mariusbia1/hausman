@@ -442,27 +442,27 @@
       </header>
 
       <div class="admin-table-card" style="padding: 2.5rem;">
-        <form id="formContentEdit" onsubmit="event.preventDefault(); alert('Textes de présentation mis à jour avec succès sur le site !');">
+        <form id="formContentEdit">
           <div class="admin-form-grid">
             
             <div class="admin-form-group full">
               <label class="admin-form-label">Titre de Présentation (About - Anglais)</label>
-              <input class="admin-input" type="text" value="PARISIAN WARDROBE ARCHIVE FOR IMAGE PROFESSIONALS" />
+              <input class="admin-input" type="text" id="aboutTitleEn" name="aboutTitleEn" value="PARISIAN WARDROBE ARCHIVE FOR IMAGE PROFESSIONALS" />
             </div>
 
             <div class="admin-form-group full">
               <label class="admin-form-label">Titre de Présentation (About - Français)</label>
-              <input class="admin-input" type="text" value="ARCHIVE DE MODE PARISIENNE POUR PROFESSIONNELS DE L'IMAGE" />
+              <input class="admin-input" type="text" id="aboutTitleFr" name="aboutTitleFr" value="ARCHIVE DE MODE PARISIENNE POUR PROFESSIONNELS DE L'IMAGE" />
             </div>
 
             <div class="admin-form-group full">
               <label class="admin-form-label">Texte Principal Showroom (Anglais)</label>
-              <textarea class="admin-textarea" rows="4">HAUSMAN is an exclusive fashion showroom based in Paris, housing an evolving archive of rare designer garments, runway pieces, and contemporary sculptural menswear and womenswear.</textarea>
+              <textarea class="admin-textarea" id="aboutTextEn" name="aboutTextEn" rows="4">HAUSMAN is an exclusive fashion showroom based in Paris, housing an evolving archive of rare designer garments, runway pieces, and contemporary sculptural menswear and womenswear.</textarea>
             </div>
 
             <div class="admin-form-group full">
               <label class="admin-form-label">Texte Principal Showroom (Français)</label>
-              <textarea class="admin-textarea" rows="4">HAUSMAN est un showroom de mode exclusif basé à Paris, abritant des archives rares de créateurs, des pièces de défilés et des silhouettes contemporaines pour femme et homme.</textarea>
+              <textarea class="admin-textarea" id="aboutTextFr" name="aboutTextFr" rows="4">HAUSMAN est un showroom de mode exclusif basé à Paris, abritant des archives rares de créateurs, des pièces de défilés et des silhouettes contemporaines pour femme et homme.</textarea>
             </div>
 
           </div>
@@ -542,46 +542,61 @@
 
           <!-- 5 PHOTOGRAPHIES OBLIGATOIRES (SECTION 10 DU CAHIER DES CHARGES) -->
           <div class="admin-form-group full">
-            <label class="admin-form-label" style="display: flex; justify-content: space-between;">
+            <label class="admin-form-label" style="display: flex; justify-content: space-between; align-items: center;">
               <span>Série de 5 Photographies Haute Définition (Ratio strict 4:5)</span>
-              <span style="font-size: 0.72rem; color: var(--admin-text-muted); font-weight: normal;">Obligatoire : 3 vues à plat + 2 vues portées</span>
+              <span style="font-size: 0.72rem; color: var(--admin-text-muted); font-weight: normal;">3 vues à plat + 2 vues portées (Cliquez ou glissez pour charger)</span>
             </label>
             
             <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 6px;">
               
               <!-- Vue 1: Plat Face -->
-              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+              <div class="photo-upload-slot" id="slot1">
                 <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">1. Plat Face</span>
-                <img id="prevImg1" src="assets/img/rick_leather_flat.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 1" />
-                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
+                <div class="photo-preview-wrap">
+                  <img id="prevImg1" class="photo-preview-img" src="assets/img/rick_leather_flat.jpg" alt="Vue 1" />
+                </div>
+                <input type="file" id="fileUpload1" class="garment-file-input" data-target="prevImg1" accept="image/*" style="display: none;" />
+                <button type="button" class="btn-icon-action btn-upload-trigger" data-input="fileUpload1" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;">Remplacer</button>
               </div>
 
               <!-- Vue 2: Plat Dos -->
-              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+              <div class="photo-upload-slot" id="slot2">
                 <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">2. Plat Dos</span>
-                <img id="prevImg2" src="assets/img/rick_leather_flat.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 2" />
-                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
+                <div class="photo-preview-wrap">
+                  <img id="prevImg2" class="photo-preview-img" src="assets/img/rick_leather_flat.jpg" alt="Vue 2" />
+                </div>
+                <input type="file" id="fileUpload2" class="garment-file-input" data-target="prevImg2" accept="image/*" style="display: none;" />
+                <button type="button" class="btn-icon-action btn-upload-trigger" data-input="fileUpload2" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;">Remplacer</button>
               </div>
 
               <!-- Vue 3: Plat Détail -->
-              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+              <div class="photo-upload-slot" id="slot3">
                 <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">3. Détail</span>
-                <img id="prevImg3" src="assets/img/hero_cover.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 3" />
-                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
+                <div class="photo-preview-wrap">
+                  <img id="prevImg3" class="photo-preview-img" src="assets/img/hero_cover.jpg" alt="Vue 3" />
+                </div>
+                <input type="file" id="fileUpload3" class="garment-file-input" data-target="prevImg3" accept="image/*" style="display: none;" />
+                <button type="button" class="btn-icon-action btn-upload-trigger" data-input="fileUpload3" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;">Remplacer</button>
               </div>
 
               <!-- Vue 4: Porté Face -->
-              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+              <div class="photo-upload-slot" id="slot4">
                 <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">4. Porté Face</span>
-                <img id="prevImg4" src="assets/img/rick_leather_model.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 4" />
-                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
+                <div class="photo-preview-wrap">
+                  <img id="prevImg4" class="photo-preview-img" src="assets/img/rick_leather_model.jpg" alt="Vue 4" />
+                </div>
+                <input type="file" id="fileUpload4" class="garment-file-input" data-target="prevImg4" accept="image/*" style="display: none;" />
+                <button type="button" class="btn-icon-action btn-upload-trigger" data-input="fileUpload4" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;">Remplacer</button>
               </div>
 
               <!-- Vue 5: Porté Silhouette -->
-              <div style="border: 1px dashed var(--admin-border); padding: 8px; text-align: center; border-radius: 4px; background: #FFF;">
+              <div class="photo-upload-slot" id="slot5">
                 <span style="display: block; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px;">5. Silhouette</span>
-                <img id="prevImg5" src="assets/img/rick_leather_model.jpg" style="width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Vue 5" />
-                <button type="button" class="btn-icon-action" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;" onclick="alert('Module de sélection photo prêt pour upload direct.')">Remplacer</button>
+                <div class="photo-preview-wrap">
+                  <img id="prevImg5" class="photo-preview-img" src="assets/img/rick_leather_model.jpg" alt="Vue 5" />
+                </div>
+                <input type="file" id="fileUpload5" class="garment-file-input" data-target="prevImg5" accept="image/*" style="display: none;" />
+                <button type="button" class="btn-icon-action btn-upload-trigger" data-input="fileUpload5" style="font-size: 0.65rem; margin-top: 6px; width: 100%; justify-content: center;">Remplacer</button>
               </div>
 
             </div>
@@ -660,11 +675,13 @@
 
           <div class="admin-form-group full">
             <label class="admin-form-label">Photographie de couverture (Ratio 4:5)</label>
-            <div style="display: flex; gap: 12px; align-items: center; border: 1px dashed var(--admin-border); padding: 12px; border-radius: 4px;">
-              <img src="assets/img/hero_cover.jpg" style="width: 60px; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Cover" />
-              <div>
+            <div style="display: flex; gap: 14px; align-items: center; border: 1px dashed var(--admin-border); padding: 12px; border-radius: 4px; background: #FFF;">
+              <img id="prevProjCover" src="assets/img/hero_cover.jpg" style="width: 60px; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" alt="Cover" />
+              <div style="flex-grow: 1;">
                 <span style="font-size: 0.8rem; font-weight: 600;">Cover HD sélectionnée</span>
                 <span style="display: block; font-size: 0.72rem; color: var(--admin-text-muted);">Format portrait 4:5 optimal pour la grille des projets</span>
+                <input type="file" id="fileUploadProjCover" accept="image/*" style="display: none;" />
+                <button type="button" class="btn-icon-action btn-upload-trigger" data-input="fileUploadProjCover" style="font-size: 0.72rem; margin-top: 6px;">Changer la photo de couverture</button>
               </div>
             </div>
           </div>
@@ -678,6 +695,79 @@
       </form>
     </div>
   </div>
+
+  <!-- MODAL: DÉTAIL D'UNE DEMANDE DE PULL (SECTION 29) -->
+  <div class="admin-modal-backdrop" id="modalInquiryDetail">
+    <div class="admin-modal-card" style="max-width: 680px;">
+      <div class="admin-modal-header">
+        <div>
+          <h2 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;" id="inquiryDetailRef">Demande de Pull</h2>
+          <span style="font-size: 0.75rem; color: var(--admin-text-muted);" id="inquiryDetailDate">Reçue via le showroom digital</span>
+        </div>
+        <button id="modalCloseInquiryDetail" style="font-size: 1.2rem; color: var(--admin-text-secondary); cursor: pointer;" aria-label="Fermer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+        
+        <!-- Demandeur info grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; background: var(--admin-border-subtle); padding: 1.2rem; border-radius: 4px;">
+          <div>
+            <span style="display: block; font-size: 0.68rem; text-transform: uppercase; color: var(--admin-text-muted); font-weight: 600;">Demandeur / Styliste</span>
+            <strong style="font-size: 0.95rem;" id="inquiryDetailName">—</strong>
+            <span style="display: block; font-size: 0.78rem; color: var(--admin-text-secondary);" id="inquiryDetailAgency">—</span>
+          </div>
+          <div>
+            <span style="display: block; font-size: 0.68rem; text-transform: uppercase; color: var(--admin-text-muted); font-weight: 600;">Contact Email</span>
+            <span style="display: block; font-size: 0.85rem; font-weight: 600;" id="inquiryDetailEmail">—</span>
+            <span style="display: block; font-size: 0.75rem; color: var(--admin-text-muted);" id="inquiryDetailInstagram">Instagram: —</span>
+          </div>
+        </div>
+
+        <!-- Project & Dates -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border: 1px solid var(--admin-border); padding: 1.2rem; border-radius: 4px;">
+          <div>
+            <span style="display: block; font-size: 0.68rem; text-transform: uppercase; color: var(--admin-text-muted); font-weight: 600;">Type de Projet</span>
+            <strong style="font-size: 0.88rem;" id="inquiryDetailProject">—</strong>
+          </div>
+          <div>
+            <span style="display: block; font-size: 0.68rem; text-transform: uppercase; color: var(--admin-text-muted); font-weight: 600;">Dates de Tournage & Prêt</span>
+            <strong style="font-size: 0.88rem;" id="inquiryDetailDates">—</strong>
+          </div>
+        </div>
+
+        <!-- Pièces demandées -->
+        <div>
+          <span style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Pièces d'Archives Demandées</span>
+          <div id="inquiryDetailPiecesList" style="display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #FFF; border: 1px solid var(--admin-border); border-radius: 4px; min-height: 48px; align-items: center;">
+            <!-- Dynamically populated tags -->
+          </div>
+        </div>
+
+        <!-- Statut & Actions -->
+        <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--admin-border); flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <label style="font-size: 0.78rem; font-weight: 600;">Statut :</label>
+            <select class="admin-select" id="inquiryDetailStatusSelect" style="padding: 6px 12px; font-size: 0.8rem; width: auto;">
+              <option value="new">Nouveau (En attente)</option>
+              <option value="in_progress">En cours de traitement</option>
+              <option value="confirmed">Validé / Fiche émise</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <a id="inquiryDetailMailtoBtn" href="#" class="btn-admin-primary" style="padding: 0.65rem 1.2rem; font-size: 0.78rem;">
+              <span>Répondre au styliste &rarr;</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIET LUXURY TOAST CONTAINER -->
+  <div class="admin-toast-container" id="adminToastContainer"></div>
 
   <!-- MODAL: CONNEXION / LOGIN ADMIN -->
   <div class="admin-modal-backdrop" id="modalAdminLogin">

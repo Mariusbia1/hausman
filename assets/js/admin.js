@@ -11,13 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
         garmentSearch: '',
         garmentCategoryFilter: 'ALL',
         garmentStatusFilter: 'ALL',
-        editingGarmentId: null
+        editingGarmentId: null,
+        activeInquiryId: null
     };
 
     // DOM Cache
     const dom = {
         navItems: document.querySelectorAll('.admin-nav-item'),
         panels: document.querySelectorAll('.admin-panel'),
+        toastContainer: document.getElementById('adminToastContainer'),
         
         // Metrics
         metricTotalPieces: document.getElementById('metricTotalPieces'),
@@ -59,14 +61,36 @@ document.addEventListener('DOMContentLoaded', () => {
         modalAddProject: document.getElementById('modalAddProject'),
         modalCloseAddProject: document.getElementById('modalCloseAddProject'),
         formAddProject: document.getElementById('formAddProject'),
+        prevProjCover: document.getElementById('prevProjCover'),
+        fileUploadProjCover: document.getElementById('fileUploadProjCover'),
 
-        // Inquiries Table & Export
+        // Inquiries Table & Detail Modal
         inquiriesTableBody: document.getElementById('inquiriesTableBody'),
         btnExportInquiries: document.getElementById('btnExportInquiries'),
+        modalInquiryDetail: document.getElementById('modalInquiryDetail'),
+        modalCloseInquiryDetail: document.getElementById('modalCloseInquiryDetail'),
+        inquiryDetailRef: document.getElementById('inquiryDetailRef'),
+        inquiryDetailDate: document.getElementById('inquiryDetailDate'),
+        inquiryDetailName: document.getElementById('inquiryDetailName'),
+        inquiryDetailAgency: document.getElementById('inquiryDetailAgency'),
+        inquiryDetailEmail: document.getElementById('inquiryDetailEmail'),
+        inquiryDetailInstagram: document.getElementById('inquiryDetailInstagram'),
+        inquiryDetailProject: document.getElementById('inquiryDetailProject'),
+        inquiryDetailDates: document.getElementById('inquiryDetailDates'),
+        inquiryDetailPiecesList: document.getElementById('inquiryDetailPiecesList'),
+        inquiryDetailStatusSelect: document.getElementById('inquiryDetailStatusSelect'),
+        inquiryDetailMailtoBtn: document.getElementById('inquiryDetailMailtoBtn'),
 
         // Projects Table
         projectsTableBody: document.getElementById('projectsTableBody'),
         projectsTablePaginationInfo: document.getElementById('projectsTablePaginationInfo'),
+
+        // Content Editor
+        formContentEdit: document.getElementById('formContentEdit'),
+        aboutTitleEn: document.getElementById('aboutTitleEn'),
+        aboutTitleFr: document.getElementById('aboutTitleFr'),
+        aboutTextEn: document.getElementById('aboutTextEn'),
+        aboutTextFr: document.getElementById('aboutTextFr'),
 
         // Mobile Sidebar
         adminSidebarToggle: document.getElementById('adminSidebarToggle'),
@@ -82,7 +106,28 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ==========================================
-    // 0. Reference Generator (HSMN-xxx)
+    // 0. Notification Toast System (Quiet Luxury)
+    // ==========================================
+    function showToast(message, duration = 3200) {
+        if (!dom.toastContainer) return;
+        const toast = document.createElement('div');
+        toast.className = 'admin-toast';
+        toast.innerHTML = `
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>${message}</span>
+        `;
+        dom.toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('toast-fadeout');
+            setTimeout(() => {
+                if (toast.parentNode) toast.parentNode.removeChild(toast);
+            }, 300);
+        }, duration);
+    }
+
+    // ==========================================
+    // 1. Reference Generator (HSMN-xxx)
     // ==========================================
     function getNextGarmentRef() {
         let maxNumber = 0;
@@ -107,7 +152,79 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 1. Navigation & Tab Switcher
+    // 2. Interactive Image Uploads (FileReader + Drag & Drop)
+    // ==========================================
+    function setupImageUploadHandlers() {
+        // Trigger buttons
+        document.querySelectorAll('.btn-upload-trigger').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const targetInputId = btn.getAttribute('data-input');
+                const fileInput = document.getElementById(targetInputId);
+                if (fileInput) fileInput.click();
+            });
+        });
+
+        // Garment file inputs
+        document.querySelectorAll('.garment-file-input').forEach(input => {
+            input.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const targetImgId = input.getAttribute('data-target');
+                    const imgElem = document.getElementById(targetImgId);
+                    const reader = new FileReader();
+                    reader.onload = (re) => {
+                        if (imgElem) imgElem.src = re.target.result;
+                        showToast(`Photographie chargée avec succès (${file.name})`);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        // Drag & Drop on photo slots
+        document.querySelectorAll('.photo-upload-slot').forEach(slot => {
+            slot.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                slot.classList.add('dragover');
+            });
+            slot.addEventListener('dragleave', () => {
+                slot.classList.remove('dragover');
+            });
+            slot.addEventListener('drop', (e) => {
+                e.preventDefault();
+                slot.classList.remove('dragover');
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    const file = e.dataTransfer.files[0];
+                    const imgElem = slot.querySelector('.photo-preview-img');
+                    const reader = new FileReader();
+                    reader.onload = (re) => {
+                        if (imgElem) imgElem.src = re.target.result;
+                        showToast(`Photographie déposée (${file.name})`);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        // Project cover upload
+        if (dom.fileUploadProjCover && dom.prevProjCover) {
+            dom.fileUploadProjCover.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (re) => {
+                        dom.prevProjCover.src = re.target.result;
+                        showToast(`Couverture de projet chargée (${file.name})`);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    }
+
+    // ==========================================
+    // 3. Navigation & Tab Switcher
     // ==========================================
     dom.navItems.forEach(item => {
         item.addEventListener('click', () => {
@@ -146,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 2. Refresh Metrics & Dashboard Widgets
+    // 4. Refresh Metrics & Dashboard Widgets
     // ==========================================
     function refreshMetrics() {
         const totalGarments = HAUSMAN_DATA.garments.length;
@@ -181,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     return `
-                        <tr>
+                        <tr style="cursor: pointer;" onclick="window.hausmanOpenInquiry('${inq.id}')">
                             <td>
                                 <strong>${inq.name}</strong><br>
                                 <span style="font-size: 0.72rem; color: var(--admin-text-muted);">${inq.agency || inq.email}</span>
@@ -194,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span class="status-pill ${statusClass}">${statusLabel}</span>
                             </td>
                             <td style="text-align: right;">
-                                <button class="btn-icon-action" onclick="document.querySelector('[data-tab=inquiries]').click();" style="font-size: 0.72rem; padding: 4px 8px;">Traiter &rarr;</button>
+                                <button class="btn-icon-action" style="font-size: 0.72rem; padding: 4px 8px;">Détails &rarr;</button>
                             </td>
                         </tr>
                     `;
@@ -220,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 return `
-                    <div class="mini-item-row" style="display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--admin-border-subtle);">
+                    <div class="mini-item-row" style="display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--admin-border-subtle); cursor: pointer;" onclick="document.querySelector('[data-tab=wardrobe]').click(); window.hausmanEditGarment('${g.id}');">
                         <div class="mini-item-info" style="display: flex; align-items: center; gap: 10px;">
                             <img class="mini-thumb" src="${g.images.flat}" alt="${g.name}" style="width: 36px; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px;" />
                             <div>
@@ -236,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 3. Render Collection Table (Sections 14 & 29)
+    // 5. Wardrobe / Collection Management
     // ==========================================
     function renderWardrobeTable() {
         if (!dom.wardrobeTableBody) return;
@@ -314,6 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     renderWardrobeTable();
                     refreshMetrics();
+                    showToast(`Statut de ${garment.brand} (${garment.ref}) mis à jour : ${garment.internalStatus.toUpperCase()}`);
                 }
             });
         });
@@ -336,6 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     HAUSMAN_DATA.garments = HAUSMAN_DATA.garments.filter(g => g.id !== id);
                     renderWardrobeTable();
                     refreshMetrics();
+                    showToast(`${gName} retiré des archives`);
                 }
             });
         });
@@ -345,9 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ==========================================
-    // 4. Modal Add / Edit Garment
-    // ==========================================
+    // Modal Add / Edit Garment
     function openAddGarmentModal() {
         adminState.editingGarmentId = null;
         if (dom.editingGarmentIdInput) dom.editingGarmentIdInput.value = '';
@@ -402,6 +519,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dom.modalAddGarment) dom.modalAddGarment.classList.add('active');
     }
 
+    // Expose edit function globally for table onclick shortcuts
+    window.hausmanEditGarment = openEditGarmentModal;
+
     if (dom.btnAddGarment) {
         dom.btnAddGarment.addEventListener('click', openAddGarmentModal);
     }
@@ -417,6 +537,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(dom.formAddGarment);
             const isEditing = Boolean(adminState.editingGarmentId);
 
+            // Fetch live previews for the 5 photos
+            const p1 = document.getElementById('prevImg1');
+            const p2 = document.getElementById('prevImg2');
+            const p3 = document.getElementById('prevImg3');
+            const p4 = document.getElementById('prevImg4');
+            const p5 = document.getElementById('prevImg5');
+
+            const currentImages = {
+                flat: p1 ? p1.src : "assets/img/rick_leather_flat.jpg",
+                flatBack: p2 ? p2.src : "assets/img/rick_leather_flat.jpg",
+                flatDetail: p3 ? p3.src : "assets/img/hero_cover.jpg",
+                model: p4 ? p4.src : "assets/img/rick_leather_model.jpg",
+                modelAlt: p5 ? p5.src : "assets/img/rick_leather_model.jpg"
+            };
+
             if (isEditing) {
                 const garment = HAUSMAN_DATA.garments.find(g => g.id === adminState.editingGarmentId);
                 if (garment) {
@@ -428,6 +563,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     garment.descriptionFr = formData.get('description') || garment.descriptionFr;
                     garment.descriptionEn = formData.get('description') || garment.descriptionEn;
                     garment.internalStatus = formData.get('status') || garment.internalStatus;
+                    garment.images = currentImages;
+                    showToast(`Pièce mise à jour : ${garment.brand} (${garment.ref})`);
                 }
             } else {
                 const autoRef = dom.newGarmentRefInput ? dom.newGarmentRefInput.value : getNextGarmentRef();
@@ -443,19 +580,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     modelSize: formData.get('size') || "48",
                     descriptionEn: formData.get('description') || "Archival showroom specimen.",
                     descriptionFr: formData.get('description') || "Pièce d'archive numérisée pour showroom.",
-                    images: {
-                        flat: "assets/img/rick_leather_flat.jpg",
-                        flatBack: "assets/img/rick_leather_flat.jpg",
-                        flatDetail: "assets/img/hero_cover.jpg",
-                        model: "assets/img/rick_leather_model.jpg",
-                        modelAlt: "assets/img/rick_leather_model.jpg"
-                    },
+                    images: currentImages,
                     internalStatus: formData.get('status') || "available",
                     order: HAUSMAN_DATA.garments.length + 1,
                     published: true
                 };
 
                 HAUSMAN_DATA.garments.unshift(newGarment);
+                showToast(`Nouvelle pièce créée : ${newGarment.brand} (${newGarment.ref})`);
             }
 
             if (dom.modalAddGarment) dom.modalAddGarment.classList.remove('active');
@@ -465,7 +597,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 5. Inquiries Table & CSV Export (Section 29)
+    // 6. Inquiries Management & Detail Modal (Section 29)
     // ==========================================
     function renderInquiriesTable() {
         if (!dom.inquiriesTableBody) return;
@@ -487,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             return `
-                <tr>
+                <tr data-id="${inq.id}">
                     <td>
                         <strong style="font-family: var(--font-heading); letter-spacing: 0.05em;">${inq.id}</strong><br>
                         <span style="font-size: 0.72rem; color: var(--admin-text-muted);">${inq.date}</span>
@@ -513,7 +645,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>
                     <td>
                         <div class="row-actions">
-                            <a href="mailto:${inq.email}?subject=HAUSMAN Paris - Demande de Prêt ${inq.id}" class="btn-icon-action">Répondre</a>
+                            <button class="btn-icon-action btn-view-inquiry" data-id="${inq.id}">Détails</button>
+                            <a href="mailto:${inq.email}?subject=HAUSMAN Paris - Demande de Prêt ${inq.id}" class="btn-icon-action">Email</a>
                         </div>
                     </td>
                 </tr>
@@ -522,7 +655,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Status Toggle listeners for inquiries
         document.querySelectorAll('.btn-toggle-inq-status').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const id = btn.getAttribute('data-id');
                 const inq = HAUSMAN_DATA.inquiries.find(i => i.id === id);
                 if (inq) {
@@ -532,8 +666,81 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     renderInquiriesTable();
                     refreshMetrics();
+                    showToast(`Demande ${inq.id} passée en statut : ${inq.status.toUpperCase()}`);
                 }
             });
+        });
+
+        // Detail view listeners
+        document.querySelectorAll('.btn-view-inquiry').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-id');
+                openInquiryDetailModal(id);
+            });
+        });
+    }
+
+    function openInquiryDetailModal(id) {
+        const inq = HAUSMAN_DATA.inquiries.find(i => i.id === id);
+        if (!inq) return;
+
+        adminState.activeInquiryId = id;
+
+        if (dom.inquiryDetailRef) dom.inquiryDetailRef.textContent = `Demande de Pull #${inq.id}`;
+        if (dom.inquiryDetailDate) dom.inquiryDetailDate.textContent = `Reçue le ${inq.date}`;
+        if (dom.inquiryDetailName) dom.inquiryDetailName.textContent = inq.name;
+        if (dom.inquiryDetailAgency) dom.inquiryDetailAgency.textContent = inq.agency || 'Styliste / Demandeur Indépendant';
+        if (dom.inquiryDetailEmail) dom.inquiryDetailEmail.textContent = inq.email;
+        if (dom.inquiryDetailInstagram) dom.inquiryDetailInstagram.textContent = `Instagram: @${inq.name.toLowerCase().replace(/\s+/g, '')}`;
+        if (dom.inquiryDetailProject) dom.inquiryDetailProject.textContent = inq.projectType;
+        if (dom.inquiryDetailDates) dom.inquiryDetailDates.textContent = inq.projectDate;
+        if (dom.inquiryDetailStatusSelect) dom.inquiryDetailStatusSelect.value = inq.status;
+
+        // Render Pieces tags
+        if (dom.inquiryDetailPiecesList) {
+            const pieces = inq.requestedPieces.split(',').map(p => p.trim()).filter(Boolean);
+            dom.inquiryDetailPiecesList.innerHTML = pieces.map(pName => {
+                // Try finding matching garment in catalog
+                const matchG = HAUSMAN_DATA.garments.find(g => pName.includes(g.brand) || pName.includes(g.ref));
+                const thumb = matchG ? matchG.images.flat : 'assets/img/rick_leather_flat.jpg';
+                return `
+                    <div class="inquiry-piece-tag">
+                        <img src="${thumb}" alt="${pName}" />
+                        <span>${pName}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Setup Mailto URL
+        if (dom.inquiryDetailMailtoBtn) {
+            const subject = encodeURIComponent(`HAUSMAN Paris — Confirmation de Prêt [${inq.id}]`);
+            const body = encodeURIComponent(`Bonjour ${inq.name},\n\nNous avons bien reçu votre demande de prêt pour le projet "${inq.projectType}" (${inq.projectDate}).\n\nLes pièces demandées (${inq.requestedPieces}) sont actuellement disponibles au showroom.\n\nBien cordialement,\nL'équipe HAUSMAN Paris\nShowroom & Archives`);
+            dom.inquiryDetailMailtoBtn.href = `mailto:${inq.email}?subject=${subject}&body=${body}`;
+        }
+
+        if (dom.modalInquiryDetail) dom.modalInquiryDetail.classList.add('active');
+    }
+
+    window.hausmanOpenInquiry = openInquiryDetailModal;
+
+    if (dom.modalCloseInquiryDetail) {
+        dom.modalCloseInquiryDetail.addEventListener('click', () => {
+            if (dom.modalInquiryDetail) dom.modalInquiryDetail.classList.remove('active');
+        });
+    }
+
+    if (dom.inquiryDetailStatusSelect) {
+        dom.inquiryDetailStatusSelect.addEventListener('change', (e) => {
+            if (adminState.activeInquiryId) {
+                const inq = HAUSMAN_DATA.inquiries.find(i => i.id === adminState.activeInquiryId);
+                if (inq) {
+                    inq.status = e.target.value;
+                    renderInquiriesTable();
+                    refreshMetrics();
+                    showToast(`Statut de la demande ${inq.id} mis à jour`);
+                }
+            }
         });
     }
 
@@ -561,11 +768,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            showToast('Export CSV généré et téléchargé');
         });
     }
 
     // ==========================================
-    // 6. Projects Table & Modal (Section 28)
+    // 7. Projects Table & Modal (Section 28)
     // ==========================================
     function renderProjectsTable() {
         if (!dom.projectsTableBody) return;
@@ -608,6 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     HAUSMAN_DATA.projects = HAUSMAN_DATA.projects.filter(p => p.id !== id);
                     renderProjectsTable();
                     refreshMetrics();
+                    showToast(`Projet "${pTitle}" supprimé`);
                 }
             });
         });
@@ -620,6 +829,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dom.btnAddProject && dom.modalAddProject) {
         dom.btnAddProject.addEventListener('click', () => {
             if (dom.formAddProject) dom.formAddProject.reset();
+            if (dom.prevProjCover) dom.prevProjCover.src = 'assets/img/hero_cover.jpg';
             dom.modalAddProject.classList.add('active');
         });
     }
@@ -639,15 +849,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const year = formData.get('year') || '2026';
             const styling = formData.get('styling') || 'Studio HAUSMAN';
             const credits = formData.get('credits') || 'Photographie: Archives HAUSMAN • Paris';
+            const coverSrc = dom.prevProjCover ? dom.prevProjCover.src : "assets/img/hero_cover.jpg";
 
             const newProject = {
                 id: `proj-${Date.now()}`,
                 title: title.toUpperCase(),
                 category: category,
                 year: year,
-                coverImage: "assets/img/hero_cover.jpg",
+                coverImage: coverSrc,
                 landscapeImages: [
-                    "assets/img/hero_cover.jpg",
+                    coverSrc,
                     "assets/img/rick_leather_flat.jpg",
                     "assets/img/rick_leather_model.jpg"
                 ],
@@ -662,11 +873,42 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dom.modalAddProject) dom.modalAddProject.classList.remove('active');
             renderProjectsTable();
             refreshMetrics();
+            showToast(`Projet "${newProject.title}" publié avec succès`);
         });
     }
 
     // ==========================================
-    // 7. Search and Filter Handlers
+    // 8. Content Editor (Section 30)
+    // ==========================================
+    function setupContentEditor() {
+        // Load stored content if any
+        try {
+            const savedContent = JSON.parse(localStorage.getItem('hausman_showroom_texts') || '{}');
+            if (savedContent.aboutTitleEn && dom.aboutTitleEn) dom.aboutTitleEn.value = savedContent.aboutTitleEn;
+            if (savedContent.aboutTitleFr && dom.aboutTitleFr) dom.aboutTitleFr.value = savedContent.aboutTitleFr;
+            if (savedContent.aboutTextEn && dom.aboutTextEn) dom.aboutTextEn.value = savedContent.aboutTextEn;
+            if (savedContent.aboutTextFr && dom.aboutTextFr) dom.aboutTextFr.value = savedContent.aboutTextFr;
+        } catch (e) {
+            console.error('Error loading saved texts', e);
+        }
+
+        if (dom.formContentEdit) {
+            dom.formContentEdit.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const texts = {
+                    aboutTitleEn: dom.aboutTitleEn ? dom.aboutTitleEn.value : '',
+                    aboutTitleFr: dom.aboutTitleFr ? dom.aboutTitleFr.value : '',
+                    aboutTextEn: dom.aboutTextEn ? dom.aboutTextEn.value : '',
+                    aboutTextFr: dom.aboutTextFr ? dom.aboutTextFr.value : ''
+                };
+                localStorage.setItem('hausman_showroom_texts', JSON.stringify(texts));
+                showToast('Textes de présentation enregistrés sur le showroom');
+            });
+        }
+    }
+
+    // ==========================================
+    // 9. Search and Filter Handlers
     // ==========================================
     if (dom.adminSearchInput) {
         dom.adminSearchInput.addEventListener('input', (e) => {
@@ -688,12 +930,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 8. Auth State Simulation
+    // 10. Auth State Simulation
     // ==========================================
     if (dom.btnLogoutAdmin) {
         dom.btnLogoutAdmin.addEventListener('click', () => {
             if (confirm('Voulez-vous vous déconnecter de la session administrateur ?')) {
                 if (dom.modalAdminLogin) dom.modalAdminLogin.classList.add('active');
+                showToast('Session déconnectée');
             }
         });
     }
@@ -702,10 +945,13 @@ document.addEventListener('DOMContentLoaded', () => {
         dom.formAdminLogin.addEventListener('submit', (e) => {
             e.preventDefault();
             if (dom.modalAdminLogin) dom.modalAdminLogin.classList.remove('active');
+            showToast('Connexion administrateur réussie');
         });
     }
 
     // Initial Execution
+    setupImageUploadHandlers();
+    setupContentEditor();
     populateBrandSuggestions();
     refreshMetrics();
     renderWardrobeTable();
